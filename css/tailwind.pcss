@@ -1,0 +1,241 @@
+/* Init Tailwind */
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+/* Custom CSS */
+
+@layer utilities {
+  .card-new {
+    @apply bg-white rounded overflow-hidden shadow-md relative;
+  }
+}
+
+@layer utilities {
+  .badge {
+    @apply text-xs font-bold uppercase rounded-full p-2 absolute top-0 ml-2 mt-2;
+  }
+}
+
+@layer utilities {
+  .btn {
+    @apply rounded-full uppercase px-3 py-2 text-xs cursor-pointer tracking-wider;
+  }
+}
+
+article p {
+  @apply my-4;
+}
+
+:root {
+  --color-hyperlinks: #cb742b;
+  --color-button: #cb742b;
+  --color-blockquote: #cb742b;
+  --color-body: #aafcb8;
+  --color-title: rgb(242, 243, 247);
+  --color-paragraphs: rgba(242, 243, 247, 0.8);
+  --color-tile: #303236;
+  --color-menu: #272a2f;
+  --color-tile-border: #272a2f;
+  --color-text: #fcfcfc;
+  --color-title: #fcfcfc;
+  --color-body-alt: #8ea0b8;
+  --color-body-highlight: rgba(35, 38, 43, 0.8);
+  --color-emphasis: #cb742b;
+  --base-font-family: 'Proxima Nova', sans-serif !important;
+  --header-font-family: 'abolition', sans-serif !important;
+}
+
+#menu {
+  font-size: responsive;
+  min-font-size: 16px;
+  max-font-size: 22px;
+}
+
+/* passive styles that don't need to change */
+
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-body-alt);
+  font-size: 16px;
+  font-family: var(--base-font-family);
+  line-height: 1.6;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  max-width: 1440px;
+  letter-spacing: 0.008em;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+article p {
+  color: var(--color-paragraphs);
+  font-size: responsive;
+  min-font-size: 16px;
+  max-font-size: 22px;
+}
+
+article li {
+  font-size: responsive;
+  min-font-size: 10px;
+  max-font-size: 16px;
+  list-style-type: circle;
+  margin-left: 2em;
+}
+
+article a {
+  color: var(--color-hyperlinks);
+}
+
+li a {
+  color: inherit;
+}
+
+strong {
+  color: var(--color-emphasis);
+  font-weight: 700;
+}
+
+input {
+  font-family: var(--base-font-family);
+}
+
+button {
+  background-color: var(--color-button);
+  border-radius: 5px;
+  font-family: var(--base-font-family);
+}
+
+header {
+  color: var(--color-text);
+}
+
+blockquote {
+  font-family: var(--base-font-family);
+  border-left: 8px solid var(--color-text);
+  font-style: italic;
+  padding: 1rem;
+  margin-left: 2.3rem;
+  margin-right: auto;
+  text-align: justify;
+}
+
+blockquote p {
+  font-family: inherit;
+  font-size: responsive;
+  min-font-size: 12px;
+  max-font-size: 15px;
+  display: inline;
+}
+
+article > img {
+  width: 100%;
+  height: auto;
+}
+
+/*
+  Single property.
+  with min and max passed.
+*/
+
+h1 {
+  font-size: responsive;
+  min-font-size: 34px;
+  max-font-size: 70px;
+  font-family: var(--header-font-family);
+  line-height: 1.1;
+  letter-spacing: 1px;
+  color: var(--color-title);
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+h2 {
+  font-size: responsive;
+  min-font-size: 30px;
+  max-font-size: 50px;
+  font-family: var(--header-font-family);
+  letter-spacing: 2px;
+  color: var(--color-title);
+}
+
+h3 {
+  font-size: responsive;
+  min-font-size: 20px;
+  max-font-size: 28px;
+  font-family: var(--header-font-family);
+  letter-spacing: 2px;
+  color: var(--color-title);
+}
+
+h4 {
+  font-size: responsive;
+  min-font-size: 18px;
+  max-font-size: 20px;
+  font-family: var(--header-font-family);
+  letter-spacing: 2px;
+  color: var(--color-title);
+}
+
+p {
+  font-size: responsive;
+  min-font-size: 16px;
+  max-font-size: 18px;
+  font-family: var(--base-font-family);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--color-title);
+}
+
+ul {
+  list-style-type: none;
+}
+
+article ul {
+  font-size: responsive;
+  min-font-size: 16px;
+  max-font-size: 18px;
+}
+
+p > img {
+  display: block;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+footer {
+  background-color: var(--color-menu);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25), 0 0 10px rgba(0, 0, 0, 0.22);
+  height: auto;
+  font-size: responsive;
+  min-font-size: 12px;
+  max-font-size: 16px;
+}
+
+button {
+  display: inline-block;
+  position: relative;
+  padding: 0.8em 1.4em;
+  font-size: 0.9em;
+  font-weight: bold;
+  border: none;
+  color: #f2f2f2;
+  transition: 0.4s;
+  text-transform: uppercase;
+  cursor: pointer;
+}
