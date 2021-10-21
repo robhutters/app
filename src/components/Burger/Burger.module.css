@@ -1,0 +1,45 @@
+.burgerButton {
+  position: absolute;
+  top: 5%;
+  left: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10;
+}
+
+.burgerButton:focus {
+  outline: none;
+}
+
+.burgerLines {
+  width: 35px;
+  display: block;
+  height: 0.25rem;
+  background: #effffa;
+  border-radius: 10px;
+  transition: all 0.3s linear;
+  position: relative;
+  transform-origin: 1px;
+  margin: 0.5em 0;
+  z-index: 20;
+}
+
+.isOpen:first-child {
+  transform: rotate(45deg);
+}
+
+.isOpen:nth-child(2) {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.isOpen:nth-child(3) {
+  transform: rotate(-45deg);
+}
