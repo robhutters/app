@@ -1,24 +1,30 @@
-import { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { AuthContext } from './context/auth';
 import Home from './pages/home/Home';
 import NoMatch from './pages/NoMatch';
 
-function App() {
-  const [auth, setAuth] = useState(false);
-  const [open, setOpen] = useState(false);
+import Account from './pages/account/Account';
 
+import { Signup } from './pages/signup/Signup';
+import { Login } from './pages/login/Login';
+import { Dashboard } from './pages/dashboard/Dashboard';
+import { AuthProvider } from './context/Auth';
+
+function App() {
   return (
-    <div>
-      <AuthContext.Provider value={{ auth, setAuth, open, setOpen }}>
+    <>
+      <AuthProvider>
         <Router>
           <Switch>
             <Route exact path='/' component={Home} />
+            <Route path='/signup' component={Signup} />
+            <Route path='/login' component={Login} />
+            <Route exact path='/dashboard' component={Dashboard} />
+
             <Route component={NoMatch} />
           </Switch>
         </Router>
-      </AuthContext.Provider>
-    </div>
+      </AuthProvider>
+    </>
   );
 }
 

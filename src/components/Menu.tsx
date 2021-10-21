@@ -59,6 +59,14 @@ function Menu({ context }: any) {
                 </span>
               </Link>
             </li>
+            <li className='px-4 border-r-2 border-body-200' id='home'>
+              <Link to={`/dashboard`}>
+                <span className='px-2'>Account</span>
+                <span>
+                  <i className='fal fa-person w-8'></i>
+                </span>
+              </Link>
+            </li>
           </ul>
         </nav>
       </header>

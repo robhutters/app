@@ -5,6 +5,8 @@ Recipes will be observed from the Tinder app.
 Redirects traffic to original recipe.
 Reviews may include original adjusted recipe.
 
+## Scratchpad
+
 ## Priorities
 
 1. Liking a recipe via the heart button will toggle between like/not-like.
