@@ -1,32 +1,24 @@
-import { useRef, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/Auth';
 
 export function Login() {
   const emailRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
 
   const { signIn } = useAuth();
-
-  const history = useHistory();
 
   async function handleSubmit(e: any) {
     e.preventDefault();
 
     // Get email and password input values
-    if (emailRef.current !== null && passwordRef.current !== null) {
+    if (emailRef.current !== null) {
       const email = emailRef.current.value;
-      const password = passwordRef.current.value;
 
       // Calls `signUp` function from the context
-      const user = await signIn({ email, password });
-      console.log(user);
+      const { error } = await signIn({ email });
 
-      if (user.error !== null) {
+      if (error !== null) {
         alert('error signing in');
-      } else {
-        // Redirect user to Dashboard
-        history.push('/dashboard');
       }
     }
   }
@@ -36,9 +28,6 @@ export function Login() {
       <form onSubmit={handleSubmit}>
         <label htmlFor='input-email'>Email</label>
         <input id='input-email' type='email' ref={emailRef} />
-
-        <label htmlFor='input-password'>Password</label>
-        <input id='input-password' type='password' ref={passwordRef} />
 
         <br />
 

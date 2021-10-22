@@ -9,6 +9,7 @@ import { Login } from './pages/login/Login';
 import { Dashboard } from './pages/dashboard/Dashboard';
 import { AuthProvider } from './context/Auth';
 import { PrivateRoute } from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
       <AuthProvider>
         <Router>
           <Switch>
-            <Route exact path='/' component={Home} />
+            <PublicRoute exact path='/' component={Home} />
             <Route path='/signup' component={Signup} />
             <Route path='/login' component={Login} />
             <PrivateRoute exact path='/dashboard' component={Dashboard} />
