@@ -37,13 +37,13 @@ function Menu({ context }: any) {
     <>
       <header className='md:col-span-1 md:flex md:justify-end '>
         <nav className='text-right relative'>
-          <div className='fixed overflow-hidden z-40 md:relative w-full py-6 flex flex-row-reverse justify-between items-center bg-body-300 m-0 shadow-lg md:shadow-none md:bg-body-200'>
+          <div className='fixed overflow-hidden z-40 md:relative w-full py-5 flex flex-row-reverse justify-between items-center bg-body-300 m-0 shadow-lg md:shadow-none md:bg-body-200'>
             <div>
-              <h1 className='text-4xl sm:text-6xl font-semibold pr-4'>
-                <Link to={`/`} className='font-header'>
-                  <span className={styled.title}>de luie chef</span>{' '}
-                </Link>
-              </h1>
+              <Link to={`/`}>
+                <span className={styled.title}>
+                  <h1 className='text-4xl sm:text-6xl font-semibold pr-4'>{import.meta.env.VITE_NAME_OF_COMPANY} </h1>
+                </span>{' '}
+              </Link>
             </div>
             <div className='cursor-pointer px-8 md:hidden' id='burger'>
               <Burger context={context} />
