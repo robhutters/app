@@ -9,7 +9,6 @@ export function AuthProvider({ children }: any) {
   const [open, setOpen] = useState<boolean>(false);
   const [restricted, setRestriction] = useState<boolean>(false);
 
-  console.log(user);
   useEffect(() => {
     // Check active sessions and sets the user
     const session = supabase.auth.session();

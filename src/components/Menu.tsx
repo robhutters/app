@@ -63,7 +63,7 @@ function Menu({ context }: any) {
               <Link to={`/dashboard`}>
                 <span className='px-2'>Account</span>
                 <span>
-                  <i className='fal fa-person w-8'></i>
+                  <i className='fal fa-user w-8'></i>
                 </span>
               </Link>
             </li>
