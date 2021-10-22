@@ -42,11 +42,13 @@ export function useAuth() {
   return useContext(AuthContext) as AuthContextType;
 }
 
-interface IUser {}
+interface IUser {
+  id: string;
+}
 
 interface AuthContextType {
   user: IUser;
   signOut: () => void;
-  signIn: () => void;
+  signIn: (data: any) => { data: object; user: object; error: any; session: any };
   signUp: (data: any) => { data: object; user: object; error: any; session: any };
 }

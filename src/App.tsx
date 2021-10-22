@@ -8,6 +8,7 @@ import { Signup } from './pages/signup/Signup';
 import { Login } from './pages/login/Login';
 import { Dashboard } from './pages/dashboard/Dashboard';
 import { AuthProvider } from './context/Auth';
+import { PrivateRoute } from './PrivateRoute';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
             <Route exact path='/' component={Home} />
             <Route path='/signup' component={Signup} />
             <Route path='/login' component={Login} />
-            <Route exact path='/dashboard' component={Dashboard} />
+            <PrivateRoute exact path='/dashboard' component={Dashboard} />
 
             <Route component={NoMatch} />
           </Switch>
