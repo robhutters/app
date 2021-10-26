@@ -1,32 +1,47 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../supabaseClient';
 
-export default function Account({ session }: any) {
+interface accountData {
+  username: string;
+  website: string;
+  avatar_url: string;
+}
+
+export default function Account({ user }: any) {
   const [loading, setLoading] = useState<boolean>(true);
-  const [username, setUsername] = useState<string | null>(null);
-  const [website, setWebsite] = useState<string | null>(null);
-  const [avatar_url, setAvatarUrl] = useState<string | null>(null);
+  const [data, setData] = useState<accountData>({
+    username: 'person',
+    website: '',
+    avatar_url: '',
+  });
+
+  const setUsername = (u: string) => {
+    console.log(data, u);
+    setData((data) => ({ ...data, username: u }));
+  };
+
+  const setWebsite = (w: string) => {
+    setData((data) => ({ ...data, website: w }));
+  };
 
   useEffect(() => {
+    console.log(user);
     getProfile();
-  }, [session]);
+  }, [user]);
 
   async function getProfile() {
     try {
       setLoading(true);
-      const user = supabase.auth.user();
-      if (user !== null) {
-        let { data, error, status } = await supabase.from('profiles').select(`username, website, avatar_url`).eq('id', user.id).single();
 
-        if (error && status !== 406) {
-          throw error;
-        }
+      let { data, error, status } = await supabase.from('profiles').select(`username, website, avatar_url`).eq('id', user.id).single();
 
-        if (data) {
-          setUsername(data.username);
-          setWebsite(data.website);
-          setAvatarUrl(data.avatar_url);
-        }
+      if (error && status !== 406) {
+        throw error;
+      }
+
+      data && setData(data);
+      if (data) {
+        setData(data);
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -37,7 +52,7 @@ export default function Account({ session }: any) {
     }
   }
 
-  async function updateProfile({ username, website, avatar_url }: any) {
+  async function updateProfile({ username, website, avatar_url }: accountData) {
     try {
       setLoading(true);
       const user = supabase.auth.user();
@@ -72,19 +87,19 @@ export default function Account({ session }: any) {
     <div className='form-widget'>
       <div>
         <label htmlFor='email'>Email</label>
-        <input id='email' type='text' value={session.user.email} disabled />
+        <input id='email' type='text' value={user.email} disabled />
       </div>
       <div>
         <label htmlFor='username'>Name</label>
-        <input id='username' type='text' value={username || ''} onChange={(e) => setUsername(e.target.value)} />
+        <input id='username' type='text' value={data.username} onChange={(e) => setUsername(e.target.value)} />
       </div>
       <div>
         <label htmlFor='website'>Website</label>
-        <input id='website' type='website' value={website || ''} onChange={(e) => setWebsite(e.target.value)} />
+        <input id='website' type='website' value={data.website} onChange={(e) => setWebsite(e.target.value)} />
       </div>
 
       <div>
-        <button className='button block primary' onClick={() => updateProfile({ username, website, avatar_url })} disabled={loading}>
+        <button className='button block primary' onClick={() => updateProfile(data)} disabled={loading}>
           {loading ? 'Loading ...' : 'Update'}
         </button>
       </div>

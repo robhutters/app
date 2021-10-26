@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/Auth';
+import GoogleOAuth from '../../components/GoogleOAuth';
 
 export function Login() {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -39,6 +40,8 @@ export function Login() {
       <p>
         Heb je nog geen account? <Link to='/signup'>Sign up</Link>
       </p>
+
+      <GoogleOAuth />
     </>
   );
 }

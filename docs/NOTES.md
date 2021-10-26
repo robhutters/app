@@ -7,6 +7,9 @@ Reviews may include original adjusted recipe.
 
 ## Scratchpad
 
+Auth example
+https://ruanmartinelli.com/posts/supabase-authentication-react
+
 ## Priorities
 
 1. Liking a recipe via the heart button will toggle between like/not-like.

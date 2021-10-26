@@ -19,5 +19,5 @@ function loadApplication() {
 }
 
 if (root !== null) {
-  setTimeout(loadApplication, 500);
+  loadApplication();
 }
