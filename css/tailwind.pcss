@@ -35,13 +35,13 @@ article p {
   --color-blockquote: #cb742b;
   --color-body: #aafcb8;
   --color-title: rgb(242, 243, 247);
-  --color-paragraphs: rgba(242, 243, 247, 0.8);
+  --color-paragraphs: #000000 ;
   --color-tile: #303236;
   --color-menu: #272a2f;
   --color-tile-border: #272a2f;
-  --color-text: #fcfcfc;
-  --color-title: #fcfcfc;
-  --color-body-alt: #8ea0b8;
+  --color-text: #ffffff;
+  --color-title: #ffffff;
+  --color-body-alt: #0e0f11;
   --color-body-highlight: rgba(35, 38, 43, 0.8);
   --color-emphasis: #cb742b;
   --base-font-family: 'Proxima Nova', sans-serif !important;
@@ -65,7 +65,7 @@ article p {
   box-sizing: border-box;
 }
 
-body {
+html, body {
   background-color: var(--color-body-alt);
   font-size: 16px;
   font-family: var(--base-font-family);
@@ -76,6 +76,10 @@ body {
   max-width: 1440px;
   letter-spacing: 0.008em;
   -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  color: white;
 }
 
 article p {

@@ -1,0 +1,16 @@
+form {
+ width: 100%;
+}
+
+form button {
+  width: 140px;
+  margin: 1em 0;
+}
+
+label {
+  color: white;
+}
+
+input:disabled {
+  color: grey;
+}

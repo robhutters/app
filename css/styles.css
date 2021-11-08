@@ -699,6 +699,10 @@ video {
   margin-top: 5rem;
 }
 
+.mt-6 {
+  margin-top: 1.5rem;
+}
+
 .block {
   display: block;
 }
@@ -727,6 +731,10 @@ video {
   width: 2rem;
 }
 
+.w-96 {
+  width: 24rem;
+}
+
 .-translate-x-full {
   --tw-translate-x: -100%;
   transform: var(--tw-transform);
@@ -740,6 +748,10 @@ video {
   cursor: pointer;
 }
 
+.flex-row {
+  flex-direction: row;
+}
+
 .flex-row-reverse {
   flex-direction: row-reverse;
 }
@@ -750,6 +762,10 @@ video {
 
 .items-center {
   align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
 }
 
 .justify-between {
@@ -904,13 +920,13 @@ article p {
   --color-blockquote: #cb742b;
   --color-body: #aafcb8;
   --color-title: rgb(242, 243, 247);
-  --color-paragraphs: rgba(242, 243, 247, 0.8);
+  --color-paragraphs: #000000 ;
   --color-tile: #303236;
   --color-menu: #272a2f;
   --color-tile-border: #272a2f;
-  --color-text: #fcfcfc;
-  --color-title: #fcfcfc;
-  --color-body-alt: #8ea0b8;
+  --color-text: #ffffff;
+  --color-title: #ffffff;
+  --color-body-alt: #0e0f11;
   --color-body-highlight: rgba(35, 38, 43, 0.8);
   --color-emphasis: #cb742b;
   --base-font-family: 'Proxima Nova', sans-serif !important;
@@ -942,8 +958,8 @@ article p {
   box-sizing: border-box;
 }
 
-body {
-  background-color: #8ea0b8;
+html, body {
+  background-color: #0e0f11;
   background-color: var(--color-body-alt);
   font-size: 16px;
   font-family: 'Proxima Nova', sans-serif;
@@ -957,8 +973,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+* {
+  color: white;
+}
+
 article p {
-  color: rgba(242, 243, 247, 0.8);
+  color: #000000;
   color: var(--color-paragraphs);
   font-size: calc(16px + 6 * ((100vw - 420px) / 860));
 }
@@ -1038,14 +1058,14 @@ button {
 }
 
 header {
-  color: #fcfcfc;
+  color: #ffffff;
   color: var(--color-text);
 }
 
 blockquote {
   font-family: 'Proxima Nova', sans-serif;
   font-family: var(--base-font-family);
-  border-left: 8px solid #fcfcfc;
+  border-left: 8px solid #ffffff;
   border-left: 8px solid var(--color-text);
   font-style: italic;
   padding: 1rem;
@@ -1088,7 +1108,7 @@ h1 {
   font-family: var(--header-font-family);
   line-height: 1.1;
   letter-spacing: 1px;
-  color: #fcfcfc;
+  color: #ffffff;
   color: var(--color-title);
   text-decoration: none;
   -webkit-font-smoothing: antialiased;
@@ -1111,7 +1131,7 @@ h2 {
   font-family: 'abolition', sans-serif;
   font-family: var(--header-font-family);
   letter-spacing: 2px;
-  color: #fcfcfc;
+  color: #ffffff;
   color: var(--color-title);
 }
 
@@ -1132,7 +1152,7 @@ h3 {
   font-family: 'abolition', sans-serif;
   font-family: var(--header-font-family);
   letter-spacing: 2px;
-  color: #fcfcfc;
+  color: #ffffff;
   color: var(--color-title);
 }
 
@@ -1153,7 +1173,7 @@ h4 {
   font-family: 'abolition', sans-serif;
   font-family: var(--header-font-family);
   letter-spacing: 2px;
-  color: #fcfcfc;
+  color: #ffffff;
   color: var(--color-title);
 }
 
@@ -1191,7 +1211,7 @@ h1,
 h2,
 h3,
 h4 {
-  color: #fcfcfc;
+  color: #ffffff;
   color: var(--color-title);
 }
 

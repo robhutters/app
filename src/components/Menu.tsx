@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import styled from './login.module.css';
+import styled from './Menu.module.css';
 import { useLocation } from 'react-router-dom';
 import Burger from './Burger';
 import Overlay from './Overlay';

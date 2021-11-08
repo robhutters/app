@@ -6,25 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- this logo is of React, not your company -->
     <link rel="apple-touch-icon" href="img/logo192.png" />
-
-    <link rel="stylesheet" href="node_modules/modern-normalize/modern-normalize.css" />
     <link rel="stylesheet" href="https://use.typekit.net/nhj5ouo.css" />
     <script src="https://kit.fontawesome.com/9235013082.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/styles.css" />
+
     <title>de luie chef (recepten app)</title>
+    <style>
+      span > .black,
+      h1 > .black {
+        color: black;
+      }
+
+      
+    </style>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
 
     <main id="backup" style="padding: 2em 0; display: flex; flex-direction: column; justify-content: center; text-align: center">
-      <div style="margin: auto; padding: 1em 0"><i class="fad fa-spinner fa-2x fa-spin"></i></div>
-      <small>Even geduld ouwe ...</small>
+      <div style="margin: auto; padding: 1em 0; color: rgb(20, 14, 14) !important; "><span><i class="black fad fa-spinner fa-2x fa-spin" ></i></span></div>
+      <h1> <span style="color:white">Even geduld ouwe ...</span></h1>
       <div style="display: flex; flex-direction: row; justify-content: center">
         <div style="max-width: 20em">
-          <img style="max-width: 100% !important; height: auto; display: block" src="img/luiechef-logo-alt-black-transparent.png" alt="" />
+          <img style="max-width: 100% !important; height: auto; display: block" src="img/luiechef-logo-alt-transparent.png" alt="" />
         </div>
       </div>
     </main>
   </body>
+  <link rel="stylesheet" href="css/styles.css" />
+
 </html>

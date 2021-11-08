@@ -1,7 +1,7 @@
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/Auth';
-import GoogleOAuth from '../../components/GoogleOAuth';
+import styled from './Login.module.css';
 
 export function Login() {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -25,23 +25,23 @@ export function Login() {
   }
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor='input-email'>Email</label>
-        <input id='input-email' type='email' ref={emailRef} />
+    <React.Fragment>
+      <section className='flex flex-row justify-center '>
+        <main className='flex flex-col w-96'>
+          <form onSubmit={handleSubmit} className={styled.form}>
+            <label htmlFor='input-email'>Email</label>
+            <input id='input-email' type='email' ref={emailRef} />
 
-        <br />
+            <button type='submit'>Login</button>
+          </form>
 
-        <button type='submit'>Login</button>
-      </form>
+ 
 
-      <br />
-
-      <p>
-        Heb je nog geen account? <Link to='/signup'>Sign up</Link>
-      </p>
-
-      <GoogleOAuth />
-    </>
+          <p className="mt-6">
+            Heb je nog geen account? <Link to='/signup'>Sign up</Link>
+          </p>
+        </main>
+      </section>
+    </React.Fragment>
   );
 }
