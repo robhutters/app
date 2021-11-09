@@ -100,25 +100,22 @@ export default function Account({ user }: any) {
       const confirmation = confirm('Are you absolutely sure you want to delete your account? There is no going back!')
 
 
-      
-      console.log(confirmation)
 
       if (confirmation) {
-        history.push('/')
+        const { error } = await supabase
+        .from('profiles')
+        .delete()
+        .match({ id: user.id })
+
+        if (error) {
+          throw error;
+        } else {
+          alert('Account successfully deleted. Redirecting you to home page in 3 seconds')
+          setTimeout(() => {
+            history.push('/')
+          }, 3000)
+        }
       }
-
-      // if (confirmation) {
-      //   const { error } = await supabase
-      //   .from('profiles')
-      //   .delete()
-      //   .match({ id: user.id })
-
-      //   if (error) {
-      //     throw error;
-      //   } else {
-          
-      //   }
-      // }
      
     } catch (error) {
       if (error instanceof Error) {

@@ -29,7 +29,6 @@ export function Dashboard() {
   useEffect(() => {
     (async function () {
       const profile = await getProfile();
-      console.log(profile);
       if (profile !== undefined) {
         setProfile(profile);
       }

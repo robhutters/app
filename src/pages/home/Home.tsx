@@ -22,12 +22,11 @@ function Home() {
   const menu = useContext(AuthContext);
 
 
-  const history = useHistory();
+  // const history = useHistory();
 
   useEffect(() => {
     (async function () {
       const profile = await getProfile();
-      console.log(profile);
       if (profile !== undefined) {
         setProfile(profile);
       }

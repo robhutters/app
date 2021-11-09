@@ -44,8 +44,7 @@ const SignupOrLogout = ({ context }: any, props: any) => {
   }
 
   const tabIndex = isHidden ? 0 : -1;
-  console.log('Logging context from Overlay component ...')
-  console.log(context)
+
 
   if (user) {
     return (
