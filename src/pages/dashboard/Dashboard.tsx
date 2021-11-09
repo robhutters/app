@@ -1,7 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState,useContext } from 'react';
 import { useHistory } from 'react-router';
 import { useAuth } from '../../context/Auth';
 import getProfile from '../../helpers/getProfile';
+import { AuthContext } from '../../context/Auth';
+import Layout from '../Layout';
+
 
 interface IProfile {
   username: string | null;
@@ -17,6 +20,9 @@ export function Dashboard() {
     website: null,
     avatar_url: null,
   } as IProfile);
+
+  const menu = useContext(AuthContext);
+
 
   const history = useHistory();
 
@@ -40,9 +46,19 @@ export function Dashboard() {
 
   return (
     <div>
-      {/* Change it to display the user ID too 👇*/}
-      <p>Welcome, {profile?.username}!</p>
-      <button onClick={handleSignOut}>Sign out</button>
+      <Layout context={menu}>
+          {/* Change it to display the user ID too 👇*/}
+      <section  className='flex flex-col px-6 max-w-xl mx-auto' >
+
+        <main className=' border-2'>
+          <p>Welkom, {profile?.username}!</p>
+
+      
+
+          <button onClick={handleSignOut}>Sign out</button>
+        </main>
+      </section>
+      </Layout>
     </div>
   );
 }

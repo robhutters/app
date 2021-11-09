@@ -613,40 +613,6 @@ video {
   --tw-shadow: 0 0 #0000;
 }
 
-.container {
-  width: 100%;
-}
-
-@media (min-width: 640px) {
-  .container {
-    max-width: 640px;
-  }
-}
-
-@media (min-width: 768px) {
-  .container {
-    max-width: 768px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .container {
-    max-width: 1024px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .container {
-    max-width: 1280px;
-  }
-}
-
-@media (min-width: 1536px) {
-  .container {
-    max-width: 1536px;
-  }
-}
-
 .fixed {
   position: fixed;
 }
@@ -681,6 +647,11 @@ video {
 
 .m-0 {
   margin: 0px;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .mt-32 {
@@ -735,6 +706,18 @@ video {
   width: 24rem;
 }
 
+.min-w-full {
+  min-width: 100%;
+}
+
+.max-w-xl {
+  max-width: 36rem;
+}
+
+.max-w-full {
+  max-width: 100%;
+}
+
 .-translate-x-full {
   --tw-translate-x: -100%;
   transform: var(--tw-transform);
@@ -780,6 +763,10 @@ video {
   overflow-y: auto;
 }
 
+.border-2 {
+  border-width: 2px;
+}
+
 .border-r-2 {
   border-right-width: 2px;
 }
@@ -793,12 +780,26 @@ video {
   border-color: rgba(255, 255, 255, var(--tw-border-opacity));
 }
 
+.bg-dark-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(16, 16, 16, var(--tw-bg-opacity));
+}
+
+.bg-red-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(220, 38, 38, var(--tw-bg-opacity));
+}
+
 .p-8 {
   padding: 2rem;
 }
 
 .p-2 {
   padding: 0.5rem;
+}
+
+.p-3 {
+  padding: 0.75rem;
 }
 
 .py-5 {
@@ -824,6 +825,11 @@ video {
 .py-6 {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
+}
+
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 .pr-4 {
@@ -922,7 +928,7 @@ article p {
   --color-title: rgb(242, 243, 247);
   --color-paragraphs: #000000 ;
   --color-tile: #303236;
-  --color-menu: #272a2f;
+  --color-menu: #0e0f11;
   --color-tile-border: #272a2f;
   --color-text: #ffffff;
   --color-title: #ffffff;
@@ -959,8 +965,6 @@ article p {
 }
 
 html, body {
-  background-color: #0e0f11;
-  background-color: var(--color-body-alt);
   font-size: 16px;
   font-family: 'Proxima Nova', sans-serif;
   font-family: var(--base-font-family);
@@ -971,6 +975,11 @@ html, body {
   max-width: 1440px;
   letter-spacing: 0.008em;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #0e0f11;
+  background-color: var(--color-body-alt);
 }
 
 * {
@@ -1031,6 +1040,7 @@ strong {
 input {
   font-family: 'Proxima Nova', sans-serif;
   font-family: var(--base-font-family);
+  padding: 10px;
 }
 
 input::-moz-placeholder {
@@ -1057,9 +1067,11 @@ button {
   font-family: var(--base-font-family);
 }
 
-header {
+nav {
   color: #ffffff;
   color: var(--color-text);
+  background-color: #0e0f11;
+  background-color: var(--color-menu);
 }
 
 blockquote {
@@ -1243,7 +1255,7 @@ p > img {
 }
 
 footer {
-  background-color: #272a2f;
+  background-color: #0e0f11;
   background-color: var(--color-menu);
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25), 0 0 10px rgba(0, 0, 0, 0.22);
   height: auto;
@@ -1321,6 +1333,11 @@ button {
 
   .md\:justify-end {
     justify-content: flex-end;
+  }
+
+  .md\:bg-dark-400 {
+    --tw-bg-opacity: 1;
+    background-color: rgba(14, 15, 17, var(--tw-bg-opacity));
   }
 
   .md\:px-6 {

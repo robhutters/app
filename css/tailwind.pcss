@@ -37,7 +37,7 @@ article p {
   --color-title: rgb(242, 243, 247);
   --color-paragraphs: #000000 ;
   --color-tile: #303236;
-  --color-menu: #272a2f;
+  --color-menu: #0e0f11;
   --color-tile-border: #272a2f;
   --color-text: #ffffff;
   --color-title: #ffffff;
@@ -66,7 +66,6 @@ article p {
 }
 
 html, body {
-  background-color: var(--color-body-alt);
   font-size: 16px;
   font-family: var(--base-font-family);
   line-height: 1.6;
@@ -76,6 +75,10 @@ html, body {
   max-width: 1440px;
   letter-spacing: 0.008em;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--color-body-alt);
 }
 
 * {
@@ -112,6 +115,7 @@ strong {
 
 input {
   font-family: var(--base-font-family);
+  padding: 10px;
 }
 
 input::placeholder {
@@ -128,8 +132,9 @@ button {
   font-family: var(--base-font-family);
 }
 
-header {
+nav {
   color: var(--color-text);
+  background-color: var(--color-menu);
 }
 
 blockquote {

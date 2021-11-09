@@ -1,5 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { supabase } from '../../supabaseClient';
+import { AuthContext } from '../../context/Auth';
+import Layout from '../Layout';
+
+import {useHistory} from 'react-router-dom';
 
 interface accountData {
   username: string;
@@ -9,14 +13,16 @@ interface accountData {
 
 export default function Account({ user }: any) {
   const [loading, setLoading] = useState<boolean>(true);
-  const [data, setData] = useState<accountData>({
+  const [accountData, setData] = useState<accountData>({
     username: 'person',
     website: '',
     avatar_url: '',
   });
+  const history = useHistory()
+
+  const menu = useContext(AuthContext);
 
   const setUsername = (u: string) => {
-    console.log(data, u);
     setData((data) => ({ ...data, username: u }));
   };
 
@@ -25,8 +31,10 @@ export default function Account({ user }: any) {
   };
 
   useEffect(() => {
-    console.log(user);
+    console.log(user.id);
+   
     getProfile();
+   
   }, [user]);
 
   async function getProfile() {
@@ -83,23 +91,64 @@ export default function Account({ user }: any) {
     }
   }
 
+
+
+  async function deleteProfile({username}:accountData) {
+
+    try {
+      setLoading(true)
+      const confirmation = confirm('Are you absolutely sure you want to delete your account? There is no going back!')
+
+
+      
+      console.log(confirmation)
+
+      if (confirmation) {
+        history.push('/')
+      }
+
+      // if (confirmation) {
+      //   const { error } = await supabase
+      //   .from('profiles')
+      //   .delete()
+      //   .match({ id: user.id })
+
+      //   if (error) {
+      //     throw error;
+      //   } else {
+          
+      //   }
+      // }
+     
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      }
+    } finally {
+      setLoading(false)
+    }
+
+    
+  }
+
   return (
-    <div className='form-widget'>
+    <Layout context={menu}>
+       <div className='form-widget flex flex-col px-6 max-w-xl mx-auto'>
       <div>
         <label htmlFor='email'>Email</label>
         <input id='email' type='text' value={user.email} disabled />
       </div>
       <div>
         <label htmlFor='username'>Name</label>
-        <input id='username' type='text' value={data.username} onChange={(e) => setUsername(e.target.value)} />
+        <input id='username' type='text' value={accountData.username} onChange={(e) => setUsername(e.target.value)} />
       </div>
       <div>
         <label htmlFor='website'>Website</label>
-        <input id='website' type='website' value={data.website} onChange={(e) => setWebsite(e.target.value)} />
+        <input id='website' type='website' value={accountData.website} onChange={(e) => setWebsite(e.target.value)} />
       </div>
 
       <div>
-        <button className='button block primary' onClick={() => updateProfile(data)} disabled={loading}>
+        <button className='button block primary' onClick={() => updateProfile(accountData)} disabled={loading}>
           {loading ? 'Loading ...' : 'Update'}
         </button>
       </div>
@@ -109,6 +158,15 @@ export default function Account({ user }: any) {
           Sign Out
         </button>
       </div>
+      <div>
+        <div className="flex flex-row justify-center p-3"><p>
+            This will permanently delete your account. 
+          </p></div>
+      <button className='button block bg-red-600' onClick={() => deleteProfile(accountData)}>
+          delete
+        </button>
+      </div>
     </div>
+    </Layout>
   );
 }

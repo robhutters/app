@@ -10,7 +10,8 @@ module.exports = {
         layer2: '#593d3b',
         layer3: '#917A6E',
         dark: {
-          400: '#0D0E12',
+          400: '#0e0f11',
+          200: '#101010'
         },
       },
       fontFamily: {

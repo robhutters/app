@@ -37,8 +37,8 @@ function Menu({ context }: any) {
     <>
       <header className='md:col-span-1 md:flex md:justify-end '>
         <nav className='text-right relative'>
-          <div className='fixed overflow-hidden z-40 md:relative w-full py-5 flex flex-row-reverse justify-between items-center bg-body-300 m-0 shadow-lg md:shadow-none md:bg-body-200'>
-            <div>
+          <div className='fixed overflow-hidden z-40 md:relative w-full py-5 flex flex-row-reverse justify-between items-center  m-0 shadow-lg md:shadow-none md:bg-dark-400 bg-dark-200'>
+            <div  >
               <Link to={`/`}>
                 <span className={styled.title}>
                   <h1 className='text-4xl sm:text-6xl font-semibold pr-4'>{import.meta.env.VITE_NAME_OF_COMPANY} </h1>
@@ -60,10 +60,18 @@ function Menu({ context }: any) {
               </Link>
             </li>
             <li className='px-4 border-r-2 border-body-200' id='home'>
-              <Link to={`/dashboard`}>
+              <Link to={`/account`}>
                 <span className='px-2'>Account</span>
                 <span>
                   <i className='fal fa-user w-8'></i>
+                </span>
+              </Link>
+            </li>
+            <li className='px-4 border-r-2 border-body-200' id='home'>
+              <Link to={`/dashboard`}>
+                <span className='px-2'>Dashboard</span>
+                <span>
+                  <i className='fal fa-desktop w-8'></i>
                 </span>
               </Link>
             </li>

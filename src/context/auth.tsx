@@ -38,6 +38,7 @@ export function AuthProvider({ children }: any) {
     open,
     setOpen: setOpen,
     restricted,
+    setRestriction
   };
 
   return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;
@@ -76,4 +77,5 @@ interface AuthContextType {
   open: any;
   setOpen: Function;
   restricted: any;
+  setRestriction: Function;
 }
