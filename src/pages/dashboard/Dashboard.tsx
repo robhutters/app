@@ -4,13 +4,7 @@ import { useAuth } from '../../context/Auth';
 import getProfile from '../../helpers/getProfile';
 import { AuthContext } from '../../context/Auth';
 import Layout from '../Layout';
-
-
-interface IProfile {
-  username: string | null;
-  website: string | null;
-  avatar_url: string | null;
-}
+import IProfile from '../../interfaces/IProfile';
 
 export function Dashboard() {
   // Get current user and signOut function from context
@@ -50,8 +44,8 @@ export function Dashboard() {
       <section  className='flex flex-col px-6 max-w-xl mx-auto' >
 
         <main className=' border-2'>
-          <p>Welkom, {profile?.username}!</p>
-
+          <p>Welcome, {profile?.username}!</p>
+          <p>Your user id is {user.id}</p>
       
 
           <button onClick={handleSignOut}>Sign out</button>

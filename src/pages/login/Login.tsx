@@ -38,7 +38,7 @@ export function Login() {
       <React.Fragment>
         <Layout context={menu}>
 
-        <p>Check je email voor inloglink. Je kan dit venster veilig sluiten.</p>
+        <p>Check your email for login link. You may safely close this window / tab.</p>
 
         </Layout>
     </React.Fragment>
@@ -59,7 +59,7 @@ export function Login() {
   
   
             <p className="mt-6">
-              Heb je nog geen account? <Link to='/signup'>Sign up</Link>
+              Don't have an account yet? <Link to='/signup'>Sign up</Link>
             </p>
           </main>
         </section>

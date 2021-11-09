@@ -9,10 +9,9 @@ interface IProfile {
   website: string | null;
   avatar_url: string | null;
 }
-import {useHistory} from 'react-router-dom'
 
 function Home() {
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
   const [profile, setProfile] = useState<IProfile>({
     username: null,
     website: null,
@@ -20,9 +19,6 @@ function Home() {
   } as IProfile);
 
   const menu = useContext(AuthContext);
-
-
-  // const history = useHistory();
 
   useEffect(() => {
     (async function () {
@@ -34,10 +30,10 @@ function Home() {
   }, []); 
   
   return (
-    <Layout context={menu} style={{ padding: '50px 25px 100px 25px' }}>
+    <Layout context={menu} >
       <section className="px-6">
         <p>Layout ...</p>
-        <p>Gebruiker ingelogd? {user.id} Naam: {profile.username}</p>
+        <p>User logged in? {user.id} Name: {profile.username}</p>
       </section>
     </Layout>
   );
