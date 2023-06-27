@@ -1,6 +1,6 @@
 /* Init Tailwind */
 
-/* ! tailwindcss v2.2.17 | MIT License | https://tailwindcss.com */
+/* ! tailwindcss v2.2.19 | MIT License | https://tailwindcss.com */
 
 /*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
 
@@ -649,6 +649,11 @@ video {
   margin: 0px;
 }
 
+.my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -668,10 +673,6 @@ video {
 
 .mt-20 {
   margin-top: 5rem;
-}
-
-.mt-6 {
-  margin-top: 1.5rem;
 }
 
 .block {
@@ -706,16 +707,8 @@ video {
   width: 24rem;
 }
 
-.min-w-full {
-  min-width: 100%;
-}
-
 .max-w-xl {
   max-width: 36rem;
-}
-
-.max-w-full {
-  max-width: 100%;
 }
 
 .-translate-x-full {
@@ -780,9 +773,9 @@ video {
   border-color: rgba(255, 255, 255, var(--tw-border-opacity));
 }
 
-.bg-dark-200 {
+.bg-white {
   --tw-bg-opacity: 1;
-  background-color: rgba(16, 16, 16, var(--tw-bg-opacity));
+  background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
 }
 
 .bg-red-600 {
@@ -832,6 +825,16 @@ video {
   padding-right: 1.5rem;
 }
 
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.px-24 {
+  padding-left: 6rem;
+  padding-right: 6rem;
+}
+
 .pr-4 {
   padding-right: 1rem;
 }
@@ -844,8 +847,16 @@ video {
   padding-bottom: 1rem;
 }
 
+.pt-10 {
+  padding-top: 2.5rem;
+}
+
 .text-left {
   text-align: left;
+}
+
+.text-center {
+  text-align: center;
 }
 
 .text-right {
@@ -876,6 +887,11 @@ video {
 
 .tracking-wider {
   letter-spacing: 0.05em;
+}
+
+.text-black {
+  --tw-text-opacity: 1;
+  color: rgba(0, 0, 0, var(--tw-text-opacity));
 }
 
 .no-underline {
@@ -925,14 +941,14 @@ article p {
   --color-button: #cb742b;
   --color-blockquote: #cb742b;
   --color-body: #aafcb8;
-  --color-title: rgb(242, 243, 247);
+  --color-title: #000;
   --color-paragraphs: #000000 ;
   --color-tile: #303236;
-  --color-menu: #0e0f11;
+  --color-menu: #fff;
   --color-tile-border: #272a2f;
-  --color-text: #ffffff;
-  --color-title: #ffffff;
-  --color-body-alt: #0e0f11;
+  --color-text: #000;
+  --color-title: #000;
+  --color-body-alt: #fff;
   --color-body-highlight: rgba(35, 38, 43, 0.8);
   --color-emphasis: #cb742b;
   --base-font-family: 'Proxima Nova', sans-serif !important;
@@ -978,12 +994,8 @@ html, body {
 }
 
 body {
-  background-color: #0e0f11;
+  background-color: #fff;
   background-color: var(--color-body-alt);
-}
-
-* {
-  color: white;
 }
 
 article p {
@@ -1068,16 +1080,16 @@ button {
 }
 
 nav {
-  color: #ffffff;
+  color: #000;
   color: var(--color-text);
-  background-color: #0e0f11;
+  background-color: #fff;
   background-color: var(--color-menu);
 }
 
 blockquote {
   font-family: 'Proxima Nova', sans-serif;
   font-family: var(--base-font-family);
-  border-left: 8px solid #ffffff;
+  border-left: 8px solid #000;
   border-left: 8px solid var(--color-text);
   font-style: italic;
   padding: 1rem;
@@ -1120,7 +1132,7 @@ h1 {
   font-family: var(--header-font-family);
   line-height: 1.1;
   letter-spacing: 1px;
-  color: #ffffff;
+  color: #000;
   color: var(--color-title);
   text-decoration: none;
   -webkit-font-smoothing: antialiased;
@@ -1143,7 +1155,7 @@ h2 {
   font-family: 'abolition', sans-serif;
   font-family: var(--header-font-family);
   letter-spacing: 2px;
-  color: #ffffff;
+  color: #000;
   color: var(--color-title);
 }
 
@@ -1164,7 +1176,7 @@ h3 {
   font-family: 'abolition', sans-serif;
   font-family: var(--header-font-family);
   letter-spacing: 2px;
-  color: #ffffff;
+  color: #000;
   color: var(--color-title);
 }
 
@@ -1185,7 +1197,7 @@ h4 {
   font-family: 'abolition', sans-serif;
   font-family: var(--header-font-family);
   letter-spacing: 2px;
-  color: #ffffff;
+  color: #000;
   color: var(--color-title);
 }
 
@@ -1223,7 +1235,7 @@ h1,
 h2,
 h3,
 h4 {
-  color: #ffffff;
+  color: #000;
   color: var(--color-title);
 }
 
@@ -1255,7 +1267,7 @@ p > img {
 }
 
 footer {
-  background-color: #0e0f11;
+  background-color: #fff;
   background-color: var(--color-menu);
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25), 0 0 10px rgba(0, 0, 0, 0.22);
   height: auto;
@@ -1333,11 +1345,6 @@ button {
 
   .md\:justify-end {
     justify-content: flex-end;
-  }
-
-  .md\:bg-dark-400 {
-    --tw-bg-opacity: 1;
-    background-color: rgba(14, 15, 17, var(--tw-bg-opacity));
   }
 
   .md\:px-6 {

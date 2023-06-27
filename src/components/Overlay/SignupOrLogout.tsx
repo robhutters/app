@@ -28,12 +28,7 @@ const SignupOrLogout = ({ context }: any, props: any) => {
             <i className='far fa-desktop w-8'></i>
           </span>
         </Link>
-        <Link to={'/logout'} tabIndex={tabIndex} onClick={handleClick} className='px-4 uppercase pt-8 pb-4 font-bold tracking-wider no-underline  transition-colors duration-300 ease-linear border-b-2 border-white'>
-          <span className='px-2'>log uit</span>
-          <span aria-hidden='true'>
-            <i className='far fa-sign-out-alt w-8'></i>
-          </span>
-        </Link>
+        
       </>
     );
   } else {
@@ -48,7 +43,7 @@ const SignupOrLogout = ({ context }: any, props: any) => {
         <Link to={'/signup'} tabIndex={tabIndex} onClick={handleClick} className='px-4 uppercase pt-8 pb-4 font-bold tracking-wider no-underline  transition-colors duration-300 ease-linear border-b-2 border-white'>
           <span className='px-2'>signup</span>
           <span aria-hidden='true'>
-            <i className='far fa-user w-8'></i>
+            <i className='far fa-user-plus w-8'></i>
           </span>
         </Link>
       </>

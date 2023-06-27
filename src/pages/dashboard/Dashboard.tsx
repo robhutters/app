@@ -6,6 +6,10 @@ import { AuthContext } from '../../context/Auth';
 import Layout from '../Layout';
 import IProfile from '../../interfaces/IProfile';
 
+/* 
+  React.memo is a higher-order component that renders the component only if props are changed.
+*/
+
 export function Dashboard() {
   // Get current user and signOut function from context
   const { user, signOut } = useAuth();

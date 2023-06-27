@@ -14,20 +14,17 @@ interface accountData {
 export default function Account({ user }: any) {
   const [loading, setLoading] = useState<boolean>(true);
   const [accountData, setData] = useState<accountData>({
-    username: 'person',
+    username: '',
     website: '',
     avatar_url: '',
   });
+  const [providerData, setProviderData] = useState<any>(null)
   const history = useHistory()
 
   const menu = useContext(AuthContext);
 
   const setUsername = (u: string) => {
     setData((data) => ({ ...data, username: u }));
-  };
-
-  const setWebsite = (w: string) => {
-    setData((data) => ({ ...data, website: w }));
   };
 
   useEffect(() => {
@@ -41,16 +38,35 @@ export default function Account({ user }: any) {
     try {
       setLoading(true);
 
-      let { data, error, status } = await supabase.from('profiles').select(`username, website, avatar_url`).eq('id', user.id).single();
 
-      if (error && status !== 406) {
-        throw error;
-      }
+      let User = await supabase.auth.user()
 
-      data && setData(data);
-      if (data) {
-        setData(data);
-      }
+      if (User !== null) {
+        console.log('Checking logged in user ...')
+        console.log(User)
+      
+        if (User.app_metadata.provider === 'email') {
+            let { data, error, status } = await supabase.from('profiles').select(`username, website, avatar_url`).eq('id', user.id).single();
+
+          if (error && status !== 406) {
+            throw error;
+          }
+
+          if (status === 406) {
+            alert('Please complete your profile.')
+          }
+    
+          data && setData(data);
+          if (data) {
+            setData(data);
+          }
+        } else {
+          setProviderData(User)
+        }
+
+      } 
+
+     
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message);
@@ -74,13 +90,19 @@ export default function Account({ user }: any) {
           updated_at: new Date(),
         };
 
-        let { error } = await supabase.from('profiles').upsert(updates, {
+        let { error, status } = await supabase.from('profiles').upsert(updates, {
           returning: 'minimal', // Don't return the value after inserting
         });
+
+        if(status === 400) {
+          alert('Operation not allowed.')
+        }
 
         if (error) {
           throw error;
         }
+
+       
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -102,15 +124,18 @@ export default function Account({ user }: any) {
 
 
       if (confirmation) {
-        const { error } = await supabase
-        .from('profiles')
-        .delete()
-        .match({ id: user.id })
+        // const { data, error} = await supabase.rpc('delete_user')
+        const { data,error } = await supabase.from('profiles').delete().match({ id: user.id})
 
+
+        console.log(data)
         if (error) {
+          console.log(error)
+
           throw error;
         } else {
           alert('Account successfully deleted. Redirecting you to home page in 3 seconds')
+          supabase.auth.signOut()
           setTimeout(() => {
             history.push('/')
           }, 3000)
@@ -128,6 +153,8 @@ export default function Account({ user }: any) {
     
   }
 
+  /* This is a PUBLIC profile */
+
   return (
     <Layout context={menu}>
        <div className='form-widget flex flex-col px-6 max-w-xl mx-auto'>
@@ -137,12 +164,9 @@ export default function Account({ user }: any) {
       </div>
       <div>
         <label htmlFor='username'>Name</label>
-        <input id='username' type='text' value={accountData.username} onChange={(e) => setUsername(e.target.value)} />
+        <input id='username' type='text' value={providerData !== null ? providerData.identities[0].identity_data.full_name : accountData.username} onChange={(e) => setUsername(e.target.value)} />
       </div>
-      <div>
-        <label htmlFor='website'>Website</label>
-        <input id='website' type='website' value={accountData.website} onChange={(e) => setWebsite(e.target.value)} />
-      </div>
+      
 
       <div>
         <button className='button block primary' onClick={() => updateProfile(accountData)} disabled={loading}>

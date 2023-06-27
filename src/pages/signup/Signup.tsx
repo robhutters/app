@@ -1,6 +1,7 @@
-import { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { useAuth } from '../../context/Auth';
+import { AuthContext, useAuth } from '../../context/Auth';
+import Layout from '../Layout';
 
 export function Signup() {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -9,6 +10,8 @@ export function Signup() {
   const { signUp } = useAuth();
 
   const history = useHistory();
+
+  const menu = useContext(AuthContext);
 
   async function handleSubmit(e: any) {
     e.preventDefault();
@@ -32,24 +35,35 @@ export function Signup() {
   }
 
   return (
-    <>
+    <React.Fragment> 
+
+<Layout context={menu}>
+<section className='flex flex-row justify-center '>
+          <main className='flex flex-col w-96'>
       <form onSubmit={handleSubmit}>
-        <label htmlFor='input-email'>Email</label>
-        <input id='input-email' type='email' ref={emailRef} />
+       <label htmlFor='input-email'>Email</label>
+       <input id='input-email' type='email' ref={emailRef} />
 
-        <label htmlFor='input-password'>Password</label>
-        <input id='input-password' type='password' ref={passwordRef} />
+        
 
-        <br />
+       <label htmlFor='input-password'>Password</label>
+       <input id='input-password' type='password' ref={passwordRef} />
 
-        <button type='submit'>Sign up</button>
-      </form>
+       <br />
 
-      <br />
+       <button type='submit'>Sign up</button>
+     </form>
 
-      <p>
-        Already have an account? <Link to='/login'>Log In</Link>
-      </p>
-    </>
+     <br />
+
+     <p>
+       Already have an account? <Link to='/login'><strong>Log in</strong></Link>
+     </p>
+     </main>
+     </section>
+
+    </Layout>
+    </React.Fragment>
+    
   );
 }
