@@ -938,7 +938,7 @@ article p {
 
 :root {
   --color-hyperlinks: #cb742b;
-  --color-button: #cb742b;
+  --color-button: #fff;
   --color-blockquote: #cb742b;
   --color-body: #aafcb8;
   --color-title: #000;
@@ -1072,7 +1072,7 @@ input:disabled {
 }
 
 button {
-  background-color: #cb742b;
+  background-color: #fff;
   background-color: var(--color-button);
   border-radius: 5px;
   font-family: 'Proxima Nova', sans-serif;
@@ -1293,7 +1293,6 @@ button {
   font-size: 0.9em;
   font-weight: bold;
   border: none;
-  color: #f2f2f2;
   transition: 0.4s;
   text-transform: uppercase;
   cursor: pointer;
