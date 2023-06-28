@@ -940,7 +940,6 @@ article p {
   --color-hyperlinks: #cb742b;
   --color-button: #fff;
   --color-blockquote: #cb742b;
-  --color-body: #aafcb8;
   --color-title: #000;
   --color-paragraphs: #000000 ;
   --color-tile: #303236;
@@ -949,7 +948,6 @@ article p {
   --color-text: #000;
   --color-title: #000;
   --color-body-alt: #fff;
-  --color-body-highlight: rgba(35, 38, 43, 0.8);
   --color-emphasis: #cb742b;
   --base-font-family: 'Proxima Nova', sans-serif !important;
   --header-font-family: 'abolition', sans-serif !important;

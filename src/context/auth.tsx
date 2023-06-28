@@ -11,28 +11,48 @@ export function AuthProvider({ children }: any) {
 
   useEffect(() => {
     // Check active sessions and sets the user
-    const session = supabase.auth.session();
+   
 
-    setUser(session?.user ?? null);
-    setLoading(false);
-    setRestriction(true);
+      const fetchUser = async () => {
+        
+        const { data, error } =  await supabase.auth.getSession();
+        const { session } = data 
+       
+        setUser(session?.user ?? null);
+        setLoading(false);
+        setRestriction(true);
+  
+         // Listen for changes on auth state (logged in, signed out, etc.)
+      const { data: authListener } = supabase.auth.onAuthStateChange((event, _session) => {
+        setUser(_session?.user ?? null);
+        
+        setRestriction(false);
+        setLoading(false);
+      });
+  
+    
+  
+      return () => {
+        authListener?.subscription.unsubscribe()
+      };
+      }
+     
 
-    // Listen for changes on auth state (logged in, signed out, etc.)
-    const { data: listener } = supabase.auth.onAuthStateChange(async (event, session) => {
-      setUser(session?.user ?? null);
-      setRestriction(false);
-      setLoading(false);
-    });
+     try {
+      fetchUser()
+     } catch (err) {
+      console.error(err)
+     }
 
-    return () => {
-      listener?.unsubscribe();
-    };
+
+
+   
   }, []);
 
   // Will be passed down to Signup, Login and Dashboard components
   const value = {
     signUp: (data: any) => supabase.auth.signUp(data),
-    signIn: (data: any) => supabase.auth.signIn(data),
+    signIn: (data: any) => supabase.auth.signInWithOtp(data),
     signOut: () => supabase.auth.signOut(),
     user,
     open,

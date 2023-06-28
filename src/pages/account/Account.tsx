@@ -39,30 +39,30 @@ export default function Account({ user }: any) {
       setLoading(true);
 
 
-      let User = await supabase.auth.user()
+      let User = await supabase.auth.getUser()
 
       if (User !== null) {
         console.log('Checking logged in user ...')
         console.log(User)
       
-        if (User.app_metadata.provider === 'email') {
-            let { data, error, status } = await supabase.from('profiles').select(`username, website, avatar_url`).eq('id', user.id).single();
+        // if (User.app_metadata.provider === 'email') {
+        //     let { data, error, status } = await supabase.from('profiles').select(`username, website, avatar_url`).eq('id', user.id).single();
 
-          if (error && status !== 406) {
-            throw error;
-          }
+        //   if (error && status !== 406) {
+        //     throw error;
+        //   }
 
-          if (status === 406) {
-            alert('Please complete your profile.')
-          }
+        //   if (status === 406) {
+        //     alert('Please complete your profile.')
+        //   }
     
-          data && setData(data);
-          if (data) {
-            setData(data);
-          }
-        } else {
-          setProviderData(User)
-        }
+        //   data && setData(data);
+        //   if (data) {
+        //     setData(data);
+        //   }
+        // } else {
+        //   setProviderData(User)
+        // }
 
       } 
 
@@ -79,28 +79,28 @@ export default function Account({ user }: any) {
   async function updateProfile({ username, website, avatar_url }: accountData) {
     try {
       setLoading(true);
-      const user = supabase.auth.user();
+      const user = supabase.auth.getUser();
 
       if (user !== null) {
         const updates = {
-          id: user.id,
+          // id: user.id,
           username,
           website,
           avatar_url,
           updated_at: new Date(),
         };
 
-        let { error, status } = await supabase.from('profiles').upsert(updates, {
-          returning: 'minimal', // Don't return the value after inserting
-        });
+        // let { error, status } = await supabase.from('profiles').upsert(updates, {
+        //   returning: 'minimal', // Don't return the value after inserting
+        // });
 
-        if(status === 400) {
-          alert('Operation not allowed.')
-        }
+        // if(status === 400) {
+        //   alert('Operation not allowed.')
+        // }
 
-        if (error) {
-          throw error;
-        }
+        // if (error) {
+        //   throw error;
+        // }
 
        
       }

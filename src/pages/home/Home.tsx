@@ -20,18 +20,20 @@ function Home() {
   } as IProfile);
 
   
-
-  const userT = supabase.auth.user()
-  console.log(userT)
   const menu = useContext(AuthContext);
 
   useEffect(() => {
+  
+   if (user !== null) {
     (async function () {
       const profile = await getProfile();
       if (profile !== undefined) {
         setProfile(profile);
       }
     })();
+   } 
+
+    
   }, []); 
   
  if (user !== null && profile !== null) {
