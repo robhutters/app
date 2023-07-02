@@ -1,5 +1,5 @@
 export default interface IProfile {
   username: string | null;
-  website: string | null;
-  avatar_url: string | null;
+  first_name: string | null;
+  last_name: string | null;
 }

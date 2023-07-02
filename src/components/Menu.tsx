@@ -38,7 +38,7 @@ function Menu({ context }: any) {
     <>
       <header className='md:col-span-1 md:flex md:justify-end '>
         <nav className='text-right relative'>
-          <div className='fixed overflow-hidden z-40 md:relative w-full py-5 flex flex-row-reverse justify-between items-center  m-0 shadow-lg md:shadow-none '>
+          <div className='sticky overflow-hidden z-40 md:relative w-full py-5 flex flex-row-reverse justify-between items-center  m-0 shadow-lg md:shadow-none '>
             <div  >
               <Link to={`/`}>
                 <span className={styled.title}>

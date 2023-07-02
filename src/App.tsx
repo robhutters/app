@@ -5,7 +5,7 @@ import NoMatch from './pages/NoMatch';
 import { Signup } from './pages/signup/Signup';
 import { Login } from './pages/login/Login';
 import { Dashboard } from './pages/dashboard/Dashboard';
-import Account from './pages/account/Account';
+import { Account } from './pages/account/Account';
 import { AuthProvider } from './context/Auth';
 import { PrivateRoute } from './PrivateRoute';
 
@@ -17,6 +17,7 @@ function App() {
           <Switch>
             <Route exact path='/' component={Home} />
             <Route path='/login' component={Login} />
+            <Route path='/signup' component={Signup} />
             <PrivateRoute exact path='/dashboard' component={Dashboard} />
             <PrivateRoute exact path='/account' component={Account} />
 

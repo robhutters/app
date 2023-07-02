@@ -1,5 +1,6 @@
 import { createContext, useState, useContext, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
+import AuthContextType from '../interfaces/AuthContextType';
 
 export const AuthContext = createContext({});
 
@@ -52,7 +53,8 @@ export function AuthProvider({ children }: any) {
   // Will be passed down to Signup, Login and Dashboard components
   const value = {
     signUp: (data: any) => supabase.auth.signUp(data),
-    signIn: (data: any) => supabase.auth.signInWithOtp(data),
+    signInMagic: (data: any) => supabase.auth.signInWithOtp(data),
+    signIn: (email: string, password: string) => supabase.auth.signInWithPassword({ email, password}),
     signOut: () => supabase.auth.signOut(),
     user,
     open,
@@ -70,32 +72,4 @@ export function useAuth() {
   return useContext(AuthContext) as AuthContextType;
 }
 
-interface IUser {
-  app_metadata: { provider: string };
-  aud: string;
-  confirmation_sent_at: string;
-  confirmed_at: string;
-  created_at: string;
-  email: string;
-  email_change_confirm_status: number;
-  email_confirmed_at: string;
-  id: string;
-  invited_at: string;
-  last_sign_in_at: string;
-  phone: string;
-  recovery_sent_at: string;
-  role: string;
-  updated_at: string;
-  user_metadata: object;
-}
 
-interface AuthContextType {
-  user: IUser;
-  signOut: () => void;
-  signIn: (data: any) => { error: any };
-  signUp: (data: any) => { data: object; user: object; error: any; session: any };
-  open: any;
-  setOpen: Function;
-  restricted: any;
-  setRestriction: Function;
-}

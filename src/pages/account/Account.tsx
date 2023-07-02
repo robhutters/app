@@ -1,189 +1,128 @@
 import { useState, useEffect, useContext } from 'react';
 import { supabase } from '../../supabaseClient';
-import { AuthContext } from '../../context/Auth';
+import { AuthContext, useAuth } from '../../context/Auth';
 import Layout from '../Layout';
-
 import {useHistory} from 'react-router-dom';
 
-interface accountData {
-  username: string;
-  website: string;
-  avatar_url: string;
-}
-
-export default function Account({ user }: any) {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [accountData, setData] = useState<accountData>({
-    username: '',
-    website: '',
-    avatar_url: '',
-  });
-  const [providerData, setProviderData] = useState<any>(null)
+export function Account() {
   const history = useHistory()
-
-  const menu = useContext(AuthContext);
-
-  const setUsername = (u: string) => {
-    setData((data) => ({ ...data, username: u }));
-  };
+  const [loading, setLoading] = useState<boolean>(true);
+  /* useful to create objects with with which to create POST requests  */
+  const [userName, setUserName ] = useState<string>("");
+  const [firstName, setFirstName ] = useState<string>("");
+  const [lastName, setLastName ] = useState<string>("");
+  const context = useContext(AuthContext);
+  /* get user from Auth context */
+  const {user} = useAuth();
 
   useEffect(() => {
-    console.log(user.id);
-   
-    getProfile();
-   
-  }, [user]);
+    (async () => { 
+ 
+        if (user) {      
+          const {data, error} = await supabase.from('profiles').select().eq("user_id", user.id)
+          if (data !== null) {
+            const {username, first_name, last_name} = data[0]
+            setUserName(username)
+            setLastName(last_name)
+            setFirstName(first_name)
+          }
 
-  async function getProfile() {
-    try {
-      setLoading(true);
-
-
-      let User = await supabase.auth.getUser()
-
-      if (User !== null) {
-        console.log('Checking logged in user ...')
-        console.log(User)
-      
-        // if (User.app_metadata.provider === 'email') {
-        //     let { data, error, status } = await supabase.from('profiles').select(`username, website, avatar_url`).eq('id', user.id).single();
-
-        //   if (error && status !== 406) {
-        //     throw error;
-        //   }
-
-        //   if (status === 406) {
-        //     alert('Please complete your profile.')
-        //   }
-    
-        //   data && setData(data);
-        //   if (data) {
-        //     setData(data);
-        //   }
-        // } else {
-        //   setProviderData(User)
-        // }
-
-      } 
-
-     
-    } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message);
-      }
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function updateProfile({ username, website, avatar_url }: accountData) {
-    try {
-      setLoading(true);
-      const user = supabase.auth.getUser();
-
-      if (user !== null) {
-        const updates = {
-          // id: user.id,
-          username,
-          website,
-          avatar_url,
-          updated_at: new Date(),
-        };
-
-        // let { error, status } = await supabase.from('profiles').upsert(updates, {
-        //   returning: 'minimal', // Don't return the value after inserting
-        // });
-
-        // if(status === 400) {
-        //   alert('Operation not allowed.')
-        // }
-
-        // if (error) {
-        //   throw error;
-        // }
-
-       
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message);
-      }
-    } finally {
-      setLoading(false);
-    }
-  }
+          setLoading(false)   
+        } else {
+          history.push('/')
+        }
+        
+    })();
+  }, []);
 
 
-
-  async function deleteProfile({username}:accountData) {
-
+  async function deleteAccount() {
     try {
       setLoading(true)
-      const confirmation = confirm('Are you absolutely sure you want to delete your account? There is no going back!')
+      if (!user) throw new Error('No user')
+      const result = confirm('Are you sure?')
 
-
-
-      if (confirmation) {
-        // const { data, error} = await supabase.rpc('delete_user')
-        const { data,error } = await supabase.from('profiles').delete().match({ id: user.id})
-
-
-        console.log(data)
-        if (error) {
-          console.log(error)
-
-          throw error;
-        } else {
-          alert('Account successfully deleted. Redirecting you to home page in 3 seconds')
-          supabase.auth.signOut()
-          setTimeout(() => {
-            history.push('/')
-          }, 3000)
-        }
+      if (result) {     
+        await supabase.from('profiles').delete().eq("user_id", user.id);      
+        alert('User deleted!')
       }
-     
+    
     } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message);
-      }
+      alert('Error deleting the account!')
+     
     } finally {
       setLoading(false)
+      // Note that you also will force a logout after completing it
+      await supabase.auth.signOut()
+      history.push('/')
     }
-
-    
   }
 
   /* This is a PUBLIC profile */
 
+  const handleSubmit = async (e:any) => {
+    e.preventDefault()
+    try {
+      await supabase.from('profiles').update({
+          username: userName,
+          first_name: firstName,
+          last_name: lastName     
+      }).eq('user_id', user.id)
+      
+     
+        alert('Profile updated successfully!')
+      
+    } catch (err) {
+      alert('Something went wrong!')
+    } 
+    
+  }
+
   return (
-    <Layout context={menu}>
-       <div className='form-widget flex flex-col px-6 max-w-xl mx-auto'>
-      <div>
-        <label htmlFor='email'>Email</label>
-        <input id='email' type='text' value={user.email} disabled />
+    <Layout context={context}>
+      <div className='flex flex-col px-6 max-w-xl mx-auto'>
+       <form onSubmit={handleSubmit} className='form-widget flex flex-col max-w-xl mx-auto' >
+        <div className='py-3'>
+          <label htmlFor='email'>Email</label>
+          <input id='email' type='text' value={user.email} disabled />
+        </div>
+        <div className='py-3'>
+          <label htmlFor='userName'>Gebruikersnaam: {user?.user_metadata.username}</label>
+          
+          <input id='userName' type='text' value={userName} onChange={(e) => setUserName(e.target.value)}  />
+        </div>
+      <div className='py-3'>
+        <label htmlFor='first_name'>Naam: {user?.user_metadata.first_name}</label>
+        
+        <input id='first_name' type='text' value={firstName} onChange={(e) => setFirstName(e.target.value)}  />
       </div>
-      <div>
-        <label htmlFor='username'>Name</label>
-        <input id='username' type='text' value={providerData !== null ? providerData.identities[0].identity_data.full_name : accountData.username} onChange={(e) => setUsername(e.target.value)} />
+
+      <div className='py-3'>
+        <label htmlFor='first_name'>Achternaam: {user?.user_metadata.last_name}</label>
+        
+        <input id='first_name' type='text' value={lastName} onChange={(e) => setLastName(e.target.value)}  />
       </div>
       
 
-      <div>
-        <button className='button block primary' onClick={() => updateProfile(accountData)} disabled={loading}>
+      <div className='py-3'>
+        <button className='button block primary hover:bg-gray-200' disabled={loading}>
           {loading ? 'Loading ...' : 'Update'}
         </button>
       </div>
-
+      </form>
       <div>
-        <button className='button block' onClick={() => supabase.auth.signOut()}>
+        <button className='button block' onClick={async () => {
+          await supabase.auth.signOut() 
+          history.push('/')}}>
           Sign Out
         </button>
       </div>
-      <div>
+     
+      <div className='py-6'>
         <div className="flex flex-row justify-center p-3"><p>
-            This will permanently delete your account. 
+            Delete je account. Je kan dit niet ongedaan maken.
           </p></div>
-      <button className='button block bg-red-600' onClick={() => deleteProfile(accountData)}>
+      <button className='button block bg-red-800 text-white' onClick={() => deleteAccount()}>
           delete
         </button>
       </div>
