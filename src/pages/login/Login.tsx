@@ -3,11 +3,16 @@ import { useAuth } from '../../context/Auth';
 import styled from './Login.module.css';
 import Layout from '../Layout';
 import { AuthContext } from '../../context/Auth';
-import SpotifySignIn from '../../components/SpotifyOAuth/SpotifyOAuth';
+import {useHistory} from 'react-router-dom';
 
 export function Login() {
+  const history = useHistory();
   const emailRef = useRef<HTMLInputElement>(null);
+  const emailRefWithPassword = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+
   const [loading, setLoading] = useState<boolean>(false);
+  // const {user} = useAuth()
 
   /* why useRef?
     'mutable reference'
@@ -19,7 +24,7 @@ export function Login() {
   const [form, setForm] = useState<null|boolean>(false)
   const menu = useContext(AuthContext);
 
-  const { signIn } = useAuth();
+  const { signIn, signInMagic } = useAuth();
 
   async function handleSubmit(e: any) {
    
@@ -28,19 +33,36 @@ export function Login() {
       setLoading(true)
       e.preventDefault();
         // Get email and password input values
-      if (emailRef.current !== null) {
+      if (emailRefWithPassword.current !== null && passwordRef.current !== null) {
        
+        const email = emailRefWithPassword.current.value;
+        const password = passwordRef.current.value;
+
+        // const profile = await supabase.from('profiles').select().eq("user_id", user.id)
+        const { data, error } = await signIn(email, password);
+
+       
+          if (error !== null) {
+            alert('error signing in');
+          } 
+  
+          if (data) {
+            history.push('/account')
+          }
+        
+
+       
+      } else if (emailRef.current !== null) {
         const email = emailRef.current.value;
+         // Calls `signUp` function from the context
+         const { error } = await signInMagic({ email });
 
-        // Calls `signUp` function from the context
-        const { error } = await signIn({ email });
-
-        if (error !== null) {
-          alert('error signing in');
-        } else {
-          
-          setForm(!form)
-        }
+         if (error !== null) {
+           alert('error signing in');
+         } else {
+           
+           setForm(!form)
+         }
       }
 
     } catch (error) {
@@ -78,12 +100,19 @@ export function Login() {
 
             <h1>Welcome!</h1>
            
-          <p className="py-4">You don't need to create an account to use our app. You can sign-in with any of the listed providers below <strong>or</strong> through a magic link!</p>
-            
+           
+           
 
-            <strong className="py-4">Providers</strong>
-            <SpotifySignIn />
-            <p className="px-24 py-4 text-center">&#x2015;</p>
+            <strong className='py-4'>Password</strong>
+            <form id="loginForm" onSubmit={handleSubmit} className={styled.form}>
+              <label htmlFor='input-email'>Email</label>
+              <input id='input-email' type='email' ref={emailRefWithPassword} />
+              <label htmlFor='input-password'>Password</label>
+              <input id='input-password' type='password' ref={passwordRef} />
+              
+              <button type='submit' disabled={loading}>
+              {loading ? 'Logging you in ...' : 'Login'}</button>
+            </form>
        
 
             <strong>Magic Link</strong>
