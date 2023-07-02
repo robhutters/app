@@ -1,10 +1,10 @@
 import { useEffect, useState,useContext } from 'react';
 import { useHistory } from 'react-router';
 import { useAuth } from '../../context/Auth';
-import getProfile from '../../helpers/getProfile';
 import { AuthContext } from '../../context/Auth';
 import Layout from '../Layout';
 import IProfile from '../../interfaces/IProfile';
+import getUserData from '../../helpers/getUserData';
 
 /* 
   React.memo is a higher-order component that renders the component only if props are changed.
@@ -15,8 +15,8 @@ export function Dashboard() {
   const { user, signOut } = useAuth();
   const [profile, setProfile] = useState<IProfile>({
     username: null,
-    website: null,
-    avatar_url: null,
+    last_name: null,
+    first_name: null,
   } as IProfile);
 
   const menu = useContext(AuthContext);
@@ -26,9 +26,11 @@ export function Dashboard() {
 
   useEffect(() => {
     (async function () {
-      const profile = await getProfile();
+      
+      const profile = await getUserData(user.id);
+      console.log(profile)
       if (profile !== undefined) {
-        setProfile(profile);
+        setProfile(profile[0]);
       }
     })();
   }, []);
@@ -48,7 +50,7 @@ export function Dashboard() {
       <section  className='flex flex-col px-6 max-w-xl mx-auto' >
 
         <main className=' border-2'>
-          <p>Welcome, {profile?.username}!</p>
+          <p>Welcome, {profile?.first_name}!</p>
           <p>Your user id is {user.id}</p>
       
 
