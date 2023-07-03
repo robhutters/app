@@ -80,7 +80,7 @@ export function Account() {
 
   return (
     <Layout context={context}>
-      <div className='flex flex-col px-6 max-w-xl mx-auto'>
+      <div className='form-widget flex flex-col max-w-xl mx-auto'>
        <form onSubmit={handleSubmit} className='form-widget flex flex-col max-w-xl mx-auto' >
         <div className='py-3'>
           <label htmlFor='email'>Email</label>
@@ -104,14 +104,15 @@ export function Account() {
       </div>
       
 
-      <div className='py-3'>
+      <div className='py-3 '>
         <button className='button block primary hover:bg-gray-200' disabled={loading}>
           {loading ? 'Loading ...' : 'Update'}
         </button>
       </div>
+      
       </form>
       <div>
-        <button className='button block' onClick={async () => {
+        <button className='button block w-full hover:bg-gray-200' onClick={async () => {
           await supabase.auth.signOut() 
           history.push('/')}}>
           Sign Out
@@ -122,7 +123,7 @@ export function Account() {
         <div className="flex flex-row justify-center p-3"><p>
             Delete je account. Je kan dit niet ongedaan maken.
           </p></div>
-      <button className='button block bg-red-800 text-white' onClick={() => deleteAccount()}>
+      <button className='button block bg-red-800 text-white w-full' onClick={() => deleteAccount()}>
           delete
         </button>
       </div>
