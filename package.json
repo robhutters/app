@@ -27,7 +27,8 @@
     "react-router-dom": "^5.2.0",
     "react-swipeable": "^6.0.1",
     "swr": "^0.3.10",
-    "tailwindcss": "^2.2.7"
+    "tailwindcss": "^2.2.7",
+    "tw-elements": "^1.0.0-beta2"
   },
   "devDependencies": {
     "@types/react": "^17.0.0",

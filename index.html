@@ -11,12 +11,21 @@
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
+    
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-
+    
     <main id="backup" style="padding: 2em 0; display: flex; flex-direction: column; justify-content: center; text-align: center">
-      <div style="margin: auto; padding: 1em 0; color: rgb(20, 14, 14) !important; "><span><i class="black fad fa-spinner fa-2x fa-spin" ></i></span></div>
-      <h1>Even geduld ouwe ...</h1>
+    
+      <section style="padding: 1rem 2rem; width: 600px; margin: auto;">
+        <div class="mb-6 h-1 w-full">
+        
+          <div id="progress" class="h-1 bg-black" style="width: 25%"></div>
+        </div>
+      </section>
+      <script type="module" src="/src/progress-bar.js"></script>
+
+      
       <div style="display: flex; flex-direction: row; justify-content: center">
         <div style="max-width: 20em">
           <img style="max-width: 100% !important; height: auto; display: block" src="img/luiechef-logo-alt-black-transparent.png" alt="" />
