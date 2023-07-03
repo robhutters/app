@@ -1,0 +1,50 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table profiles {
+  id serial [primary key]
+  user_id uuid [ref: - auth.users.id, ref: <> recipes.user_id]
+  username varchar(255)
+  first_name text
+  last_name text
+  email citext
+
+}
+
+Table auth.users {
+  id uuid [primary key]
+  email citext
+}
+
+Table recipes {
+  id serial [primary key] 
+  user_id uuid 
+  created_at timestamp
+  name varchar(255)
+  byline varchar(255)
+  labels text[]
+  description text
+  prepTime integer
+  cookTime integer
+  totalTime integer
+  steps jsonb
+  ingredients jsonb
+  comments jsonb
+  calories integer [ref: - nutrition.id]
+}
+
+
+
+Table nutrition {
+  id integer [primary key]
+  calories integer
+  fats integer
+  saturatedFats integer
+  carbohydrates integer 
+  sugarContent integer
+  fibre integer
+  salt integer
+}
+
+
+
