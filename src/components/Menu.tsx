@@ -7,32 +7,7 @@ import Overlay from './Overlay';
 import MenuSignUpOrLogout from './MenuSignupOrLogout';
 
 function Menu({ context }: any) {
-  let location = useLocation();
-
-  useEffect(() => {
-    const path = location.pathname.split('/')[1];
-    const menu = {};
-
-    const target = document.getElementById('home');
-    if (target === null) return;
-    target.classList.add('border-primary');
-    target.classList.remove('border-body-200');
-
-    for (let key in menu) {
-      if (key === path) {
-        const home = document.getElementById('home');
-        if (home === null) return;
-        home.classList.remove('border-primary');
-        home.classList.add('border-body-200');
-
-        const target = document.getElementById(path);
-        if (target === null) return;
-        target.classList.remove('border-body-200');
-        target.classList.add('border-primary');
-      } else {
-      }
-    }
-  }, [location]);
+ 
 
   return (
     <>

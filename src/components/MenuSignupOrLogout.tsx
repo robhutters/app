@@ -37,6 +37,16 @@ const MenuSignUpOrLogout = ({ context}: any, props: any) => {
                   <i className='fal fa-sign-in-alt w-8 '></i>
                 </span>
               </Link>
+             
+            </li>
+            <li className='px-4 border-r-2 border-body-200 ' id='login'>
+              <Link to={`/signup`}>
+                <span className='px-2 '>Aanmelden</span>
+                <span>
+                  <i className='fal fa-sign-in-alt w-8 '></i>
+                </span>
+              </Link>
+             
             </li>
        
       </React.Fragment>

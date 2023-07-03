@@ -49,7 +49,7 @@ export function Signup() {
         }).eq('user_id', result.data.user.id)
         
         if (error === null) {
-          history.push('/account')
+          history.push('/dashboard')
         } 
       
       } else {

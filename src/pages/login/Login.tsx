@@ -47,7 +47,7 @@ export function Login() {
           } 
   
           if (data) {
-            history.push('/account')
+            history.push('/dashboard')
           }
         
 
