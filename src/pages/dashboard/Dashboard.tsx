@@ -24,6 +24,8 @@ export function Dashboard() {
 
   const [loading, setLoading] = useState<boolean>(false);
 
+  const [steps, setSteps] = useState<number>(0)
+
   const history = useHistory();
 
   useEffect(() => {
@@ -44,6 +46,17 @@ export function Dashboard() {
 
     // Redirects the user to Login page
     history.push('/login');
+  }
+
+  async function addStep() {
+    console.log('Clicked the button!')
+    console.log(steps)
+    const updateSteps = steps + 1
+
+    console.log(updateSteps)
+
+    setSteps(updateSteps)
+    
   }
 
   async function handleSubmit(e:any) {
@@ -78,25 +91,70 @@ export function Dashboard() {
           {/* Change it to display the user ID too 👇*/}
       <section  className='flex flex-col  ' >
 
-        <main className='flex flex-row justify-around'>
-          <section>
-          <p>Welcome, {profile?.first_name}!</p>
+        <main className='flex flex-row justify-around '>
+          <section className=" mx-8">
+          <div className="py-6">
+          <p>Welcome, <strong>{profile?.first_name}</strong>!</p>
           <p>Your user id is {user.id}</p>
-          <button onClick={handleSignOut}>Sign out</button>
+          </div>
+          <button onClick={handleSignOut} className='w-full'>Sign out</button>
           </section>
          
-          <section className="flex flex-col">
+          <section className="flex flex-col max-w-xl">
             <form method="post" id="submitRecipeForm" onSubmit={handleSubmit}>
+                <h1>Voeg een recept toe</h1>
                 <label htmlFor='recipeName'>Geef je recept een naam:</label>
                 <input name='recipeName'  className="my-3" type='text'  />
+
                 <label htmlFor='byline'>Voor onder de titel:</label>
                 <input name='byline' className="my-3" type='text'  />
+
                 <label htmlFor='labels'>Labels (b.v. vegan):</label>
                 <input name='labels' className="my-3" type='text'  />
+
+                <label htmlFor='prepTime' >Voorbereidingstijd:</label>
+                <input name='prepTime' className="my-3" type='text'  />
+
+                <label htmlFor='cookTime' >Kooktijd:</label>
+                <input name='cookTime' className="my-3" type='text'  />
+
+                <label htmlFor='totalTime' >Totale tijd:</label>
+                <input name='totalTime' className="my-3" type='text'  />
+
+                <label htmlFor='calories' >Calorieën:</label>
+                <input name='calories' className="my-3" type='text'  />
+
                 <label htmlFor='description' >Beschrijving:</label>
                 <br />
                 <textarea name='description' className="my-3 w-full border-2 border-black" rows={5}  wrap="soft" />
                 
+                <h1>Beschrijf het kookproces in 4 stappen</h1>
+                <p>Elke stap mag kleinere stapjes bevatten, maar niet meer dan 5.</p>
+
+                <label htmlFor='stepOne' >Naam stap 1:</label>
+                <input name='stepOne' className="my-3" type='text'  />
+
+                <p>Beschrijving stap 1</p>
+                <button disabled={steps > 4} type="button" onClick={addStep}>{ steps < 5? 'Voeg stap toe' : 'Helaas' } </button>
+
+                <label htmlFor='stepTwo' >Naam stap 2:</label>
+                <input name='stepTwo' className="my-3" type='text'  />
+
+                <p>Beschrijving stap 2</p>
+                <button disabled={steps > 4} type="button" onClick={addStep}>{ steps < 5? 'Voeg stap toe' : 'Helaas' } </button>
+
+                <label htmlFor='stepThree' >Naam stap 3:</label>
+                <input name='stepThree' className="my-3" type='text'  />
+
+                <p>Beschrijving stap 3</p>
+                <button disabled={steps > 4} type="button" onClick={addStep}>{ steps < 5? 'Voeg stap toe' : 'Helaas' } </button>
+
+                <label htmlFor='stepFour' >Naam stap 4:</label>
+                <input name='stepFour' className="my-3" type='text'  />
+
+                <p>Beschrijving stap 4</p>
+                <button disabled={steps > 4} type="button" onClick={addStep}>{ steps < 5? 'Voeg stap toe' : 'Helaas' } </button>
+
                 <button type='submit' disabled={loading}>
                 {loading ? 'Loading...' : 'Submit'}</button>
               </form>
