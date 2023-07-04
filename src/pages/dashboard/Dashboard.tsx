@@ -24,7 +24,12 @@ export function Dashboard() {
 
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [steps, setSteps] = useState<number>(0)
+  const [steps, setSteps] = useState<{step1: number; step2: number; step3: number, step4:number;}[]>([{
+    step1: 0,
+    step2: 0,
+    step3: 0,
+    step4: 0
+  }])
 
   const history = useHistory();
 
@@ -48,16 +53,19 @@ export function Dashboard() {
     history.push('/login');
   }
 
-  async function addStep() {
+  async function addStep() {}
+
+  async function addStepButtonOne() {
     console.log('Clicked the button!')
-    console.log(steps)
-    const updateSteps = steps + 1
-
-    console.log(updateSteps)
-
+    const updateSteps = steps.map(object => ({
+      ...object,
+      step1: object.step1 += 1
+    }))
     setSteps(updateSteps)
-    
   }
+
+  
+  
 
   async function handleSubmit(e:any) {
     e.preventDefault()
@@ -135,7 +143,7 @@ export function Dashboard() {
                 <input name='stepOne' className="my-3" type='text'  />
 
                 <p>Beschrijving stap 1</p>
-                <button disabled={steps > 4} type="button" onClick={addStep}>{ steps < 5? 'Voeg stap toe' : 'Helaas' } </button>
+                <button  type="button" name="stepOneButton" onClick={addStepButtonOne}></button>
 
                 <label htmlFor='stepTwo' >Naam stap 2:</label>
                 <input name='stepTwo' className="my-3" type='text'  />
