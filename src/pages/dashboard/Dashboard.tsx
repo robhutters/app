@@ -210,8 +210,8 @@ export function Dashboard() {
           {/* Change it to display the user ID too 👇*/}
       <section  className='flex flex-col  ' >
 
-        <main className='flex flex-row justify-around '>
-          <section className=" mx-8">
+        <main className='flex md:flex-row md:justify-around flex-col'>
+          <section className=" mx-8 py-6 mb-8">
           <div className="py-6">
           <p>Welcome, <strong>{profile?.first_name}</strong>!</p>
           <p>Your user id is {user.id}</p>

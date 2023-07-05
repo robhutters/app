@@ -26,39 +26,45 @@ export function Login() {
 
   const { signIn, signInMagic } = useAuth();
 
+  async function handlePasswordSubmit(e: any) {
+    
+    setLoading(true)
+    e.preventDefault();
+      // Get email and password input values
+    if (emailRefWithPassword.current !== null && passwordRef.current !== null) {
+     
+      const email = emailRefWithPassword.current.value;
+      const password = passwordRef.current.value;
+
+      // const profile = await supabase.from('profiles').select().eq("user_id", user.id)
+      const { data, error } = await signIn(email, password);
+
+     
+        if (error !== null) {
+          alert(error);
+        } 
+
+        if (data) {
+          setLoading(false)
+          history.push('/dashboard')
+        }
+    }
+
+  }
+
   async function handleSubmit(e: any) {
-   
+    e.preventDefault()
 
     try {
-      setLoading(true)
-      e.preventDefault();
-        // Get email and password input values
-      if (emailRefWithPassword.current !== null && passwordRef.current !== null) {
+    
        
-        const email = emailRefWithPassword.current.value;
-        const password = passwordRef.current.value;
-
-        // const profile = await supabase.from('profiles').select().eq("user_id", user.id)
-        const { data, error } = await signIn(email, password);
-
-       
-          if (error !== null) {
-            alert('error signing in');
-          } 
-  
-          if (data) {
-            history.push('/dashboard')
-          }
-        
-
-       
-      } else if (emailRef.current !== null) {
+      if (emailRef.current !== null) {
         const email = emailRef.current.value;
          // Calls `signUp` function from the context
          const { error } = await signInMagic({ email });
 
          if (error !== null) {
-           alert('error signing in');
+           alert(error);
          } else {
            
            setForm(!form)
@@ -104,7 +110,7 @@ export function Login() {
            
 
             <strong className='py-4'>Password</strong>
-            <form id="loginForm" onSubmit={handleSubmit} className={styled.form}>
+            <form id="loginForm" onSubmit={handlePasswordSubmit} className={styled.form}>
               <label htmlFor='input-email'>Email</label>
               <input id='input-email' type='email' ref={emailRefWithPassword} />
               <label htmlFor='input-password'>Password</label>

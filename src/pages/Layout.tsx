@@ -8,7 +8,7 @@ const Layout = ({ children, context }: any) => {
       <Menu context={context} />
 
       <main className={`${OverlayVisible}`}>
-        <section className='mt-32 md:mt-0 '>{children}</section>
+        <section className='md:mt-0 px-4'>{children}</section>
       </main>
     </section>
   );
