@@ -24,12 +24,31 @@ export function Dashboard() {
 
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [steps, setSteps] = useState<{step1: number; step2: number; step3: number, step4:number;}[]>([{
-    step1: 0,
-    step2: 0,
-    step3: 0,
-    step4: 0
+  const [steps, setSteps] = useState<{ [key: string] : number;}[]>([{
+    stap1: 0,
+    stap2: 0,
+    stap3: 0,
+    stap4: 0
   }])
+
+  const [components, setComponent] = useState<any[]>([
+    {
+      stap1: [],
+
+    },
+    {
+      stap2: [],
+
+    },
+    {
+      stap3: [],
+
+    },
+    {
+      stap4: [],
+
+    }
+  ])
 
   const history = useHistory();
 
@@ -53,15 +72,70 @@ export function Dashboard() {
     history.push('/login');
   }
 
-  async function addStep() {}
-
-  async function addStepButtonOne() {
+  async function addStep(e:any) {
+    console.log(components)
+    const name = e.target.name
     console.log('Clicked the button!')
     const updateSteps = steps.map(object => ({
       ...object,
-      step1: object.step1 += 1
+      [name]: object[name] += 1
     }))
     setSteps(updateSteps)
+    console.log(steps)
+
+    let componentsToStore:any = [
+      {
+        stap1: [],
+
+      },
+      {
+        stap2: [],
+
+      },
+      {
+        stap3: [],
+
+      },
+      {
+        stap4: [],
+
+      }
+    ] 
+
+    let componentsToRender
+
+
+
+
+    for (const [key, value] of Object.entries(steps[0])) {
+      console.log(`Key: ${key}, value: ${value}`)
+      for (let i = 0; i < value; i++) {
+      
+        // push a component to an array to handle item rendering
+        
+        
+          const components = componentsToStore.map((itemInArray:any ) => {
+           
+            if (itemInArray.hasOwnProperty(key)) {
+              let components = []
+              for (let i = 0; i < value; i++) { 
+                components.push({ name: [key]})
+               }
+              return {
+                [key]: components
+              } 
+            } else {
+              return itemInArray
+            }
+            
+          })
+          componentsToRender = components
+        
+      }
+    }
+  
+    setComponent(componentsToRender)
+    
   }
 
   
@@ -88,8 +162,21 @@ export function Dashboard() {
     if (error) {
       alert('Error occurred!')
     } else {
+      setSteps([{}])
       alert('Entry uploaded!')
     }
+    
+  }
+
+  function AddItem({name, index} : {name: string, index: number}) {
+    return (
+    <div>
+      <label htmlFor={`${name}-tussenstap-${index + 1}`}>{`${name} - tussenstap ${index + 1}`}</label>
+        <input className="my-3" name={`${name}-tussenstap-${index + 1}`} ></input>
+    </div>
+        
+     
+    )
     
   }
 
@@ -139,29 +226,40 @@ export function Dashboard() {
                 <h1>Beschrijf het kookproces in 4 stappen</h1>
                 <p>Elke stap mag kleinere stapjes bevatten, maar niet meer dan 5.</p>
 
-                <label htmlFor='stepOne' >Naam stap 1:</label>
+                <label htmlFor='stepOne' ><strong>Naam stap 1:</strong></label>
                 <input name='stepOne' className="my-3" type='text'  />
 
                 <p>Beschrijving stap 1</p>
-                <button  type="button" name="stepOneButton" onClick={addStepButtonOne}></button>
+                <button disabled={steps[0].stap1 > 4} type="button" name="stap1" onClick={addStep}>{ steps[0].stap1 < 5? 'Voeg stap toe' : 'Helaas' }</button>
+                <p>{console.log('Rendering ...')}</p>
+               {components[0].stap1.map((itemInArray:any, index:any) => <AddItem key={`${itemInArray.name}-tussenstap-${index + 1}`} index={index} name={itemInArray.name} />)}
 
-                <label htmlFor='stepTwo' >Naam stap 2:</label>
+                <label htmlFor='stepTwo' ><strong>Naam stap 2:</strong></label>
                 <input name='stepTwo' className="my-3" type='text'  />
 
-                <p>Beschrijving stap 2</p>
-                <button disabled={steps > 4} type="button" onClick={addStep}>{ steps < 5? 'Voeg stap toe' : 'Helaas' } </button>
+              
 
-                <label htmlFor='stepThree' >Naam stap 3:</label>
+                <p>Beschrijving stap 2</p>
+                <button disabled={steps[0].stap2 > 4} type="button" name="stap2" onClick={addStep}>{ steps[0].stap2 < 5? 'Voeg stap toe' : 'Helaas' }</button>
+
+                {components[1].stap2.map((itemInArray:any, index:any) => <AddItem key={`${itemInArray.name}-tussenstap-${index + 1}`} index={index} name={itemInArray.name} />)}
+             
+
+                <label htmlFor='stepThree' ><strong>Naam stap 3:</strong></label>
                 <input name='stepThree' className="my-3" type='text'  />
 
                 <p>Beschrijving stap 3</p>
-                <button disabled={steps > 4} type="button" onClick={addStep}>{ steps < 5? 'Voeg stap toe' : 'Helaas' } </button>
+                <button disabled={steps[0].stap3 > 4} type="button" name="stap3" onClick={addStep}>{ steps[0].stap3 < 5? 'Voeg stap toe' : 'Helaas' }</button>
 
-                <label htmlFor='stepFour' >Naam stap 4:</label>
+                {components[2].stap3.map((itemInArray:any, index:any) => <AddItem key={`${itemInArray.name}-tussenstap-${index + 1}`} index={index} name={itemInArray.name} />)}
+
+                <label htmlFor='stepFour' ><strong>Naam stap 4:</strong></label>
                 <input name='stepFour' className="my-3" type='text'  />
 
                 <p>Beschrijving stap 4</p>
-                <button disabled={steps > 4} type="button" onClick={addStep}>{ steps < 5? 'Voeg stap toe' : 'Helaas' } </button>
+                <button disabled={steps[0].stap4 > 4} type="button" name="stap4" onClick={addStep}>{ steps[0].stap4 < 5? 'Voeg stap toe' : 'Helaas' }</button>
+
+                {components[3].stap4.map((itemInArray:any, index:any) => <AddItem key={`${itemInArray.name}-tussenstap-${index + 1}`} index={index} name={itemInArray.name} />)}
 
                 <button type='submit' disabled={loading}>
                 {loading ? 'Loading...' : 'Submit'}</button>
