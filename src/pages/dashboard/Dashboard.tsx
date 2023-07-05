@@ -149,14 +149,38 @@ export function Dashboard() {
     const formObject = Object.fromEntries(formData.entries());
     console.log(formObject)
 
+    const stepsArray = [formObject]
+
+    const mutateStepsObject = stepsArray.map(function (item) {
+      return {
+          step1Title: item.stepOne,
+          step2Title: item.stepTwo,
+          step3Title: item.stepThree,
+          step4Title: item.stepFour,
+          step1IntermediateSteps: [item["stap1-tussenstap-1"], item["stap1-tussenstap-2"], item["stap1-tussenstap-3"],item["stap1-tussenstap-4"],item["stap1-tussenstap-5"]],
+          step2IntermediateSteps: [item["stap2-tussenstap-1"], item["stap2-tussenstap-2"], item["stap2-tussenstap-3"],item["stap2-tussenstap-4"],item["stap2-tussenstap-5"]],
+          step3IntermediateSteps: [item["stap3-tussenstap-1"], item["stap3-tussenstap-2"], item["stap3-tussenstap-3"],item["stap3-tussenstap-4"],item["stap3-tussenstap-5"]],
+          step4IntermediateSteps: [item["stap4-tussenstap-1"], item["stap4-tussenstap-2"], item["stap4-tussenstap-3"],item["stap4-tussenstap-4"],item["stap4-tussenstap-5"]],
+          
+      }
+  })
+
+    const steps = mutateStepsObject[0]
+
     const { error } = await supabase
     .from('recipes')
     .insert({
       user_id: user.id,
+      steps: steps,
       recipename: formObject.recipeName,
       byline: formObject.byline,
       labels: [formObject.labels],
-      description: formObject.description
+      description: formObject.description,
+      cookTime: formObject.cookTime,
+      prepTime: formObject.prepTime,
+      totalTime: formObject.totalTime,
+      calories: formObject.calories
+      
     })
 
     if (error) {
