@@ -5,6 +5,7 @@ import { AuthContext,useAuth } from '../../context/Auth';
 import getUserData from '../../helpers/getUserData';
 import IProfile from '../../interfaces/IProfile';
 import {useSwipeable} from 'react-swipeable'
+import { Link } from 'react-router-dom';
 
 function Home() {
   const { user } = useAuth();
@@ -61,10 +62,27 @@ function Home() {
   };
 
   const RecipeSlider = ({ recipes }) => {
+    const [activeIndex, setActiveIndex] = useState(0);
+
     const handlers = useSwipeable({
-      onSwiped: (eventData) => console.log("User Swiped!", eventData),
+      onSwipedLeft: (eventData) =>{
+        console.log("User Swiped left!", eventData)
+        setActiveIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+      },
+      onSwipedRight: (eventData) => {
+        console.log("User swiped right!", eventData)
+        setActiveIndex((prevIndex) =>
+        Math.min(prevIndex + 1, recipes.length - 1)
+      );
+      }
     });
-    return <div {...handlers}> You can swipe here </div>;
+
+    const currentRecipe = recipes[activeIndex];
+
+    
+    return <div {...handlers}> 
+      <RecipeCard recipe={currentRecipe} />
+    </div>;
   
     
   };
@@ -73,10 +91,13 @@ function Home() {
  if (user !== null && profile !== null) {
   return (
     <Layout context={menu} >
-      <section className="px-6">
+      <section className="px-6 mb-8">
         <p><strong>User logged in?</strong> {user.id} </p>
-        <p><strong>Name:</strong> { profile.first_name !== null && profile.first_name.length !== 0 ? `${profile.first_name}` : 'Profile details missing.' }</p>
+        <p><strong>Name:</strong> { profile.first_name !== null && profile.first_name.length !== 0 ? `${profile.first_name}` : `Profile details missing. Please update account.` }</p>
+        
+        
       </section>
+      
       <h1>Swiiiiiipe</h1>
       <section>
       <RecipeSlider recipes={recipes} />
