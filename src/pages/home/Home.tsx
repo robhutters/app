@@ -4,8 +4,7 @@ import Layout from '../Layout';
 import { AuthContext,useAuth } from '../../context/Auth';
 import getUserData from '../../helpers/getUserData';
 import IProfile from '../../interfaces/IProfile';
-import {useSwipeable} from 'react-swipeable'
-import { Link } from 'react-router-dom';
+import {useSwipeable} from 'react-swipeable';
 import { supabase } from '../../supabaseClient';
 
 function Home() {
@@ -124,6 +123,7 @@ function Home() {
   
   
  if (user !== null && profile !== null) {
+  console.log(databaseData)
   return (
     <Layout context={menu} >
       <section className="px-6 mb-8">
@@ -135,7 +135,7 @@ function Home() {
       
       <h1>Swiiiiiipe</h1>
       <section>
-      <RecipeSlider recipes={dataFromDatabaseForm} />
+      <RecipeSlider recipes={databaseData} />
       </section>
     </Layout>
   );
