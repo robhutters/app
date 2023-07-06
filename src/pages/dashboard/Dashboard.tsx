@@ -171,7 +171,7 @@ export function Dashboard() {
     .from('recipes')
     .insert({
       user_id: user.id,
-      steps: steps,
+      instructions: steps,
       recipename: formObject.recipeName,
       byline: formObject.byline,
       labels: [formObject.labels],
