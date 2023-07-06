@@ -5,14 +5,14 @@ import { useLocation } from 'react-router-dom';
 import Burger from './Burger';
 import Overlay from './Overlay';
 import MenuSignUpOrLogout from './MenuSignupOrLogout';
-import News from './news/News';
+
 
 function Menu({ context }: any) {
  
 
   return (
     <>
-      <News />
+    
       <header className='md:col-span-1 md:flex md:justify-end '>
         <nav className='text-right relative'>
           <div className='sticky overflow-hidden z-40 md:relative w-full py-5 flex flex-row-reverse justify-between items-center  m-0 shadow-lg md:shadow-none '>
