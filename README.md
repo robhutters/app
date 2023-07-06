@@ -21,3 +21,7 @@ I try to tackle one feature a day (10 minutes to 3 hours), but usually exceed th
 I try to tackle two bugs a day if there are any reported. 
 
 I do not work more than four hours a day because productivity plummets beyond that window. I can think about the project while doing other life stuff. That's how it should be for everyone. 
+
+# Hosted on Netlify 
+
+I have 3 branches, testing, staging, and production. Each branch gets its own deploy on Netlify with their own unique URL.
