@@ -15,18 +15,24 @@ function Home() {
     last_name: null,
   } as IProfile);
 
-  const [databaseData, setDatabaseData] = useState<any[] | null>()
+  const [databaseData, setDatabaseData] = useState<any[] | null | undefined>()
+  const [loading, setLoading] = useState<boolean>(true)
   
   const menu = useContext(AuthContext);
 
   useEffect(() => {
+    (async function () {
+      console.log('fetching data')
+      const {data, error} = await supabase.from('recipes').select()
+    if (!error) {
+      setDatabaseData(data) 
+      setLoading(false)
+    }
+    else alert(error)
+    })()
   
    if (user !== null) {
     (async function () {
-      
-      const {data, error} = await supabase.from('recipes').select()
-      if (!error) setDatabaseData(data)
-      else alert(error)
       
       const profile = await getUserData(user.id);
       if (profile !== undefined) {
@@ -122,32 +128,27 @@ function Home() {
   };
   
   
- if (user !== null && profile !== null) {
-  console.log(databaseData)
-  return (
-    <Layout context={menu} >
-      <section className="px-6 mb-8">
-        <p><strong>User logged in?</strong> {user.id} </p>
-        <p><strong>Name:</strong> { profile.first_name !== null && profile.first_name.length !== 0 ? `${profile.first_name}` : `Profile details missing. Please update account.` }</p>
+
+  if (databaseData !== undefined && loading !== true) {
+    console.log(databaseData)
+    return (
+      <Layout context={menu} >
         
         
-      </section>
-      
-      <h1>Swiiiiiipe</h1>
-      <section>
-      <RecipeSlider recipes={databaseData} />
-      </section>
-    </Layout>
-  );
- } else {
-  return (
-    <Layout context={menu} >
-      <section className="px-6">
-        <p>No user ...</p>
-      </section>
-    </Layout>
-  );
- }
-}
+        <h1>Swiiiiiipe</h1>
+        <section>
+        <RecipeSlider recipes={databaseData} />
+        </section>
+      </Layout>
+    );
+   } else {
+    return (
+      <Layout context={menu}>
+        <p>Loading data ...</p>
+      </Layout>
+    )
+   } 
+  } 
+
 
 export default Home;
