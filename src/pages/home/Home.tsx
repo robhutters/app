@@ -6,6 +6,8 @@ import getUserData from '../../helpers/getUserData';
 import IProfile from '../../interfaces/IProfile';
 import {useSwipeable} from 'react-swipeable';
 import { supabase } from '../../supabaseClient';
+import HomeLayout from './HomeLayout';
+import userOnDesktop from '../../helpers/userOnDesktop';
 
 function Home() {
   const { user } = useAuth();
@@ -17,12 +19,16 @@ function Home() {
 
   const [databaseData, setDatabaseData] = useState<any[] | null | undefined>()
   const [loading, setLoading] = useState<boolean>(true)
+  const [desktop, setDesktop] = useState<boolean | null>(null)
   
   const menu = useContext(AuthContext);
 
   useEffect(() => {
     (async function () {
       console.log('fetching data')
+      const view = await userOnDesktop()
+      if (view === true) setDesktop(true)
+      else setDesktop(false)
       const {data, error} = await supabase.from('recipes').select()
     if (!error) {
       setDatabaseData(data) 
@@ -101,46 +107,57 @@ function Home() {
     );
   };
 
-  const RecipeSlider = ({ recipes } : { recipes: any[]}) => {
-    const [activeIndex, setActiveIndex] = useState(0);
+  const RecipeSlider = ({ recipes } : { recipes: any[] | null}) => {
+    if (recipes !== null) {
+      const [activeIndex, setActiveIndex] = useState(0);
 
-    const handlers = useSwipeable({
-      onSwipedLeft: (eventData) =>{
-        console.log("User Swiped left!", eventData)
-        setActiveIndex((prevIndex) => Math.max(prevIndex - 1, 0));
-      },
-      onSwipedRight: (eventData) => {
-        console.log("User swiped right!", eventData)
-        setActiveIndex((prevIndex) =>
-        Math.min(prevIndex + 1, recipes.length - 1)
-      );
-      }
-    });
-
-    const currentRecipe = recipes[activeIndex];
-
-    
-    return <div {...handlers}> 
+      const handlers = useSwipeable({
+        onSwipedLeft: (eventData) =>{
+          console.log("User Swiped left!", eventData)
+          setActiveIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+        },
+        onSwipedRight: (eventData) => {
+          console.log("User swiped right!", eventData)
+          setActiveIndex((prevIndex) =>
+          Math.min(prevIndex + 1, recipes.length - 1)
+        );
+        }
+      });
+  
+      const currentRecipe = recipes[activeIndex];
+      return <div {...handlers}> 
       <RecipeCard recipe={currentRecipe} />
     </div>;
+    } else {
+      return <div>
+        <p>No valid data found.</p>
+      </div>
+    }
+
+    
+
   
     
   };
   
+ 
   
 
-  if (databaseData !== undefined && loading !== true) {
-    console.log(databaseData)
+  if (databaseData !== undefined && loading !== true && desktop === false) {
+   
     return (
       <Layout context={menu} >
-        
-        
-        <h1>Swiiiiiipe</h1>
-        <section>
-        <RecipeSlider recipes={databaseData} />
-        </section>
+          <RecipeSlider recipes={databaseData} />   
       </Layout>
     );
+   } else if (databaseData !== undefined && loading !== true && desktop === true) {
+     return (
+        <Layout context={menu}>
+          <HomeLayout desktop={desktop}>
+            <p>We are on a desktop.</p>
+          </HomeLayout>
+        </Layout>
+     )
    } else {
     return (
       <Layout context={menu}>
