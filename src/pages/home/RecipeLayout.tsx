@@ -19,7 +19,7 @@ function ImageOrInstructions ({isImage, isView, instructions, trackedStep, setTr
   return (
     <section className='w-[400px]'>
       <div className='flex flex-row justify-end my-4'>
-        <button onClick={() => setTrackedStep(loopTrackedSteps) }>Volgende stap</button>
+        <button onClick={() => setTrackedStep(loopTrackedSteps) } className='btn btn-secondary'>Volgende stap</button>
       </div>
       <h3>{instructions.stepTitle.map((stepName:any, index:number) => {
         if (trackedStep == index) return stepName
@@ -94,12 +94,12 @@ export default function RecipeLayout ({recipe}: {recipe : any}) {
 
           <button disabled={view} className="btn btn-primary w-32" onClick={() => {
             setImage(!image)
-           
+            
           }}>{ image === true && view === false ? 'instructies' : 'foto'}</button>
           <button  className="btn btn-primary w-32" onClick={() => {
             setView(!view)
             setImage(!image)
-          }}>{ view === false && image === false ? 'ingrediënten' : 'terug'}</button>
+          }}>{ view === false && image === true ? 'ingrediënten' : 'terug'}</button>
           <button className="btn btn-primary w-32">Like!</button>
       </div>
     </section>
