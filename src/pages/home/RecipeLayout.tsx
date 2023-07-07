@@ -1,7 +1,7 @@
 import {useState} from 'react'
 
 function ImageOrInstructions ({isImage, isView, instructions, trackedStep, setTrackedStep, ingredients} : {isImage: boolean, instructions: any, trackedStep: any, setTrackedStep: any, ingredients: any, isView: boolean}) {
-  console.log(instructions)
+ 
 
   function loopTrackedSteps (trackedStep:number) {
     

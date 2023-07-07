@@ -1,6 +1,6 @@
 import { useContext, useState,useEffect } from 'react';
 import Layout from '../Layout';
-// import './home.css';
+import './home.css';
 import { AuthContext,useAuth } from '../../context/Auth';
 import getUserData from '../../helpers/getUserData';
 import IProfile from '../../interfaces/IProfile';
@@ -11,6 +11,7 @@ import userOnDesktop from '../../helpers/userOnDesktop';
 import recipesTestObject from '../../helpers/recipesTestObject';
 import {HashLink} from 'react-router-hash-link'
 import RecipeLayout from './RecipeLayout';
+import { data } from 'autoprefixer';
 
 function Home() {
   const { user } = useAuth();
@@ -23,12 +24,13 @@ function Home() {
   const [databaseData, setDatabaseData] = useState<any[] | null | undefined>()
   const [loading, setLoading] = useState<boolean>(true)
   const [desktop, setDesktop] = useState<boolean | null>(null)
+  const [slideNumber, setSlideNumber] = useState<number>(2)
   
   const menu = useContext(AuthContext);
 
   useEffect(() => {
     (async function () {
-      console.log('fetching data')
+   
       const view = await userOnDesktop()
       if (view === true) setDesktop(true)
       else setDesktop(false)
@@ -102,8 +104,20 @@ function Home() {
   
     
   };
-  
+
  
+  
+  function trackSlideView(slideNumber:any, dataSetOfChoice:any, direction: string) {
+    const dataSetSize = dataSetOfChoice.length 
+
+    if (slideNumber < dataSetSize && direction === "next") {
+       setSlideNumber(slideNumber + 1) 
+    } else {
+      setSlideNumber(1)
+    }
+
+    
+  }
   
   const dataSetOfChoice = recipesTestObject // switch between recipesTestObject (fake) or databaseData (real)
 
@@ -122,27 +136,32 @@ function Home() {
         <Layout context={menu}>
           <HomeLayout>
             <h1>Like om naar je favorieten lijstje te sturen</h1>
-            <div className="flex justify-center w-full py-2 gap-2">
-            {dataSetOfChoice !== null ? dataSetOfChoice.map((recipe, index) => {
-                const identifier = index + 1
-              return (
-              
-                  <HashLink smooth to={`/#${identifier.toString()}`} key={index} className="btn btn-xs">{identifier.toString()}</HashLink> 
-                
-              )
-            }) : ''}
-          </div>
+           
           
-
+           
+            <div className='py-4'>
+                <span onClick={() => trackSlideView(slideNumber, dataSetOfChoice, "next")} >
+              <HashLink id="testButton" smooth to={`/#${slideNumber}`} className="btn btn-secondary"><p className='text-2xl'>Volgende</p></HashLink>
+            </span>
+            </div>
+      
+        
+          
+         
+      
             
 
             <div className="carousel w-full">
             {dataSetOfChoice !== null ? dataSetOfChoice.map((recipe,index) => {
-              const identifier = index + 1
-
+              const nextIdentifier = index + 1
+              
               return (
-                    <div id={identifier.toString()} key={index} className="carousel-item w-full "> 
-                     <RecipeLayout recipe={recipe} />
+                    <div id={nextIdentifier.toString()} key={index} className="carousel-item w-full "> 
+                     
+                      {/* <a href="#slide2" className="btn btn-circle">❮</a>  */}
+
+                        <RecipeLayout recipe={recipe} />
+                      {/* <a href="#slide4" className="btn btn-circle">❯</a> */}
                     </div>
                     
               )
