@@ -15,5 +15,5 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [require("tw-elements/dist/plugin.cjs")],
+  plugins: [require('daisyui'), require("tw-elements/dist/plugin.cjs")],
 };

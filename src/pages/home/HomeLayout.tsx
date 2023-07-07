@@ -1,19 +1,17 @@
 export default function HomeLayout (
   { 
-    children, 
-    desktop
+    children
   } 
     : 
   {
-    children: any, 
-    desktop: boolean | null
+    children: any
 
   }) {
   return (
-    <div>
-      <h1>CHECKING</h1>
+    <div >
+      
       {children}
-      <p>{`Value of desktop: ${desktop}`}</p>
+      
     
 
     </div>

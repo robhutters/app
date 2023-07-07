@@ -8,6 +8,9 @@ import {useSwipeable} from 'react-swipeable';
 import { supabase } from '../../supabaseClient';
 import HomeLayout from './HomeLayout';
 import userOnDesktop from '../../helpers/userOnDesktop';
+import recipesTestObject from '../../helpers/recipesTestObject';
+import {HashLink} from 'react-router-hash-link'
+import RecipeLayout from './RecipeLayout';
 
 function Home() {
   const { user } = useAuth();
@@ -50,47 +53,7 @@ function Home() {
     
   }, []); 
 
-  const recipes = [
-    {
-      name: 'Recipe 1',
-      ingredients: ['Ingredient 1', 'Ingredient 2', 'Ingredient 3'],
-      instructions: 'Instructions for Recipe 1',
-    },
-    {
-      name: 'Recipe 2',
-      ingredients: ['Ingredient 4', 'Ingredient 5', 'Ingredient 6'],
-      instructions: 'Instructions for Recipe 2',
-    },
-    // Add more recipes as needed
-  ];
-
-  const dataFromDatabaseForm = [ {
-    id: 1,
-    user_id: 123,  
-    created_at: 'time',
-    name: 'TestRecipe',
-    byline: 'Met room en gehaktballetjes',
-    labels: ['vegan'],
-    description: 'Een onzin gerecht',
-    prepTime: 10,
-    cookTime: 14,
-    totalTime: 24,
-    instructions: {
-      step1Title: 'Step 1 title',
-      step2Title: 'Step 2 title',
-      step3Title: 'Step 3 title',
-      step4Title: 'Step 4 title',
-      step1IntermediateSteps: [],
-      step2IntermediateSteps: [],
-      step3IntermediateSteps: [],
-      step4IntermediateSteps: [],
-    },
-    ingredients: [
-      'bananen', 'aardbeien', 'slagroom'
-    ],
-    comments: [],
-    calories: 1000
-  }]
+  
 
 
   const RecipeCard = ({ recipe } : { recipe: any}) => {
@@ -142,19 +105,50 @@ function Home() {
   
  
   
+  const dataSetOfChoice = recipesTestObject // switch between recipesTestObject (fake) or databaseData (real)
+
 
   if (databaseData !== undefined && loading !== true && desktop === false) {
    
     return (
       <Layout context={menu} >
-          <RecipeSlider recipes={databaseData} />   
+          <h1>Swipe rechts om te liken</h1>
+          <RecipeSlider recipes={dataSetOfChoice} />   
       </Layout>
     );
    } else if (databaseData !== undefined && loading !== true && desktop === true) {
+     
      return (
         <Layout context={menu}>
-          <HomeLayout desktop={desktop}>
-            <p>We are on a desktop.</p>
+          <HomeLayout>
+            <h1>Like om naar je favorieten lijstje te sturen</h1>
+            <div className="flex justify-center w-full py-2 gap-2">
+            {dataSetOfChoice !== null ? dataSetOfChoice.map((recipe, index) => {
+                const identifier = index + 1
+              return (
+              
+                  <HashLink smooth to={`/#${identifier.toString()}`} key={index} className="btn btn-xs">{identifier.toString()}</HashLink> 
+                
+              )
+            }) : ''}
+          </div>
+          
+
+            
+
+            <div className="carousel w-full">
+            {dataSetOfChoice !== null ? dataSetOfChoice.map((recipe,index) => {
+              const identifier = index + 1
+
+              return (
+                    <div id={identifier.toString()} key={index} className="carousel-item w-full "> 
+                     <RecipeLayout recipe={recipe} />
+                    </div>
+                    
+              )
+            }) : ''}
+          </div> 
+         
           </HomeLayout>
         </Layout>
      )

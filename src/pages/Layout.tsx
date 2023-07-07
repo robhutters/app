@@ -5,10 +5,10 @@ const Layout = ({ children, context }: any) => {
   const OverlayVisible = context.open ? 'hidden' : 'md:px-6 py-6';
 
   return (
-    <div className='md:grid md:grid-cols-3'>
+    <div className='md:grid md:grid-cols-4'>
       <Menu context={context} />
      
-      <section className='col-span-2'> 
+      <section className='col-span-3'> 
         <main className={`${OverlayVisible} flex flex-col min-h-screen w-full` }>
           <News />
           <section className='md:mt-0 px-4 flex-grow'>
