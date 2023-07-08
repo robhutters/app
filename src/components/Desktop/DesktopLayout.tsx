@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { trackSlideView } from "../../helpers/trackSlideView"
 import { HashLink } from 'react-router-hash-link'
-import RecipeLayout from "../../pages/home/RecipeLayout"
+import RecipeLayout from "../Recipes/RecipeLayout"
 
 export default function DesktopLayout ( {dataset} : {dataset: any}) {
 

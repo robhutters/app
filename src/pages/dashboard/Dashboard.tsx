@@ -4,6 +4,36 @@ import Layout from '../Layout';
 import { supabase } from '../../supabaseClient';
 import { DashboardLayout } from './DashboardLayout';
 import NewRecipeTestObject from './NewRecipeTestObject';
+import { StepOneComponent } from '../../components/Recipes/instructions/StepOneComponent';
+import { StepTwoComponent } from '../../components/Recipes/instructions/StepTwoComponent';
+import { StepThreeComponent } from '../../components/Recipes/instructions/StepThreeComponent';
+import { StepFourComponent } from '../../components/Recipes/instructions/StepFourComponent';
+
+function RenderView ({props} : {props : any}) {
+  
+  const {view, handleSubmitToDatabase, loading} = props
+
+  if (view.length === 0) {
+    return (<StepOneComponent props={props} />)
+  } else if (view.length === 1){
+    return ( <StepTwoComponent props={props} />)
+  } else if (view.length === 2) {
+    return (<StepThreeComponent props={props} />)
+  } else if (view.length === 3) {
+    return (<StepFourComponent props={props} />)
+  } else {
+    return (
+      <div className='mt-8'>
+        <form method="post" onSubmit={handleSubmitToDatabase} >
+        <h3>Klaar om je recept op te sturen?</h3>
+      <button type='submit' disabled={loading} className='hover:bg-gray-200'>
+        {loading ? 'Loading...' : 'Submit'}</button>
+    </form>
+      </div>
+    )
+  }
+  
+}
 
 /* 
   React.memo is a higher-order component that renders the component only if props are changed.
@@ -14,7 +44,17 @@ export function Dashboard() {
   const [loading, setLoading] = useState<boolean>(false);
   const [intermediateFormData, setIntermediateFormData] = useState<any>()
   const [steps, setSteps] = useState<boolean>(false)
-  const [instructions, setInstructions] = useState<any>()
+  const [instructions, setInstructions] = useState<any[]>([])
+  const [view, setView] = useState<any[]>([])
+
+  const props = {
+    instructions,
+    setInstructions,
+    view,
+    setView,
+    loading,
+    handleSubmitToDatabase
+  }
 
   useEffect(() => {
     /* dev only */
@@ -26,66 +66,17 @@ export function Dashboard() {
   async function handleSubmitToDatabase(e:any) {
     e.preventDefault()
     setLoading(true)
-
-    /* Handle the incoming instructions */
-    const form = e.target;
-    const formData = new FormData(form)
-  
-    const formObject = Object.fromEntries(formData.entries());
-   
-
-    const stepsArray = [formObject]
-
-    const mutateStepsObject = stepsArray.map(function (item) {
-      return {
-          stepTitle: [
-            'Voorbereiding',
-            item.stepTwo,
-            item.stepThree,
-            'Serveren'
-          ],
-          intermediateSteps: [
-            [
-              item["stap1-tussenstap-1"], 
-              item["stap1-tussenstap-2"], 
-              item["stap1-tussenstap-3"],
-              item["stap1-tussenstap-4"]
-            ],
-            [
-            item["stap2-tussenstap-1"], 
-            item["stap2-tussenstap-2"], 
-            item["stap2-tussenstap-3"],
-            item["stap2-tussenstap-4"],
-         
-          ],
-          [
-            item["stap3-tussenstap-1"], 
-            item["stap3-tussenstap-2"], 
-            item["stap3-tussenstap-3"],
-            item["stap3-tussenstap-4"],
-          ],
-          [
-            item["stap4-tussenstap-1"], 
-            item["stap4-tussenstap-2"], 
-            item["stap4-tussenstap-3"],
-
-          ],
-        ] 
-          
-      }
-    })
-
-    const instructions = mutateStepsObject[0]
-    setInstructions(instructions)
-
+    console.log(instructions)
     /* check data saved to state for description of the recipe */
     
-
     const { error } = await supabase
     .from('recipes')
     .insert({
       user_id: user.id,
-      instructions: intermediateFormData.dummy === true ? intermediateFormData.instructions : instructions,
+      instructions: {
+        stepTitle: ['Stap 1: Voorbereiding', 'Stap 2: Koken of bakken', 'Stap 3: Koken of bakken', 'Stap 4: Serveren' ],
+        intermediateSteps: intermediateFormData.dummy === true ? intermediateFormData.instructions : instructions,
+      },
       recipename: intermediateFormData.recipename,
       byline: intermediateFormData.byline,
       labels: intermediateFormData.labels,
@@ -103,6 +94,7 @@ export function Dashboard() {
       alert('Error occurred!')
     } else {
       setLoading(false)
+      setView([])
       alert('Entry uploaded!')
     }
     
@@ -141,66 +133,11 @@ export function Dashboard() {
       <Layout menu={menu}>
         <DashboardLayout>
           <h1>Omschrijving Instructies</h1>
-         
-          <form method="post" onSubmit={handleSubmitToDatabase} >
-            <p>Elk gerecht bestaat uit maximaal vier stappen en een korte reeks instructies. Minimaal 1 instructie per stap.</p>
-            <h3>1. Voorbereiding</h3>
-
-            <label htmlFor="stap1-tussenstap-1">Bijv. snij de ui in halve ringen</label>
-            <input name='stap1-tussenstap-1'  className="my-3" type='text'  />
-            <label htmlFor="stap1-tussenstap-2">Bijv. Verwarm de oven op 200 graden</label>
-            <input name='stap1-tussenstap-2'  className="my-3" type='text'  />
-            <label htmlFor="stap1-tussenstap-3">Bijv. Snij de peen in kleine stukjes</label>
-            <input name='stap1-tussenstap-3'  className="my-3" type='text'  />
-            <label htmlFor="stap1-tussenstap-4">Bijv. Kook water voor de aardappelen</label>
-            <input name='stap1-tussenstap-4'  className="my-3" type='text'  />
-            
-            <h3>2. Bijv. Aardappelen koken</h3>
-
-            <label htmlFor="stepTwo" >Geef in twee woorden een beschrijving van stap 2</label>
-            <input type="text" name="stepTwo" className="my-3"/>
-
-            <label htmlFor="stap2-tussenstap-1">Bijv. schil de aardappelen</label>
-            <input name='stap2-tussenstap-1'  className="my-3" type='text'  />
-            <label htmlFor="stap2-tussenstap-2">Bijv. kook de aardappelen 20 minuten</label>
-            <input name='stap2-tussenstap-2'  className="my-3" type='text'  />
-            <label htmlFor="stap2-tussenstap-3">Meng in een kom: 1/2 extra vierge olijfolie en witte wijnazijn</label>
-            <input name='stap2-tussenstap-3'  className="my-3" type='text'  />
-            <label htmlFor="stap2-tussenstap-4">Meng de peen door het mengsel</label>
-            <input name='stap2-tussenstap-4'  className="my-3" type='text'  />
-
-            <h3>3. Bijv. Kipstukjes bakken</h3>
-            <label htmlFor="stepThree">Geef in twee woorden een beschrijving van stap 3</label>
-            <input type="text" name="stepThree" className="my-3" />
-
-            <label htmlFor="stap3-tussenstap-1">Bijv. verpak de mini-tortilla's in aluminiumfolie</label>
-            <input name='stap3-tussenstap-1'  className="my-3" type='text'  />
-            <label htmlFor="stap3-tussenstap-2">Bijv. halveer de avocado en verwijder de pit</label>
-            <input name='stap3-tussenstap-2'  className="my-3" type='text'  />
-            <label htmlFor="stap3-tussenstap-3">Bijv. Snijd de witte kaas in blokjes</label>
-
-            <input name='stap3-tussenstap-3'  className="my-3" type='text'  />
-            <label htmlFor="stap3-tussenstap-4">Bijv. verhit de kipstukjes 6 minuten</label>
-
-            <input name='stap3-tussenstap-4'  className="my-3" type='text'  />
-
-            <h3>4. Serveren</h3>
-
-            <label htmlFor="stap4-tussenstap-1">Bijv. leg op elk bord 3 tortilla's</label>
-
-            <input name='stap4-tussenstap-1'  className="my-3" type='text'  />
-            <label htmlFor="stap4-tussenstap-2">Bijv. zet de tomatensalsa op tafel</label>
-
-            <input name='stap4-tussenstap-2'  className="my-3" type='text'  />
-            <label htmlFor="stap4-tussenstap-3">Bijv. snijd de basilicum in reepjes</label>
-
-            <input name='stap4-tussenstap-3'  className="my-3" type='text'  />
-            <p><strong>Stuur je recept naar de database!</strong></p>
-            <button type='submit' disabled={loading} className='hover:bg-gray-200'>
-                  {loading ? 'Loading...' : 'Submit'}</button>
-          </form>
+          <p>Elk gerecht bestaat uit maximaal vier stappen en een korte reeks instructies. Minimaal 1 instructie per stap.</p>
+           <RenderView props={props} />
         </DashboardLayout>
       </Layout>
+      
     )
   } else {
     return (
@@ -232,13 +169,10 @@ export function Dashboard() {
                   <textarea name='description' className="my-3 w-full border-2 border-black" rows={5}  wrap="soft" />
                 
                   <button type='submit' disabled={loading}>
-                  {loading ? 'Loading...' : 'Submit'}</button>
+                  {loading ? 'Loading...' : 'Volgende'}</button>
                 </form> 
          
-        </DashboardLayout>
-           
-  
-          
+          </DashboardLayout>
         </Layout>
      
     );
