@@ -1906,6 +1906,33 @@ html {
     color: hsl(var(--nc) / var(--tw-text-opacity));
   }
 
+  .\!menu li > *:not(ul):not(details):active,
+.\!menu li > *:not(ul):not(details).\!active,
+.\!menu li > details > summary:active {
+    --tw-bg-opacity: 1 !important;
+    background-color: hsl(var(--n) / var(--tw-bg-opacity)) !important;
+    --tw-text-opacity: 1 !important;
+    color: hsl(var(--nc) / var(--tw-text-opacity)) !important;
+  }
+
+  .\!menu li > *:not(ul):not(details):active,
+.\!menu li > *:not(ul):not(details).\!active,
+.\!menu li > details > summary:active {
+    --tw-bg-opacity: 1 !important;
+    background-color: hsl(var(--n) / var(--tw-bg-opacity)) !important;
+    --tw-text-opacity: 1 !important;
+    color: hsl(var(--nc) / var(--tw-text-opacity)) !important;
+  }
+
+  .\!menu li > *:not(ul):not(details):active,
+.\!menu li > *:not(ul):not(details).\!active,
+.\!menu li > details > summary:active {
+    --tw-bg-opacity: 1 !important;
+    background-color: hsl(var(--n) / var(--tw-bg-opacity)) !important;
+    --tw-text-opacity: 1 !important;
+    color: hsl(var(--nc) / var(--tw-text-opacity)) !important;
+  }
+
   .tab:hover {
     --tw-text-opacity: 1;
   }
@@ -2231,6 +2258,24 @@ html {
     outline-offset: 2px;
   }
 
+  :where(.\!menu li:not(.\!menu-title):not(.\!disabled) > *:not(ul):not(details):not(.\!menu-title)):not(.\!active):hover, :where(.\!menu li:not(.\!menu-title):not(.\!disabled) > details > summary:not(.\!menu-title)):not(.\!active):hover {
+    cursor: pointer !important;
+    background-color: hsl(var(--bc) / 0.1) !important;
+    --tw-text-opacity: 1 !important;
+    color: hsl(var(--bc) / var(--tw-text-opacity)) !important;
+    outline: 2px solid transparent !important;
+    outline-offset: 2px !important;
+  }
+
+  :where(.\!menu li:not(.\!menu-title):not(.\!disabled) > *:not(ul):not(details):not(.\!menu-title)):not(.\!active):hover, :where(.\!menu li:not(.\!menu-title):not(.\!disabled) > details > summary:not(.\!menu-title)):not(.\!active):hover {
+    cursor: pointer !important;
+    background-color: hsl(var(--bc) / 0.1) !important;
+    --tw-text-opacity: 1 !important;
+    color: hsl(var(--bc) / var(--tw-text-opacity)) !important;
+    outline: 2px solid transparent !important;
+    outline-offset: 2px !important;
+  }
+
   .tab[disabled],
     .tab[disabled]:hover {
     cursor: not-allowed;
@@ -2378,11 +2423,27 @@ html {
   padding: 0.5rem;
 }
 
+.\!menu {
+  display: flex !important;
+  flex-direction: column !important;
+  flex-wrap: wrap !important;
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+  padding: 0.5rem !important;
+}
+
 .menu :where(li ul) {
   position: relative;
   white-space: nowrap;
   margin-left: 1rem;
   padding-left: 0.5rem;
+}
+
+.\!menu :where(li ul) {
+  position: relative !important;
+  white-space: nowrap !important;
+  margin-left: 1rem !important;
+  padding-left: 0.5rem !important;
 }
 
 .menu :where(li:not(.menu-title) > *:not(ul):not(details):not(.menu-title)),
@@ -2400,6 +2461,28 @@ html {
           user-select: none;
 }
 
+.\!menu :where(li:not(.\!menu-title) > *:not(ul):not(details):not(.\!menu-title)),
+  .\!menu :where(li:not(.\!menu-title) > details > summary:not(.\!menu-title)) {
+  display: grid !important;
+  grid-auto-flow: column !important;
+  align-content: flex-start !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  grid-auto-columns: -webkit-max-content auto -webkit-max-content !important;
+  grid-auto-columns: max-content auto max-content !important;
+  -webkit-user-select: none !important;
+     -moz-user-select: none !important;
+      -ms-user-select: none !important;
+          user-select: none !important;
+  display: grid !important;
+  grid-auto-flow: column !important;
+  align-content: flex-start !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  grid-auto-columns: max-content auto max-content !important;
+  user-select: none !important;
+}
+
 .menu li.disabled {
   cursor: not-allowed;
   -webkit-user-select: none;
@@ -2409,8 +2492,21 @@ html {
   color: hsl(var(--bc) / 0.3);
 }
 
+.\!menu li.\!disabled {
+  cursor: not-allowed !important;
+  -webkit-user-select: none !important;
+     -moz-user-select: none !important;
+      -ms-user-select: none !important;
+          user-select: none !important;
+  color: hsl(var(--bc) / 0.3) !important;
+}
+
 .menu :where(li > .menu-dropdown:not(.menu-dropdown-show)) {
   display: none;
+}
+
+.\!menu :where(li > .\!menu-dropdown:not(.\!menu-dropdown-show)) {
+  display: none !important;
 }
 
 :where(.menu li) {
@@ -2422,8 +2518,21 @@ html {
   align-items: stretch;
 }
 
+:where(.\!menu li) {
+  position: relative !important;
+  display: flex !important;
+  flex-shrink: 0 !important;
+  flex-direction: column !important;
+  flex-wrap: wrap !important;
+  align-items: stretch !important;
+}
+
 :where(.menu li) .badge {
   justify-self: end;
+}
+
+:where(.\!menu li) .\!badge {
+  justify-self: end !important;
 }
 
 .modal {
@@ -3154,6 +3263,12 @@ details.collapse summary::-webkit-details-marker {
   height: 1px;
 }
 
+:where(.\!menu li:empty) {
+  background-color: hsl(var(--bc) / 0.1) !important;
+  margin: 0.5rem 1rem !important;
+  height: 1px !important;
+}
+
 .menu :where(li ul):before {
   position: absolute;
   left: 0px;
@@ -3162,6 +3277,16 @@ details.collapse summary::-webkit-details-marker {
   width: 1px;
   background-color: hsl(var(--bc) / 0.1);
   content: "";
+}
+
+.\!menu :where(li ul):before {
+  position: absolute !important;
+  left: 0px !important;
+  top: 0.75rem !important;
+  bottom: 0.75rem !important;
+  width: 1px !important;
+  background-color: hsl(var(--bc) / 0.1) !important;
+  content: "" !important;
 }
 
 .menu :where(li:not(.menu-title) > *:not(ul):not(details):not(.menu-title)),
@@ -3179,6 +3304,30 @@ details.collapse summary::-webkit-details-marker {
   border-radius: var(--rounded-btn, 0.5rem);
 }
 
+.\!menu :where(li:not(.\!menu-title) > *:not(ul):not(details):not(.\!menu-title)),
+.\!menu :where(li:not(.\!menu-title) > details > summary:not(.\!menu-title)) {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+  text-align: left !important;
+  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter !important;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter !important;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter !important;
+  transition-duration: 200ms !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+  border-radius: var(--rounded-btn, 0.5rem) !important;
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+  text-align: left !important;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter !important;
+  transition-duration: 200ms !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+  border-radius: var(--rounded-btn, 0.5rem) !important;
+}
+
 :where(.menu li:not(.menu-title):not(.disabled) > *:not(ul):not(details):not(.menu-title)):not(summary):not(.active).focus,
   :where(.menu li:not(.menu-title):not(.disabled) > *:not(ul):not(details):not(.menu-title)):not(summary):not(.active):focus,
   :where(.menu li:not(.menu-title):not(.disabled) > *:not(ul):not(details):not(.menu-title)):is(summary):not(.active):focus-visible,
@@ -3193,6 +3342,50 @@ details.collapse summary::-webkit-details-marker {
   outline-offset: 2px;
 }
 
+:where(.\!menu li:not(.\!menu-title):not(.\!disabled) > *:not(ul):not(details):not(.\!menu-title)):not(summary):not(.\!active).\!focus,
+  :where(.\!menu li:not(.\!menu-title):not(.\!disabled) > *:not(ul):not(details):not(.\!menu-title)):not(summary):not(.\!active):focus,
+  :where(.\!menu li:not(.\!menu-title):not(.\!disabled) > *:not(ul):not(details):not(.\!menu-title)):is(summary):not(.\!active):focus-visible,
+  :where(.\!menu li:not(.\!menu-title):not(.\!disabled) > details > summary:not(.\!menu-title)):not(summary):not(.\!active).\!focus,
+  :where(.\!menu li:not(.\!menu-title):not(.\!disabled) > details > summary:not(.\!menu-title)):not(summary):not(.\!active):focus,
+  :where(.\!menu li:not(.\!menu-title):not(.\!disabled) > details > summary:not(.\!menu-title)):is(summary):not(.\!active):focus-visible {
+  cursor: pointer !important;
+  background-color: hsl(var(--bc) / 0.1) !important;
+  --tw-text-opacity: 1 !important;
+  color: hsl(var(--bc) / var(--tw-text-opacity)) !important;
+  outline: 2px solid transparent !important;
+  outline-offset: 2px !important;
+  cursor: pointer !important;
+  background-color: hsl(var(--bc) / 0.1) !important;
+  --tw-text-opacity: 1 !important;
+  color: hsl(var(--bc) / var(--tw-text-opacity)) !important;
+  outline: 2px solid transparent !important;
+  outline-offset: 2px !important;
+  cursor: pointer !important;
+  background-color: hsl(var(--bc) / 0.1) !important;
+  --tw-text-opacity: 1 !important;
+  color: hsl(var(--bc) / var(--tw-text-opacity)) !important;
+  outline: 2px solid transparent !important;
+  outline-offset: 2px !important;
+  cursor: pointer !important;
+  background-color: hsl(var(--bc) / 0.1) !important;
+  --tw-text-opacity: 1 !important;
+  color: hsl(var(--bc) / var(--tw-text-opacity)) !important;
+  outline: 2px solid transparent !important;
+  outline-offset: 2px !important;
+  cursor: pointer !important;
+  background-color: hsl(var(--bc) / 0.1) !important;
+  --tw-text-opacity: 1 !important;
+  color: hsl(var(--bc) / var(--tw-text-opacity)) !important;
+  outline: 2px solid transparent !important;
+  outline-offset: 2px !important;
+  cursor: pointer !important;
+  background-color: hsl(var(--bc) / 0.1) !important;
+  --tw-text-opacity: 1 !important;
+  color: hsl(var(--bc) / var(--tw-text-opacity)) !important;
+  outline: 2px solid transparent !important;
+  outline-offset: 2px !important;
+}
+
 .menu li > *:not(ul):not(details):active,
 .menu li > *:not(ul):not(details).active,
 .menu li > details > summary:active {
@@ -3202,8 +3395,29 @@ details.collapse summary::-webkit-details-marker {
   color: hsl(var(--nc) / var(--tw-text-opacity));
 }
 
+.\!menu li > *:not(ul):not(details):active,
+.\!menu li > *:not(ul):not(details).\!active,
+.\!menu li > details > summary:active {
+  --tw-bg-opacity: 1 !important;
+  background-color: hsl(var(--n) / var(--tw-bg-opacity)) !important;
+  --tw-text-opacity: 1 !important;
+  color: hsl(var(--nc) / var(--tw-text-opacity)) !important;
+  --tw-bg-opacity: 1 !important;
+  background-color: hsl(var(--n) / var(--tw-bg-opacity)) !important;
+  --tw-text-opacity: 1 !important;
+  color: hsl(var(--nc) / var(--tw-text-opacity)) !important;
+  --tw-bg-opacity: 1 !important;
+  background-color: hsl(var(--n) / var(--tw-bg-opacity)) !important;
+  --tw-text-opacity: 1 !important;
+  color: hsl(var(--nc) / var(--tw-text-opacity)) !important;
+}
+
 .menu :where(li > details > summary)::-webkit-details-marker {
   display: none;
+}
+
+.\!menu :where(li > details > summary)::-webkit-details-marker {
+  display: none !important;
 }
 
 .menu :where(li > details > summary):after,
@@ -3223,10 +3437,48 @@ details.collapse summary::-webkit-details-marker {
   pointer-events: none;
 }
 
+.\!menu :where(li > details > summary):after,
+.\!menu :where(li > .\!menu-dropdown-toggle):after {
+  justify-self: end !important;
+  display: block !important;
+  margin-top: -0.5rem !important;
+  height: 0.5rem !important;
+  width: 0.5rem !important;
+  transform: rotate(45deg) !important;
+  transition-property: transform, margin-top !important;
+  transition-duration: 0.3s !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+  content: "" !important;
+  transform-origin: 75% 75% !important;
+  box-shadow: 2px 2px !important;
+  pointer-events: none !important;
+  justify-self: end !important;
+  display: block !important;
+  margin-top: -0.5rem !important;
+  height: 0.5rem !important;
+  width: 0.5rem !important;
+  transform: rotate(45deg) !important;
+  transition-property: transform, margin-top !important;
+  transition-duration: 0.3s !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+  content: "" !important;
+  transform-origin: 75% 75% !important;
+  box-shadow: 2px 2px !important;
+  pointer-events: none !important;
+}
+
 .menu :where(li > details[open] > summary):after,
 .menu :where(li > .menu-dropdown-toggle.menu-dropdown-show):after {
   transform: rotate(225deg);
   margin-top: 0;
+}
+
+.\!menu :where(li > details[open] > summary):after,
+.\!menu :where(li > .\!menu-dropdown-toggle.\!menu-dropdown-show):after {
+  transform: rotate(225deg) !important;
+  margin-top: 0 !important;
+  transform: rotate(225deg) !important;
+  margin-top: 0 !important;
 }
 
 .mockup-phone .display {

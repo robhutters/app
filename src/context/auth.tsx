@@ -76,8 +76,10 @@ export function AuthProvider({ children }: any) {
     signOut: () => supabase.auth.signOut(),
     user: user,
     profile: profile,
-    open,
-    setOpen: setOpen,
+    menu: {
+      open: open,
+      setOpen: setOpen
+    },
     restricted,
     setRestriction
   };

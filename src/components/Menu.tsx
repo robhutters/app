@@ -1,15 +1,12 @@
-import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from './Menu.module.css';
-import { useLocation } from 'react-router-dom';
 import Burger from './Burger';
 import Overlay from './Overlay';
 import MenuSignUpOrLogout from './MenuSignupOrLogout';
 
 
-function Menu({ context }: any) {
+function Menu({ menu }: any) {
  
-
   return (
     <>
     
@@ -24,8 +21,8 @@ function Menu({ context }: any) {
               </Link>
             </div>
             <div className='cursor-pointer px-8 md:hidden' id='burger'>
-              <Burger context={context} />
-              <Overlay context={context} />
+              <Burger  menu={menu}/>
+              <Overlay menu={menu} />
             </div>
           </div>
           <ul className='hidden md:block' id='menu'>
@@ -40,7 +37,7 @@ function Menu({ context }: any) {
                
               </Link>
             </li>
-            <MenuSignUpOrLogout context={context} />
+            <MenuSignUpOrLogout />
           </ul>
         </nav>
       </header>

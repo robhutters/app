@@ -1,12 +1,13 @@
 import Menu from '../components/Menu';
 import News from '../components/news/News';
 
-const Layout = ({ children, context }: any) => {
-  const OverlayVisible = context.open ? 'hidden' : 'md:px-6 py-6';
+const Layout = ({ children, menu }: any) => {
+  
+  const OverlayVisible = menu.open ? 'hidden' : 'md:px-6 py-6';
 
   return (
     <div className='md:grid md:grid-cols-4'>
-      <Menu context={context} />
+      <Menu menu={menu} />
      
       <section className='col-span-3'> 
         <main className={`${OverlayVisible} flex flex-col min-h-screen w-full` }>

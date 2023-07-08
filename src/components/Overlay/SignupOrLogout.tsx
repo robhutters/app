@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../context/Auth';
 
-const SignupOrLogout = ({ context }: any, props: any) => {
-  const { user, open, setOpen } = context;
+const SignupOrLogout = ({ menu }: any, props: any) => {
+  const { open, setOpen } = menu;
+  const {user} = useAuth()
   const isHidden = props.hidden;
 
   function handleClick() {

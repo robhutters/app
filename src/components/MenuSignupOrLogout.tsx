@@ -1,11 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/Auth";
 
-const MenuSignUpOrLogout = ({ context}: any, props: any) => {
-  const {user} = context;
+const MenuSignUpOrLogout = () => {
+  const { user } = useAuth()
  
-
-
   if (user) {
     return(
      <React.Fragment>

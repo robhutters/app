@@ -9,11 +9,12 @@ declare module 'react' {
 }
 
 type Context = {
-  context: any;
+  menu: any;
 };
 
-const Burger = ({ context, ...props }: Context) => {
-  const { open, setOpen } = context;
+const Burger = ({ menu, ...props }: Context) => {
+  
+  const { open, setOpen } = menu;
   const completedClass = open ? styles.isOpen : '';
 
   const node = useRef<HTMLDivElement>(null);
