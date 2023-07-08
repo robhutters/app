@@ -18,6 +18,14 @@ const MenuSignUpOrLogout = ({ context}: any, props: any) => {
               </Link>
             </li>
             <li className='px-4 border-r-2 border-body-200 ' id='home'>
+              <Link to={`/favourites`}>
+                <span className='px-2  '>Favorieten</span>
+                <span>
+                  <i className='fal fa-desktop w-8 '></i>
+                </span>
+              </Link>
+            </li>
+            <li className='px-4 border-r-2 border-body-200 ' id='home'>
               <Link to={`/dashboard`}>
                 <span className='px-2  '>Dashboard</span>
                 <span>
@@ -25,6 +33,7 @@ const MenuSignUpOrLogout = ({ context}: any, props: any) => {
                 </span>
               </Link>
             </li>
+           
      </React.Fragment>
     )
   } else {
