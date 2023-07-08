@@ -34,6 +34,7 @@ export function AuthProvider({ children }: any) {
           setRestriction(true);
           const profile = await getUserData(session.user.id);
           if (profile !== undefined) {
+            console.log('Auth context: Profile found!')
             console.log(profile)
             setProfile(profile[0]);
         }
@@ -81,7 +82,8 @@ export function AuthProvider({ children }: any) {
       setOpen: setOpen
     },
     restricted,
-    setRestriction
+    setRestriction,
+    loading
   };
 
   return <AuthContext.Provider value={auth}>{!loading && children}</AuthContext.Provider>;

@@ -10,4 +10,5 @@ export default interface AuthContextType {
   restricted: any;
   setRestriction: Function;
   profile: any;
+  loading: boolean;
 }

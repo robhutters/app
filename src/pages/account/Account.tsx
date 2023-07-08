@@ -13,24 +13,20 @@ export function Account() {
   const [lastName, setLastName ] = useState<string >('');
   const context = useContext(AuthContext);
   /* get user from Auth context */
-  const {user} = useAuth();
+  const {user, profile, menu} = useAuth();
 
   useEffect(() => {
     (async () => { 
        
-        if (user) {      
-          const {data, error} = await supabase.from('profiles').select().eq("user_id", user.id)
-          if (data !== null) {
-            console.log(data)
-            const {username, first_name, last_name} = data[0]
-            setUserName(username)
-            setLastName(last_name)
-            setFirstName(first_name)
-          }
-
-          setLoading(false)   
-        } else {
+        if (!user) {              
           history.push('/')
+        } else {
+            if (profile) {
+              setUserName(profile.username)
+              setLastName(profile.last_name)
+              setFirstName(profile.first_name)
+            } 
+            setLoading(false)
         }
         
     })();
@@ -86,7 +82,7 @@ export function Account() {
 
   if (user) {
     return (
-      <Layout context={context}>
+      <Layout menu={menu}>
         <div className='form-widget flex flex-col max-w-xl mx-auto'>
          <form onSubmit={handleSubmit} className='form-widget flex flex-col max-w-xl mx-auto' >
           <div className='py-3'>
