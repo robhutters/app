@@ -3,13 +3,13 @@ import recipesTestObject from "../../helpers/recipesTestObject";
 import Layout from "../Layout";
 
 export function Favourites () {
-  const auth = useAuth()
+  const {menu, user} = useAuth()
 
   const favourites = recipesTestObject
 
-  if (auth) {
+  if (user) {
     return (
-      <Layout context={auth}>
+      <Layout menu={menu}>
         <div>
           <h1>Favorieten</h1>
          
