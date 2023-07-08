@@ -7,6 +7,7 @@ import { Login } from './pages/login/Login';
 import { Dashboard } from './pages/dashboard/Dashboard';
 import { Account } from './pages/account/Account';
 import { AuthProvider } from './context/Auth';
+import { DataProvider } from './context/Data';
 import { PrivateRoute } from './PrivateRoute';
 import { Favourites } from './pages/favourites/Favourites';
 
@@ -14,6 +15,7 @@ function App() {
   return (
     <>
       <AuthProvider>
+        <DataProvider>
         <Router>
           <Switch>
             <Route exact path='/' component={Home} />
@@ -25,6 +27,8 @@ function App() {
             <Route component={NoMatch} />
           </Switch>
         </Router>
+        </DataProvider>
+       
       </AuthProvider>
     </>
   );

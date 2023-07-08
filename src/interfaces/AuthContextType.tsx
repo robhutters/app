@@ -10,4 +10,5 @@ export default interface AuthContextType {
   setOpen: Function;
   restricted: any;
   setRestriction: Function;
+  profile: any;
 }

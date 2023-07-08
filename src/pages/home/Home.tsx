@@ -1,79 +1,47 @@
-import { useContext, useState,useEffect } from 'react';
+import { useState,useEffect } from 'react';
 import Layout from '../Layout';
-import { AuthContext,useAuth } from '../../context/Auth';
-import getUserData from '../../helpers/getUserData';
-import IProfile from '../../interfaces/IProfile';
-import { supabase } from '../../supabaseClient';
-import userOnDesktop from '../../helpers/userOnDesktop';
+import { useAuth } from '../../context/Auth';
 import recipesTestObject from '../../helpers/recipesTestObject';
 import { RecipeSliderMobile } from '../../components/Recipes/RecipeSliderMobile';
+import { useData } from '../../context/Data';
 import DesktopLayout from '../../components/Desktop/DesktopLayout';
 
 function Home() {
-  const { user } = useAuth();
-  const [profile, setProfile] = useState<IProfile>({
-    username: null,
-    first_name: null,
-    last_name: null,
-  } as IProfile);
+  const { user, profile } = useAuth(); // extract session info and profile info 
+  const [context, setContext] = useState<any>()
+  const [dataset, setDataset] = useState<any[] | null | undefined>()
 
-  const [databaseData, setDatabaseData] = useState<any[] | null | undefined>()
-  const [loading, setLoading] = useState<boolean>(true)
-  const [desktop, setDesktop] = useState<boolean | null>(null)
-  
-  const menu = useContext(AuthContext);
+  const menu = useAuth(); // awareness of how to render the menu
+  const data =  useData(); // awareness of what data to render
 
   useEffect(() => {
-    (async function () {
    
-      const view = await userOnDesktop()
-      if (view === true) setDesktop(true)
-      else setDesktop(false)
-      const {data, error} = await supabase.from('recipes').select()
-    if (!error) {
-      setDatabaseData(data) 
-      setLoading(false)
-    }
-    else alert(error)
-    })()
-  
-   if (user !== null) {
-    (async function () {
+      setContext(data)
+      setDataset(data.dummyData)
       
-      const profile = await getUserData(user.id);
-      if (profile !== undefined) {
-        setProfile(profile[0]);
-      }
-    })();
-   } 
-
     
   }, []); 
 
- 
-  const dataSetOfChoice = recipesTestObject // switch between recipesTestObject (fake) or databaseData (real)
 
-
-  if (databaseData !== undefined && loading !== true && desktop === false) {
-   
-    return (
-      <Layout context={menu} >
-          <h1>Swipe rechts om te liken</h1>
-          <RecipeSliderMobile recipes={dataSetOfChoice} />   
-      </Layout>
-    );
-   } else if (databaseData !== undefined && loading !== true && desktop === true) {
-     
-     return (
-        <Layout context={menu}>
-           <h1>Like om naar je favorieten lijstje te sturen</h1>
-  
-          <DesktopLayout dataset={dataSetOfChoice} />
-           
-           
-         
+  if (dataset !== undefined && context.loading !== true) {
+    
+    if ( context.desktop === true) {
+    
+      return (
+         <Layout context={menu}>
+            <h1>Like om naar je favorieten lijstje te sturen</h1>     
+           <DesktopLayout dataset={dataset} />
+         </Layout>
+      )
+    } else {
+      return (
+        <Layout context={menu} >
+            <h1>Swipe rechts om te liken</h1>
+            <RecipeSliderMobile recipes={dataset} />   
         </Layout>
-     )
+      );
+    }
+    
    } else {
     return (
       <Layout context={menu}>

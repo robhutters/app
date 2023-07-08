@@ -12,7 +12,7 @@ export function Favourites () {
       <Layout context={auth}>
         <div>
           <h1>Favorieten</h1>
-          <p>Test</p>
+         
           <ul>
           {favourites.map((recept, index) => {
             return <li key={index}>{recept.recipename}</li>
