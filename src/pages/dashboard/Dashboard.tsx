@@ -1,300 +1,246 @@
-import { useEffect, useState,useContext,useRef } from 'react';
-import { useHistory } from 'react-router';
+import {  useEffect, useState } from 'react';
 import { useAuth } from '../../context/Auth';
-import { AuthContext } from '../../context/Auth';
 import Layout from '../Layout';
-import IProfile from '../../interfaces/IProfile';
-import getUserData from '../../helpers/getUserData';
 import { supabase } from '../../supabaseClient';
+import { DashboardLayout } from './DashboardLayout';
+import NewRecipeTestObject from './NewRecipeTestObject';
 
 /* 
   React.memo is a higher-order component that renders the component only if props are changed.
 */
 
 export function Dashboard() {
-  // Get current user and signOut function from context
-  const { user, signOut } = useAuth();
-  const [profile, setProfile] = useState<IProfile>({
-    username: null,
-    last_name: null,
-    first_name: null,
-  } as IProfile);
-
-  const menu = useContext(AuthContext);
-
+  const { user, menu } = useAuth();
   const [loading, setLoading] = useState<boolean>(false);
-
-  const [steps, setSteps] = useState<{ [key: string] : number;}[]>([{
-    stap1: 0,
-    stap2: 0,
-    stap3: 0,
-    stap4: 0
-  }])
-
-  const [components, setComponent] = useState<any[]>([
-    {
-      stap1: [],
-
-    },
-    {
-      stap2: [],
-
-    },
-    {
-      stap3: [],
-
-    },
-    {
-      stap4: [],
-
-    }
-  ])
-
-  const history = useHistory();
+  const [intermediateFormData, setIntermediateFormData] = useState<any>()
+  const [steps, setSteps] = useState<boolean>(false)
+  const [instructions, setInstructions] = useState<any>()
 
   useEffect(() => {
-    (async function () {
-      setLoading(true)
-      const profile = await getUserData(user.id);
-      
-      if (profile !== undefined) {
-        setProfile(profile[0]);
-        setLoading(false)
-      }
-    })();
-  }, []);
+    /* dev only */
+    setIntermediateFormData(NewRecipeTestObject)
+    setSteps(true)
+  }, [])
+ 
 
-  async function handleSignOut() {
-    // Ends user session
-    await signOut();
-
-    // Redirects the user to Login page
-    history.push('/login');
-  }
-
-  async function addStep(e:any) {
-    console.log(components)
-    const name = e.target.name
-    console.log('Clicked the button!')
-    const updateSteps = steps.map(object => ({
-      ...object,
-      [name]: object[name] += 1
-    }))
-    setSteps(updateSteps)
-    console.log(steps)
-
-    let componentsToStore:any = [
-      {
-        stap1: [],
-
-      },
-      {
-        stap2: [],
-
-      },
-      {
-        stap3: [],
-
-      },
-      {
-        stap4: [],
-
-      }
-    ] 
-
-    let componentsToRender
-
-
-
-
-    for (const [key, value] of Object.entries(steps[0])) {
-      console.log(`Key: ${key}, value: ${value}`)
-      for (let i = 0; i < value; i++) {
-      
-        // push a component to an array to handle item rendering
-        
-        
-          const components = componentsToStore.map((itemInArray:any ) => {
-           
-            if (itemInArray.hasOwnProperty(key)) {
-              let components = []
-              for (let i = 0; i < value; i++) { 
-                components.push({ name: [key]})
-               }
-              return {
-                [key]: components
-              } 
-            } else {
-              return itemInArray
-            }
-            
-          })
-          componentsToRender = components
-        
-      }
-    }
-  
-    setComponent(componentsToRender)
-    
-  }
-
-  
-  
-
-  async function handleSubmit(e:any) {
+  async function handleSubmitToDatabase(e:any) {
     e.preventDefault()
+    setLoading(true)
+
+    /* Handle the incoming instructions */
     const form = e.target;
     const formData = new FormData(form)
   
     const formObject = Object.fromEntries(formData.entries());
-    console.log(formObject)
+   
 
     const stepsArray = [formObject]
 
     const mutateStepsObject = stepsArray.map(function (item) {
       return {
-          step1Title: item.stepOne,
-          step2Title: item.stepTwo,
-          step3Title: item.stepThree,
-          step4Title: item.stepFour,
-          step1IntermediateSteps: [item["stap1-tussenstap-1"], item["stap1-tussenstap-2"], item["stap1-tussenstap-3"],item["stap1-tussenstap-4"],item["stap1-tussenstap-5"]],
-          step2IntermediateSteps: [item["stap2-tussenstap-1"], item["stap2-tussenstap-2"], item["stap2-tussenstap-3"],item["stap2-tussenstap-4"],item["stap2-tussenstap-5"]],
-          step3IntermediateSteps: [item["stap3-tussenstap-1"], item["stap3-tussenstap-2"], item["stap3-tussenstap-3"],item["stap3-tussenstap-4"],item["stap3-tussenstap-5"]],
-          step4IntermediateSteps: [item["stap4-tussenstap-1"], item["stap4-tussenstap-2"], item["stap4-tussenstap-3"],item["stap4-tussenstap-4"],item["stap4-tussenstap-5"]],
+          stepTitle: [
+            'Voorbereiding',
+            item.stepTwo,
+            item.stepThree,
+            'Serveren'
+          ],
+          intermediateSteps: [
+            [
+              item["stap1-tussenstap-1"], 
+              item["stap1-tussenstap-2"], 
+              item["stap1-tussenstap-3"],
+              item["stap1-tussenstap-4"]
+            ],
+            [
+            item["stap2-tussenstap-1"], 
+            item["stap2-tussenstap-2"], 
+            item["stap2-tussenstap-3"],
+            item["stap2-tussenstap-4"],
+         
+          ],
+          [
+            item["stap3-tussenstap-1"], 
+            item["stap3-tussenstap-2"], 
+            item["stap3-tussenstap-3"],
+            item["stap3-tussenstap-4"],
+          ],
+          [
+            item["stap4-tussenstap-1"], 
+            item["stap4-tussenstap-2"], 
+            item["stap4-tussenstap-3"],
+
+          ],
+        ] 
           
       }
-  })
+    })
 
-    const steps = mutateStepsObject[0]
+    const instructions = mutateStepsObject[0]
+    setInstructions(instructions)
+
+    /* check data saved to state for description of the recipe */
+    
 
     const { error } = await supabase
     .from('recipes')
     .insert({
       user_id: user.id,
-      instructions: steps,
-      recipename: formObject.recipeName,
-      byline: formObject.byline,
-      labels: [formObject.labels],
-      description: formObject.description,
-      cookTime: formObject.cookTime,
-      prepTime: formObject.prepTime,
-      totalTime: formObject.totalTime,
-      calories: formObject.calories
+      instructions: intermediateFormData.dummy === true ? intermediateFormData.instructions : instructions,
+      recipename: intermediateFormData.recipename,
+      byline: intermediateFormData.byline,
+      labels: intermediateFormData.labels,
+      description: intermediateFormData.description,
+      cooktime: intermediateFormData.cookTime,
+      preptime: intermediateFormData.prepTime,
+      totaltime: intermediateFormData.totalTime,
+      calories: intermediateFormData.calories
       
     })
 
     if (error) {
+      setLoading(false)
+      console.log(error)
       alert('Error occurred!')
     } else {
-      setSteps([{}])
+      setLoading(false)
       alert('Entry uploaded!')
     }
     
   }
 
-  function AddItem({name, index} : {name: string, index: number}) {
-    return (
-    <div>
-      <label htmlFor={`${name}-tussenstap-${index + 1}`}>{`${name} - tussenstap ${index + 1}`}</label>
-        <input className="my-3" name={`${name}-tussenstap-${index + 1}`} ></input>
-    </div>
+  async function handleSubmit(e: any) {
+   
+      e.preventDefault()
+      setLoading(true)
+      const form = e.target;
+      const formData = new FormData(form)    
+      const formObject = Object.fromEntries(formData.entries());
+  
+      setIntermediateFormData({
+        user_id: user.id,
+        recipename: formObject.recipeName,
+        byline: formObject.byline,
+        labels: [formObject.labels],
+        description: formObject.description,
+        cookTime: formObject.cookTime,
+        prepTime: formObject.prepTime,
+        totalTime: Number(formObject.cookTime) + Number(formObject.prepTime),
+        calories: formObject.calories
         
-     
-    )
-    
+      })
+      setLoading(false)
+      setSteps(true)
+       
   }
 
-  return (
-    <div>
-      <Layout context={menu}>
-          {/* Change it to display the user ID too 👇*/}
-      <section  className='flex flex-col  ' >
 
-        <main className='flex md:flex-row md:justify-around flex-col'>
-          <section className=" mx-8 py-6 mb-8">
-          <div className="py-6">
-          <p>Welcome, <strong>{profile?.first_name}</strong>!</p>
-          <p>Your user id is {user.id}</p>
-          </div>
-          <button onClick={handleSignOut} className='w-full'>Sign out</button>
-          </section>
+  if (steps) {
+    console.log(intermediateFormData)
+
+    return (
+      <Layout menu={menu}>
+        <DashboardLayout>
+          <h1>Omschrijving Instructies</h1>
          
-          <section className="flex flex-col max-w-xl">
-            <form method="post" id="submitRecipeForm" onSubmit={handleSubmit}>
-                <h1>Voeg een recept toe</h1>
-                <label htmlFor='recipeName'>Geef je recept een naam:</label>
-                <input name='recipeName'  className="my-3" type='text'  />
+          <form method="post" onSubmit={handleSubmitToDatabase} >
+            <p>Elk gerecht bestaat uit maximaal vier stappen en een korte reeks instructies. Minimaal 1 instructie per stap.</p>
+            <h3>1. Voorbereiding</h3>
 
-                <label htmlFor='byline'>Voor onder de titel:</label>
-                <input name='byline' className="my-3" type='text'  />
+            <label htmlFor="stap1-tussenstap-1">Bijv. snij de ui in halve ringen</label>
+            <input name='stap1-tussenstap-1'  className="my-3" type='text'  />
+            <label htmlFor="stap1-tussenstap-2">Bijv. Verwarm de oven op 200 graden</label>
+            <input name='stap1-tussenstap-2'  className="my-3" type='text'  />
+            <label htmlFor="stap1-tussenstap-3">Bijv. Snij de peen in kleine stukjes</label>
+            <input name='stap1-tussenstap-3'  className="my-3" type='text'  />
+            <label htmlFor="stap1-tussenstap-4">Bijv. Kook water voor de aardappelen</label>
+            <input name='stap1-tussenstap-4'  className="my-3" type='text'  />
+            
+            <h3>2. Bijv. Aardappelen koken</h3>
 
-                <label htmlFor='labels'>Labels (b.v. vegan):</label>
-                <input name='labels' className="my-3" type='text'  />
+            <label htmlFor="stepTwo" >Geef in twee woorden een beschrijving van stap 2</label>
+            <input type="text" name="stepTwo" className="my-3"/>
 
-                <label htmlFor='prepTime' >Voorbereidingstijd:</label>
-                <input name='prepTime' className="my-3" type='text'  />
+            <label htmlFor="stap2-tussenstap-1">Bijv. schil de aardappelen</label>
+            <input name='stap2-tussenstap-1'  className="my-3" type='text'  />
+            <label htmlFor="stap2-tussenstap-2">Bijv. kook de aardappelen 20 minuten</label>
+            <input name='stap2-tussenstap-2'  className="my-3" type='text'  />
+            <label htmlFor="stap2-tussenstap-3">Meng in een kom: 1/2 extra vierge olijfolie en witte wijnazijn</label>
+            <input name='stap2-tussenstap-3'  className="my-3" type='text'  />
+            <label htmlFor="stap2-tussenstap-4">Meng de peen door het mengsel</label>
+            <input name='stap2-tussenstap-4'  className="my-3" type='text'  />
 
-                <label htmlFor='cookTime' >Kooktijd:</label>
-                <input name='cookTime' className="my-3" type='text'  />
+            <h3>3. Bijv. Kipstukjes bakken</h3>
+            <label htmlFor="stepThree">Geef in twee woorden een beschrijving van stap 3</label>
+            <input type="text" name="stepThree" className="my-3" />
 
-                <label htmlFor='totalTime' >Totale tijd:</label>
-                <input name='totalTime' className="my-3" type='text'  />
+            <label htmlFor="stap3-tussenstap-1">Bijv. verpak de mini-tortilla's in aluminiumfolie</label>
+            <input name='stap3-tussenstap-1'  className="my-3" type='text'  />
+            <label htmlFor="stap3-tussenstap-2">Bijv. halveer de avocado en verwijder de pit</label>
+            <input name='stap3-tussenstap-2'  className="my-3" type='text'  />
+            <label htmlFor="stap3-tussenstap-3">Bijv. Snijd de witte kaas in blokjes</label>
 
-                <label htmlFor='calories' >Calorieën:</label>
-                <input name='calories' className="my-3" type='text'  />
+            <input name='stap3-tussenstap-3'  className="my-3" type='text'  />
+            <label htmlFor="stap3-tussenstap-4">Bijv. verhit de kipstukjes 6 minuten</label>
 
-                <label htmlFor='description' >Beschrijving:</label>
-                <br />
-                <textarea name='description' className="my-3 w-full border-2 border-black" rows={5}  wrap="soft" />
-                
-                <h1>Beschrijf het kookproces in 4 stappen</h1>
-                <p>Elke stap mag kleinere stapjes bevatten, maar niet meer dan 5.</p>
+            <input name='stap3-tussenstap-4'  className="my-3" type='text'  />
 
-                <label htmlFor='stepOne' ><strong>Naam stap 1:</strong></label>
-                <input name='stepOne' className="my-3" type='text'  />
+            <h3>4. Serveren</h3>
 
-                <p>Beschrijving stap 1</p>
-                <button disabled={steps[0].stap1 > 4} type="button" name="stap1" onClick={addStep}>{ steps[0].stap1 < 5? 'Voeg stap toe' : 'Helaas' }</button>
-                <p>{console.log('Rendering ...')}</p>
-               {components[0].stap1.map((itemInArray:any, index:any) => <AddItem key={`${itemInArray.name}-tussenstap-${index + 1}`} index={index} name={itemInArray.name} />)}
+            <label htmlFor="stap4-tussenstap-1">Bijv. leg op elk bord 3 tortilla's</label>
 
-                <label htmlFor='stepTwo' ><strong>Naam stap 2:</strong></label>
-                <input name='stepTwo' className="my-3" type='text'  />
+            <input name='stap4-tussenstap-1'  className="my-3" type='text'  />
+            <label htmlFor="stap4-tussenstap-2">Bijv. zet de tomatensalsa op tafel</label>
 
-              
+            <input name='stap4-tussenstap-2'  className="my-3" type='text'  />
+            <label htmlFor="stap4-tussenstap-3">Bijv. snijd de basilicum in reepjes</label>
 
-                <p>Beschrijving stap 2</p>
-                <button disabled={steps[0].stap2 > 4} type="button" name="stap2" onClick={addStep}>{ steps[0].stap2 < 5? 'Voeg stap toe' : 'Helaas' }</button>
-
-                {components[1].stap2.map((itemInArray:any, index:any) => <AddItem key={`${itemInArray.name}-tussenstap-${index + 1}`} index={index} name={itemInArray.name} />)}
-             
-
-                <label htmlFor='stepThree' ><strong>Naam stap 3:</strong></label>
-                <input name='stepThree' className="my-3" type='text'  />
-
-                <p>Beschrijving stap 3</p>
-                <button disabled={steps[0].stap3 > 4} type="button" name="stap3" onClick={addStep}>{ steps[0].stap3 < 5? 'Voeg stap toe' : 'Helaas' }</button>
-
-                {components[2].stap3.map((itemInArray:any, index:any) => <AddItem key={`${itemInArray.name}-tussenstap-${index + 1}`} index={index} name={itemInArray.name} />)}
-
-                <label htmlFor='stepFour' ><strong>Naam stap 4:</strong></label>
-                <input name='stepFour' className="my-3" type='text'  />
-
-                <p>Beschrijving stap 4</p>
-                <button disabled={steps[0].stap4 > 4} type="button" name="stap4" onClick={addStep}>{ steps[0].stap4 < 5? 'Voeg stap toe' : 'Helaas' }</button>
-
-                {components[3].stap4.map((itemInArray:any, index:any) => <AddItem key={`${itemInArray.name}-tussenstap-${index + 1}`} index={index} name={itemInArray.name} />)}
-
-                <button type='submit' disabled={loading}>
-                {loading ? 'Loading...' : 'Submit'}</button>
-              </form>
-              
-          </section>
-
-          
-        </main>
-      </section>
+            <input name='stap4-tussenstap-3'  className="my-3" type='text'  />
+            <p><strong>Stuur je recept naar de database!</strong></p>
+            <button type='submit' disabled={loading} className='hover:bg-gray-200'>
+                  {loading ? 'Loading...' : 'Submit'}</button>
+          </form>
+        </DashboardLayout>
       </Layout>
-    </div>
-  );
+    )
+  } else {
+    return (
+      <Layout menu={menu}>
+        <DashboardLayout>
+          
+              <form method="post" onSubmit={handleSubmit}>
+                  <h1>Voeg een recept toe</h1>
+                  <label htmlFor='recipeName'>Geef je recept een naam:</label>
+                  <input name='recipeName'  className="my-3" type='text'  />
+  
+                  <label htmlFor='byline'>Voor onder de titel:</label>
+                  <input name='byline' className="my-3" type='text'  />
+  
+                  <label htmlFor='labels'>Labels (b.v. vegan):</label>
+                  <input name='labels' className="my-3" type='text'  />
+  
+                  <label htmlFor='prepTime' >Voorbereidingstijd:</label>
+                  <input name='prepTime' className="my-3" type='number'  />
+  
+                  <label htmlFor='cookTime' >Kooktijd:</label>
+                  <input name='cookTime' className="my-3" type='number'  />
+  
+                  <label htmlFor='calories' >Calorieën:</label>
+                  <input name='calories' className="my-3" type='number'  />
+  
+                  <label htmlFor='description' >Beschrijving:</label>
+                  <br />
+                  <textarea name='description' className="my-3 w-full border-2 border-black" rows={5}  wrap="soft" />
+                
+                  <button type='submit' disabled={loading}>
+                  {loading ? 'Loading...' : 'Submit'}</button>
+                </form> 
+         
+        </DashboardLayout>
+           
+  
+          
+        </Layout>
+     
+    );
+  }
 }

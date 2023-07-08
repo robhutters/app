@@ -4729,6 +4729,14 @@ details.collapse summary::-webkit-details-marker {
   margin-right: 1rem;
 }
 
+.ml-4 {
+  margin-left: 1rem;
+}
+
+.mr-10 {
+  margin-right: 2.5rem;
+}
+
 .box-border {
   box-sizing: border-box;
 }
@@ -5111,6 +5119,22 @@ details.collapse summary::-webkit-details-marker {
 
 .max-w-\[90\%\] {
   max-width: 90%;
+}
+
+.max-w-2xl {
+  max-width: 42rem;
+}
+
+.max-w-3xl {
+  max-width: 48rem;
+}
+
+.max-w-md {
+  max-width: 28rem;
+}
+
+.max-w-sm {
+  max-width: 24rem;
 }
 
 .flex-auto {
@@ -7100,6 +7124,10 @@ button {
 
   .md\:justify-end {
     justify-content: flex-end;
+  }
+
+  .md\:justify-between {
+    justify-content: space-between;
   }
 
   .md\:justify-around {
