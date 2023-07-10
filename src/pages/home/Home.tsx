@@ -15,9 +15,8 @@ function Home() {
   useEffect(() => {
       
       setContext(data)
-      setDataset(data.dummyData)
-      console.log('Data loaded!')
-      console.log(data)
+      if (data.dev) setDataset(data.dummyData)
+      else setDataset(data.data)
     
   }, []); 
 

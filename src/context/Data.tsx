@@ -17,6 +17,7 @@ export function DataProvider({ children }: any) {
   const [desktop, setDesktop] = useState<boolean | null>(null)
   const [databaseData, setDatabaseData] = useState<any[] | null | undefined>()
   const [dummyData, setDummyData] = useState<any[] | null | undefined>()
+  const [devEnvironment, setDevEnvironment] = useState<boolean>(false)
 
 
   useEffect(() => {
@@ -31,7 +32,36 @@ export function DataProvider({ children }: any) {
       else alert('Could not load data from database. Check Data Context component.')
 
       setDummyData(recipesTestObject)
+      setDevEnvironment(false)
       setLoading(false)
+
+        // Listen for changes on state
+        const channel = supabase
+          .channel('schema-db-changes')
+          .on(
+            'postgres_changes',
+            {
+              event: 'UPDATE',
+              schema: 'public',
+            },
+            (payload) => {
+              console.log('Hello from Postgres channel!')
+              console.log(payload)
+              console.log('Updating data context!')
+              if (data !== null) {
+                const updatedData = data.map((recipe) => {
+                  if (payload.new.id === recipe.id) return payload.new 
+                  else return recipe
+                })
+                console.log('New data ...')
+                console.log(updatedData)
+                console.log('-------------------------------')
+                setDatabaseData(updatedData) 
+              }
+             
+            }
+          )
+          .subscribe()
     })()
   }, []);
 
@@ -39,7 +69,8 @@ export function DataProvider({ children }: any) {
     data: databaseData,
     desktop: desktop,
     dummyData: dummyData,
-    loading: loading
+    loading: loading,
+    dev: devEnvironment
   };
 
   return <DataContext.Provider value={context}>{!loading && children}</DataContext.Provider>;

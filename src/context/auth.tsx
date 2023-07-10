@@ -35,7 +35,8 @@ export function AuthProvider({ children }: any) {
           const profile = await getUserData(session.user.id);
           if (profile !== undefined) {
             console.log('Auth context: Profile found!')
-            console.log(profile)
+            console.log(profile[0])
+            console.log('-------------------------------')
             setProfile(profile[0]);
         }
 

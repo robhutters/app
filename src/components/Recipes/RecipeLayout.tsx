@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react'
 import { useData } from '../../context/Data'
+import { supabase } from '../../supabaseClient'
 
 function ImageOrInstructions ({isImage, isView, instructions, trackedStep, setTrackedStep, ingredients} : {isImage: boolean, instructions: any, trackedStep: any, setTrackedStep: any, ingredients: any, isView: boolean}) {
  
@@ -57,21 +58,44 @@ export default function RecipeLayout ({recipe}: {recipe : any}) {
   const [favourite, setFavourite] = useState<boolean>(false)
   const [trackedStep, setTrackedStep] = useState<number>(0)
 
+  const recipes = useData()
+  const {dummyData, dev } = recipes
+
   useEffect(() => {
     setFavourite(recipe.favourite)
-  },[favourite])
+  },[])
 
-  const data = useData()
+ 
 
-  function handleLike() {
-    console.log('You liked this recipe!')
-    const {dummyData} = data
+  async function handleLike() {
+   
     console.log('This is the recipe!')
     console.log(recipe)
-    dummyData.filter((item) => item.id === recipe.id ).map((recipe) => recipe.favourite = !favourite)
-    console.log('Updating dataset!')
-    console.log(dummyData)
-    setFavourite(!favourite)
+   
+
+    if (dev) {
+      dummyData.filter((item) => item.id === recipe.id ).map((recipe) => recipe.favourite = !favourite)
+      console.log('Updating dataset!')
+      console.log(dummyData)
+      setFavourite(!favourite)
+
+    } else {
+      const { data, error } = await supabase
+      .from('recipes')
+      .update({ favourite: !favourite })
+      .eq('id', recipe.id)
+      .select()
+
+      setFavourite(!favourite)
+
+      if (error) {
+        console.log(error)
+        alert ('Er ging iets mis met updaten! Neem contact op met de ontwikkelaar.')
+      }
+    }
+    
+    
+   
   } 
 
   return (

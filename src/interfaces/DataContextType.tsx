@@ -3,4 +3,5 @@ export default interface DataConTextType {
   desktop: boolean
   dummyData: any[]
   loading: boolean
+  dev: boolean
 }
