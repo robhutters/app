@@ -5,6 +5,7 @@ const dataFromDatabaseForm = [ {
     user_id: 123,  
     created_at: 'time',
     recipename: 'TestRecipe',
+    favourite: false,
     byline: 'Met room en gehaktballetjes',
     labels: ['vegan'],
     description: 'Een onzin gerecht',

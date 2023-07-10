@@ -1,11 +1,13 @@
+import DesktopLayout from "../../components/Desktop/DesktopLayout";
 import { useAuth } from "../../context/Auth";
-import recipesTestObject from "../../helpers/recipesTestObject";
+import { useData } from "../../context/Data";
+import recipesFavouritesTestObject from "../../helpers/recipesFavouritesTestObject";
 import Layout from "../Layout";
 
 export function Favourites () {
   const {menu, user} = useAuth()
-
-  const favourites = recipesTestObject
+  const {dummyData} = useData()
+  const favourites = dummyData.filter((item) => item.favourite === true)
 
   if (user) {
     return (
@@ -13,11 +15,9 @@ export function Favourites () {
         <div>
           <h1>Favorieten</h1>
          
-          <ul>
-          {favourites.map((recept, index) => {
-            return <li key={index}>{recept.recipename}</li>
-          })}
-          </ul>
+        
+
+          <DesktopLayout dataset={favourites} />
         </div>
       </Layout>
     )

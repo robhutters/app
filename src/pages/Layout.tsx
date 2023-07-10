@@ -1,5 +1,5 @@
 import Menu from '../components/Menu';
-import News from '../components/news/News';
+import News from '../components/News/News';
 
 const Layout = ({ children, menu }: any) => {
   
@@ -8,7 +8,7 @@ const Layout = ({ children, menu }: any) => {
   return (
     <div className='md:grid md:grid-cols-4'>
       <Menu menu={menu} />
-     
+      
       <section className='col-span-3'> 
         <main className={`${OverlayVisible} flex flex-col min-h-screen w-full` }>
           <News />

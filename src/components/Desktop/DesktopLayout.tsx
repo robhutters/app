@@ -2,17 +2,20 @@ import { useState } from "react"
 import { trackSlideView } from "../../helpers/trackSlideView"
 import { HashLink } from 'react-router-hash-link'
 import RecipeLayout from "../Recipes/RecipeLayout"
+import { useLocation } from "react-router-dom"
 
 export default function DesktopLayout ( {dataset} : {dataset: any}) {
 
   const [slideNumber, setSlideNumber] = useState<number>(2)
+  const location = useLocation()
+  const {pathname} = location
 
   return (
     <div >
       
       <div className='py-4'>
                 <span onClick={() => trackSlideView(slideNumber, dataset, "next", setSlideNumber)} >
-              <HashLink id="testButton" smooth to={`/#${slideNumber}`} className="btn btn-secondary"><p className='text-2xl'>Volgende</p></HashLink>
+              <HashLink id="testButton" smooth to={`${pathname}#${slideNumber}`} className="btn btn-secondary"><p className='text-2xl'>Volgende</p></HashLink>
             </span>
             </div>
 

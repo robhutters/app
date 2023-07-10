@@ -1,4 +1,5 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
+import { useData } from '../../context/Data'
 
 function ImageOrInstructions ({isImage, isView, instructions, trackedStep, setTrackedStep, ingredients} : {isImage: boolean, instructions: any, trackedStep: any, setTrackedStep: any, ingredients: any, isView: boolean}) {
  
@@ -53,7 +54,25 @@ function ImageOrInstructions ({isImage, isView, instructions, trackedStep, setTr
 export default function RecipeLayout ({recipe}: {recipe : any}) {
   const [image, setImage] = useState<boolean>(true)
   const [view, setView] = useState<boolean>(false)
+  const [favourite, setFavourite] = useState<boolean>(false)
   const [trackedStep, setTrackedStep] = useState<number>(0)
+
+  useEffect(() => {
+    setFavourite(recipe.favourite)
+  },[favourite])
+
+  const data = useData()
+
+  function handleLike() {
+    console.log('You liked this recipe!')
+    const {dummyData} = data
+    console.log('This is the recipe!')
+    console.log(recipe)
+    dummyData.filter((item) => item.id === recipe.id ).map((recipe) => recipe.favourite = !favourite)
+    console.log('Updating dataset!')
+    console.log(dummyData)
+    setFavourite(!favourite)
+  } 
 
   return (
     <div className="w-5/6 h-[32rem] border-2 border-black ">
@@ -100,7 +119,7 @@ export default function RecipeLayout ({recipe}: {recipe : any}) {
             setView(!view)
             setImage(!image)
           }}>{ view === false && image === true ? 'ingrediënten' : 'terug'}</button>
-          <button className="btn btn-primary w-32">Like!</button>
+          <button className="btn btn-primary w-32" onClick={() => handleLike() }>{favourite ? 'unlike' : 'like!'}</button>
       </div>
     </section>
   </div>

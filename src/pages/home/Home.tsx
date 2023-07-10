@@ -16,7 +16,8 @@ function Home() {
       
       setContext(data)
       setDataset(data.dummyData)
-      
+      console.log('Data loaded!')
+      console.log(data)
     
   }, []); 
 

@@ -1,16 +1,10 @@
-# Background
+# README
 
-Every front-end application needs basic features like logging in, account management, and a dashboard with user-centric features; I was building my next app with that idea in mind. It has morphed into a recipe app.
+I'm a self-taught developer. This repo contains the front-end code for a Tinder-like recipe app. I'm building it for a Dutch market. It's called "the lazy chef". I intend to collect and sell user data to other businesses and offer premium features to consumers.
 
-# de luie chef 
+## How I work
 
-Translation: "the lazy chef"
-Idea: build a Tinder-like recipe app. 
-Business: collect and sell user data, offer premium features to consumers.
-
-# How I work
-
-I open an Issue ticket on Github with the feature I want to develop. I make a judgement call on the spot whether this feature is necessary for an MVP. 
+I open an ticket on a Github kanban project board with the feature I want to develop. I make a judgement call on the spot whether this feature is necessary for an MVP. 
 
 I work with 3 windows open: Safari (GitHub, e-mail, ChatGPT), FireFox (documentation, research, database, app), VSCODE (code, terminal). This setup keeps me focused on what matters most.
 
@@ -20,8 +14,13 @@ I try to tackle one feature a day (10 minutes to 3 hours), but usually exceed th
 
 I try to tackle two bugs a day if there are any reported. 
 
-I do not work more than four hours a day because productivity plummets beyond that window. I can think about the project while doing other life stuff. That's how it should be for everyone. 
+I do not work more than four hours a day because productivity plummets beyond that window. I think about the project while doing other life stuff. 
 
-# Hosted on Netlify 
+## Tech stack
+
+Postgres backend (Supabase)
+React (TypeScript) front-end 
+
+## Hosted on Netlify 
 
 I have 3 branches, testing, staging, and production. Each branch gets its own deploy on Netlify with their own unique URL.
