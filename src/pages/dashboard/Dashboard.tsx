@@ -98,8 +98,8 @@ export function Dashboard() {
       cooktime: intermediateFormData.cookTime,
       preptime: intermediateFormData.prepTime,
       totaltime: intermediateFormData.totalTime,
-      calories: intermediateFormData.calories
-      
+      calories: intermediateFormData.calories,
+      ingredients
     })
 
     if (error) {
