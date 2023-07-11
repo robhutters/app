@@ -58,15 +58,27 @@ export function Dashboard() {
 
   useEffect(() => {
     /* dev only */
-    setIntermediateFormData(NewRecipeTestObject)
-    setSteps(true)
+    // setIntermediateFormData(NewRecipeTestObject)
+    // setSteps(true)
   }, [])
  
+  const object = {"stepTitle":["Stap 1: Voorbereiding","Stap 2: Koken of bakken","Stap 3: Koken of bakken","Stap 4: Serveren"],"intermediateSteps":
+  [
+    [
+      ["snij de ui in halve ringen","snij de ui in halve ringen","snij de ui in halve ringen","snij de ui in halve ringen"]
+    ],
+    [
+      ["schil de aardappelen","schil de aardappelen","schil de aardappelen","schil de aardappelen"]
+    ],
+    [
+      ["verpak de mini-tortilla's in aluminiumfolie","verpak de mini-tortilla's in aluminiumfolie","verpak de mini-tortilla's in aluminiumfolie","verpak de mini-tortilla's in aluminiumfolie"]],[["leg op elk bord 3 tortilla's","leg op elk bord 3 tortilla's","leg op elk bord 3 tortilla's"]
+    ]
+  ]}
 
   async function handleSubmitToDatabase(e:any) {
     e.preventDefault()
     setLoading(true)
-    console.log(instructions)
+    console.log(instructions.flat(1))
     /* check data saved to state for description of the recipe */
     
     const { error } = await supabase
@@ -75,7 +87,7 @@ export function Dashboard() {
       user_id: user.id,
       instructions: {
         stepTitle: ['Stap 1: Voorbereiding', 'Stap 2: Koken of bakken', 'Stap 3: Koken of bakken', 'Stap 4: Serveren' ],
-        intermediateSteps: intermediateFormData.dummy === true ? intermediateFormData.instructions : instructions,
+        intermediateSteps: intermediateFormData.dummy === true ? intermediateFormData.instructions : instructions.flat(1),
       },
       recipename: intermediateFormData.recipename,
       byline: intermediateFormData.byline,
@@ -95,6 +107,7 @@ export function Dashboard() {
     } else {
       setLoading(false)
       setView([])
+      setSteps(false)
       alert('Entry uploaded!')
     }
     
@@ -128,7 +141,7 @@ export function Dashboard() {
 
   if (steps) {
     console.log(intermediateFormData)
-
+    console.log(instructions.flat(1))
     return (
       <Layout menu={menu}>
         <DashboardLayout>

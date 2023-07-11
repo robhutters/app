@@ -1,7 +1,6 @@
 export function StepFourComponent ({props} : {props : any}) {
 
   const {instructions, setInstructions, setView} = props
-  console.log(instructions)
 
   function handleSubmit (e: any) {
       e.preventDefault()
