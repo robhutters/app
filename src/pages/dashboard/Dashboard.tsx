@@ -8,11 +8,14 @@ import { StepOneComponent } from '../../components/Recipes/instructions/StepOneC
 import { StepTwoComponent } from '../../components/Recipes/instructions/StepTwoComponent';
 import { StepThreeComponent } from '../../components/Recipes/instructions/StepThreeComponent';
 import { StepFourComponent } from '../../components/Recipes/instructions/StepFourComponent';
+import { Ingredients } from '../../components/Recipes/Ingredients';
+import { useData } from '../../context/Data';
 
 function RenderView ({props} : {props : any}) {
   
   const {view, handleSubmitToDatabase, loading} = props
 
+  
   if (view.length === 0) {
     return (<StepOneComponent props={props} />)
   } else if (view.length === 1){
@@ -21,9 +24,13 @@ function RenderView ({props} : {props : any}) {
     return (<StepThreeComponent props={props} />)
   } else if (view.length === 3) {
     return (<StepFourComponent props={props} />)
+  } else if (view.length === 4) {
+    return (
+      <Ingredients props={props} />
+    )
   } else {
     return (
-      <div className='mt-8'>
+      <div className='mt-8 min-w-full mx-auto'>
         <form method="post" onSubmit={handleSubmitToDatabase} >
         <h3>Klaar om je recept op te sturen?</h3>
       <button type='submit' disabled={loading} className='hover:bg-gray-200'>
@@ -32,7 +39,7 @@ function RenderView ({props} : {props : any}) {
       </div>
     )
   }
-  
+
 }
 
 /* 
@@ -41,10 +48,12 @@ function RenderView ({props} : {props : any}) {
 
 export function Dashboard() {
   const { user, menu } = useAuth();
+  const { dev } = useData();
   const [loading, setLoading] = useState<boolean>(false);
   const [intermediateFormData, setIntermediateFormData] = useState<any>()
   const [steps, setSteps] = useState<boolean>(false)
   const [instructions, setInstructions] = useState<any[]>([])
+  const [ingredients, setIngredients] = useState<any[]>([])
   const [view, setView] = useState<any[]>([])
 
   const props = {
@@ -53,27 +62,20 @@ export function Dashboard() {
     view,
     setView,
     loading,
-    handleSubmitToDatabase
+    handleSubmitToDatabase,
+    ingredients,
+    setIngredients
   }
 
   useEffect(() => {
     /* dev only */
-    // setIntermediateFormData(NewRecipeTestObject)
-    // setSteps(true)
+    setIntermediateFormData(NewRecipeTestObject)
+    setSteps(true)
+
+    setView([1,2,3,4,5])
+    /* dev */
   }, [])
  
-  const object = {"stepTitle":["Stap 1: Voorbereiding","Stap 2: Koken of bakken","Stap 3: Koken of bakken","Stap 4: Serveren"],"intermediateSteps":
-  [
-    [
-      ["snij de ui in halve ringen","snij de ui in halve ringen","snij de ui in halve ringen","snij de ui in halve ringen"]
-    ],
-    [
-      ["schil de aardappelen","schil de aardappelen","schil de aardappelen","schil de aardappelen"]
-    ],
-    [
-      ["verpak de mini-tortilla's in aluminiumfolie","verpak de mini-tortilla's in aluminiumfolie","verpak de mini-tortilla's in aluminiumfolie","verpak de mini-tortilla's in aluminiumfolie"]],[["leg op elk bord 3 tortilla's","leg op elk bord 3 tortilla's","leg op elk bord 3 tortilla's"]
-    ]
-  ]}
 
   async function handleSubmitToDatabase(e:any) {
     e.preventDefault()
@@ -87,7 +89,7 @@ export function Dashboard() {
       user_id: user.id,
       instructions: {
         stepTitle: ['Stap 1: Voorbereiding', 'Stap 2: Koken of bakken', 'Stap 3: Koken of bakken', 'Stap 4: Serveren' ],
-        intermediateSteps: intermediateFormData.dummy === true ? intermediateFormData.instructions : instructions.flat(1),
+        intermediateSteps: dev ? intermediateFormData.instructions : instructions.flat(1),
       },
       recipename: intermediateFormData.recipename,
       byline: intermediateFormData.byline,
@@ -140,13 +142,11 @@ export function Dashboard() {
 
 
   if (steps) {
-    console.log(intermediateFormData)
-    console.log(instructions.flat(1))
+    
     return (
       <Layout menu={menu}>
         <DashboardLayout>
-          <h1>Omschrijving Instructies</h1>
-          <p>Elk gerecht bestaat uit maximaal vier stappen en een korte reeks instructies. Minimaal 1 instructie per stap.</p>
+         
            <RenderView props={props} />
         </DashboardLayout>
       </Layout>

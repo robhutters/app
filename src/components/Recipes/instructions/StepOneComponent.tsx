@@ -38,6 +38,9 @@ export function StepOneComponent ({props} : { props: any}) {
 
   return (
     <div>
+            <h1>Omschrijving Instructies</h1>
+            <p>Elk gerecht bestaat uit maximaal vier stappen en een korte reeks instructies. Minimaal 1 instructie per stap.</p>
+  
            <form action="post" onSubmit={handleSubmit}>
            <h3>1. Voorbereiding</h3>
             <label htmlFor="stap1-tussenstap-1">Bijv. snij de ui in halve ringen</label>

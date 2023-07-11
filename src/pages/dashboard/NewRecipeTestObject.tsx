@@ -10,14 +10,21 @@ const NewRecipeTestObject = {
   cookTime: 14,
   totalTime: 24,
   instructions: {
-    stepTitle: ["Step 1 Title", "Step 2 Title", "Step 3 Title", "Step 4 Title"],
-    intermediateSteps: [  ["Snijd ui fijn", "Pers knoflook", "Zet oven aan"],
-     
-       ["Bak uitjes in olijfolie 1-2 minuten", "Doe tomatensaus erbij"]
-    ]
-   
-
-  },
+    "stepTitle":
+      ["Stap 1: Voorbereiding","Stap 2: Koken of bakken","Stap 3: Koken of bakken","Stap 4: Serveren"],
+    "intermediateSteps": [
+    
+      ["snij de ui in halve ringen","snij de ui in halve ringen","snij de ui in halve ringen","snij de ui in halve ringen"]
+    ,
+    
+      ["schil de aardappelen","schil de aardappelen","schil de aardappelen","schil de aardappelen"]
+    ,
+    
+      ["verpak de mini-tortilla's in aluminiumfolie","verpak de mini-tortilla's in aluminiumfolie","verpak de mini-tortilla's in aluminiumfolie","verpak de mini-tortilla's in aluminiumfolie"],
+      
+      ["leg op elk bord 3 tortilla's","leg op elk bord 3 tortilla's","leg op elk bord 3 tortilla's"]
+    
+  ]},
   ingredients: [
     'bananen', 'aardbeien', 'slagroom'
   ],

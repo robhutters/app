@@ -25,7 +25,7 @@ export function DashboardLayout ({children} : {children: any}) {
           </div>
           <button onClick={handleSignOut} className='w-full'>Sign out</button>
         </section>
-        <section className="flex flex-col max-w-3xl">
+        <section className="flex flex-col max-w-3xl w-full">
         {children}
         </section>
         
