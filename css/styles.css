@@ -4939,6 +4939,18 @@ summary:where(.\!menu li:not(.\!menu-title):not(.\!disabled) > details > summary
   margin-right: 1rem;
 }
 
+.mr-3 {
+  margin-right: 0.75rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
 .box-border {
   box-sizing: border-box;
 }
@@ -5117,6 +5129,14 @@ summary:where(.\!menu li:not(.\!menu-title):not(.\!disabled) > details > summary
 
 .h-3 {
   height: 0.75rem;
+}
+
+.h-\[400px\] {
+  height: 400px;
+}
+
+.h-\[300px\] {
+  height: 300px;
 }
 
 .max-h-\[calc\(100\%-64px\)\] {
@@ -6095,6 +6115,10 @@ summary:where(.\!menu li:not(.\!menu-title):not(.\!disabled) > details > summary
 
 .pt-3 {
   padding-top: 0.75rem;
+}
+
+.pr-3 {
+  padding-right: 0.75rem;
 }
 
 .text-left {

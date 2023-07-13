@@ -1,36 +1,83 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import { RecipeCard } from "../Recipes/RecipeCard";
 import { MobileViewRecipeCard } from "./MobileViewRecipeCard";
+import { useData } from "../../context/Data";
+import { supabase } from "../../supabaseClient";
+
+
 
 export function MobileViewLayout ({ recipes } : { recipes: any[] | null}) {
-  console.log(recipes)
+  const dataset = useData()
+  const {dummyData, dev } = dataset
+  const [favourite, setFavourite] = useState<any[]>([])
+
+  useEffect(() => {
+    console.log('Favourites ...')
+    console.log(favourite)
+    console.log('-----------------------------')
+  },[favourite])
+  
   if (recipes !== null) {
     const [activeIndex, setActiveIndex] = useState(0);
 
     const handlers = useSwipeable({
       onSwipedLeft: (eventData) =>{
-        console.log("User Swiped left!", eventData)
+        console.log("User Swiped left!")
         setActiveIndex((prevIndex) => Math.max(prevIndex - 1, 0));
       },
       onSwipedRight: (eventData) => {
-        console.log("User swiped right!", eventData)
+        console.log("User swiped right!")
+        setFavourite(prev => {
+          return [
+            ...prev,
+            currentRecipe
+          ]
+        })
+        handleLike(currentRecipe)
         setActiveIndex((prevIndex) =>
         Math.min(prevIndex + 1, recipes.length - 1)
+        
       );
       }
     });
 
     const currentRecipe = recipes[activeIndex];
+
+
+    async function handleLike(recipe:any) {
+     
+      if (dev) {
+        dummyData.filter((item) => item.id === recipe.id ).map((recipe) => {
+          console.log('Recipe ...')
+          console.log(recipe)
+          return recipe.favourite = !recipe.favourite
+        })
+        console.log('Updating dummy dataset!')
+        console.log(dummyData)
+  
+      } else {
+        const { data, error } = await supabase
+        .from('recipes')
+        .update({ favourite: !recipe.favourite })
+        .eq('id', recipe.id)
+        .select()
+  
+  
+        if (error) {
+          console.log(error)
+          alert ('Er ging iets mis met updaten! Neem contact op met de ontwikkelaar.')
+        }
+      }
+      
+      
+     
+    } 
+
+
+
     return (<div {...handlers} className="flex flex-col flex-grow "> 
-          {/* <MobileViewRecipeCard recipe={currentRecipe} /> */}
-          <div className="flex flex-col flex-grow">
-             <p className="border-2 border-purple-400">Testing flex 1</p>
-             <p className="border-2 flex-auto border-purple-400">Testing flex 2</p>
-             <p className="border-2  border-purple-400">Testing flex 3</p>
-          </div>
-          
-          
+          <MobileViewRecipeCard recipe={currentRecipe} />
       </div>)
   } else {
     return <div>
