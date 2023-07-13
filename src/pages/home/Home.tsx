@@ -1,7 +1,7 @@
 import { useState,useEffect } from 'react';
 import Layout from '../Layout';
 import { useAuth } from '../../context/Auth';
-import { RecipeSliderMobile } from '../../components/Recipes/RecipeSliderMobile';
+import { MobileViewLayout } from '../../components/Mobile/MobileViewLayout';
 import { useData } from '../../context/Data';
 import DesktopLayout from '../../components/Desktop/DesktopLayout';
 
@@ -34,8 +34,9 @@ function Home() {
     } else {
       return (
         <Layout menu={menu} >
-            <h1>Swipe rechts om te liken</h1>
-            <RecipeSliderMobile recipes={dataset} />   
+           
+            <MobileViewLayout recipes={dataset} />   
+          
         </Layout>
       );
     }

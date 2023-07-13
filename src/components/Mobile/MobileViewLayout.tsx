@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useSwipeable } from "react-swipeable";
-import { RecipeCard } from "./RecipeCard";
+import { RecipeCard } from "../Recipes/RecipeCard";
+import { MobileViewRecipeCard } from "./MobileViewRecipeCard";
 
-export function RecipeSliderMobile ({ recipes } : { recipes: any[] | null}) {
+export function MobileViewLayout ({ recipes } : { recipes: any[] | null}) {
+  console.log(recipes)
   if (recipes !== null) {
     const [activeIndex, setActiveIndex] = useState(0);
 
@@ -20,9 +22,16 @@ export function RecipeSliderMobile ({ recipes } : { recipes: any[] | null}) {
     });
 
     const currentRecipe = recipes[activeIndex];
-    return <div {...handlers}> 
-    <RecipeCard recipe={currentRecipe} />
-  </div>;
+    return (<div {...handlers} className="flex flex-col flex-grow "> 
+          {/* <MobileViewRecipeCard recipe={currentRecipe} /> */}
+          <div className="flex flex-col flex-grow">
+             <p className="border-2 border-purple-400">Testing flex 1</p>
+             <p className="border-2 flex-auto border-purple-400">Testing flex 2</p>
+             <p className="border-2  border-purple-400">Testing flex 3</p>
+          </div>
+          
+          
+      </div>)
   } else {
     return <div>
       <p>No valid data found.</p>

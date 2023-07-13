@@ -18,7 +18,7 @@ export function Favourites () {
         <div>
           <h1>Favorieten</h1>
           <DesktopLayout dataset={dev ? favouritesDummy : favourites} />
-          <p>{favourites.length === 0 ? 'Geen favoriete gerechten gevonden.': ' '}</p>
+          <p>{favourites.length === 0 || favouritesDummy.length === 0 ? 'Geen favoriete gerechten gevonden.': ' '}</p>
         </div>
       </Layout>
     )

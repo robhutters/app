@@ -16,7 +16,7 @@ function Menu({ menu }: any) {
             <div  >
               <Link to={`/`}>
                 <span className={styled.title}>
-                  <h1 className='text-4xl sm:text-6xl font-semibold pr-4'>{import.meta.env.VITE_NAME_OF_COMPANY} </h1>
+                  <h1 className='text-4xl sm:text-6xl font-semibold pr-4'>{import.meta.env.VITE_APP_NAME_OF_COMPANY} </h1>
                 </span>{' '}
               </Link>
             </div>
