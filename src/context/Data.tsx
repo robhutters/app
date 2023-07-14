@@ -32,7 +32,7 @@ export function DataProvider({ children }: any) {
       else alert('Could not load data from database. Check Data Context component.')
 
       setDummyData(recipesTestObject)
-      setDevEnvironment(true)
+      setDevEnvironment(false)
       setLoading(false)
 
         // Listen for changes on state

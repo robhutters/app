@@ -29,7 +29,7 @@ function ImageOrInstructions ({isImage, isView, instructions, trackedStep, setTr
       {instructions.intermediateSteps.map((step:any, index:any) => {
       
         if (trackedStep == index) {
-          return step.map((reeks :any) => <p>{reeks}</p>)
+          return step.map((reeks :any, index: number) => <p key={index}>{reeks}</p>)
         }
       })}
 
@@ -45,7 +45,7 @@ function ImageOrInstructions ({isImage, isView, instructions, trackedStep, setTr
    <section className='w-[400px]'>
      <div>
       <h3>Ingrediënten</h3>
-      {ingredients.map((ingredient:any) => <p>{ingredient}</p>)}
+      {ingredients.map((ingredient:any, index:number) => <p key={index}>{ingredient}</p>)}
     </div>
    </section>
   )

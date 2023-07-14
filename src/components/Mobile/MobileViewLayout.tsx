@@ -24,7 +24,7 @@ export function MobileViewLayout ({ recipes } : { recipes: any[] | null}) {
     const handlers = useSwipeable({
       onSwipedLeft: (eventData) =>{
         console.log("User Swiped left!")
-        setActiveIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+        setActiveIndex((prevIndex) => Math.min(prevIndex + 1, recipes.length - 1));
       },
       onSwipedRight: (eventData) => {
         console.log("User swiped right!")
@@ -62,11 +62,13 @@ export function MobileViewLayout ({ recipes } : { recipes: any[] | null}) {
         .update({ favourite: !recipe.favourite })
         .eq('id', recipe.id)
         .select()
-  
+        
   
         if (error) {
           console.log(error)
           alert ('Er ging iets mis met updaten! Neem contact op met de ontwikkelaar.')
+        } else {
+          console.log(data)
         }
       }
       

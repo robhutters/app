@@ -16,7 +16,7 @@ function Home() {
       
       setContext(data)
       if (data.dev) setDataset(data.dummyData)
-      else setDataset(data.data)
+      else setDataset(data.data.filter((recipe) => recipe.favourite === false))
     
   }, []); 
 
@@ -32,6 +32,9 @@ function Home() {
          </Layout>
       )
     } else {
+      console.log('On mobile ...')
+      console.log('Dataset', dataset)
+      console.log('-------------------------')
       return (
         <Layout menu={menu} >
             <h1 className='pb-4'>Swipe rechts om te liken!</h1>
