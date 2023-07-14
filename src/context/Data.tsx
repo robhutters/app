@@ -3,6 +3,8 @@ import userOnDesktop from '../helpers/userOnDesktop';
 import DataConTextType from '../interfaces/DataContextType';
 import { supabase } from '../supabaseClient';
 import recipesTestObject from '../helpers/recipesTestObject';
+import { useAuth } from './Auth';
+import filterFavourites from '../helpers/filterFavourites';
 
 export const DataContext = createContext({});
 
@@ -18,7 +20,9 @@ export function DataProvider({ children }: any) {
   const [databaseData, setDatabaseData] = useState<any[] | null | undefined>()
   const [dummyData, setDummyData] = useState<any[] | null | undefined>()
   const [devEnvironment, setDevEnvironment] = useState<boolean>(false)
-
+  const { user, profile, menu } = useAuth(); // extract session info and profile info 
+  const [favourites, setFavourites] = useState<any[]>([])
+  const [filtered, setFiltered] = useState<any[]>([])
 
   useEffect(() => {
     // Check active sessions and sets the user
@@ -28,15 +32,35 @@ export function DataProvider({ children }: any) {
       else setDesktop(false)
 
       const {data, error} = await supabase.from('recipes').select()
-      if (!error) setDatabaseData(data) 
+      if (!error)  {
+        setDatabaseData(data)
+        console.log('Data from data context')
+        console.log(data)
+        console.log('--------------------')
+
+        const favourites = await filterFavourites(user, data, 'favourites')
+        console.log('Favourites from data context')
+        console.log(favourites)
+        console.log('--------------------')
+        setFavourites(favourites)
+        const renderedData = await filterFavourites(user, data, 'filtered')
+        console.log('Data to render ...')
+        console.log(renderedData)
+        console.log('--------------------')
+        setFiltered(renderedData)
+      }
       else alert('Could not load data from database. Check Data Context component.')
+    
+
 
       setDummyData(recipesTestObject)
       setDevEnvironment(false)
       setLoading(false)
+      console.log('Hello from data context')
+
 
         // Listen for changes on state
-        const channel = supabase
+        supabase
           .channel('schema-db-changes')
           .on(
             'postgres_changes',
@@ -62,15 +86,54 @@ export function DataProvider({ children }: any) {
             }
           )
           .subscribe()
+
+          supabase
+            .channel('schema-db-changes')
+            .on(
+              'postgres_changes',
+              {
+                event: 'INSERT',
+                schema: 'public',
+              },
+              async (payload) => {
+                console.log('Hello from Postgres channel!')
+              console.log(payload)
+              console.log('Updating data context!')
+              if (data !== null) {
+                const updatedData = data.map((recipe) => {
+                  if (payload.new.id === recipe.id) return payload.new 
+                  else return recipe
+                })
+                console.log('New data ...')
+                console.log(updatedData)
+                console.log('-------------------------------')
+                setDatabaseData(updatedData) 
+                const favourites = await filterFavourites(user, data, 'favourites')
+                console.log('Favourites from data context')
+                console.log(favourites)
+                console.log('--------------------')
+                setFavourites(favourites)
+                const renderedData = await filterFavourites(user, data, 'filtered')
+                console.log('Data to render ...')
+                console.log(renderedData)
+                console.log('--------------------')
+                setFiltered(renderedData)
+              }
+
+              }
+            )
+            .subscribe()
     })()
   }, []);
 
   const context = {
-    data: databaseData,
+    data: databaseData, //raw
+    filtered: filtered,
     desktop: desktop,
     dummyData: dummyData,
     loading: loading,
-    dev: devEnvironment
+    dev: devEnvironment,
+    favourites: favourites
   };
 
   return <DataContext.Provider value={context}>{!loading && children}</DataContext.Provider>;

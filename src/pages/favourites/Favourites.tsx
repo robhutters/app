@@ -3,13 +3,23 @@ import DesktopLayout from "../../components/Desktop/DesktopLayout";
 import { useAuth } from "../../context/Auth";
 import { useData } from "../../context/Data";
 import Layout from "../Layout";
+import { useEffect, useState } from "react";
+import filterFavourites from "../../helpers/filterFavourites";
 
 export function Favourites () {
   const {menu, user} = useAuth()
-  const {dummyData, dev, data} = useData()
+  const recipes = useData()
+  const [dummyData, setDummyData] = useState<any[]>([])
 
-  const favouritesDummy = dummyData.filter((item) => item.favourite === true)
-  const favourites = data.filter((item => item.favourite === true))
+  useEffect(() => {
+    
+    (async function() {
+      if (recipes.dev) {
+        const favouritesDummy = recipes.dummyData.filter((item) => item.favourite === true)
+        setDummyData(favouritesDummy)
+      } 
+    })()
+  }, [])
   
 
   if (user) {
@@ -17,8 +27,8 @@ export function Favourites () {
       <Layout menu={menu}>
         <div>
           <h1>Favorieten</h1>
-          <DesktopLayout dataset={dev ? favouritesDummy : favourites} />
-          <p>{favourites.length === 0 || favouritesDummy.length === 0 ? 'Geen favoriete gerechten gevonden.': ' '}</p>
+          <DesktopLayout dataset={recipes.dev ? dummyData : recipes.favourites} />
+          <p>{recipes.favourites.length == 0  ? 'Geen favoriete gerechten gevonden.': ' '}</p>
         </div>
       </Layout>
     )

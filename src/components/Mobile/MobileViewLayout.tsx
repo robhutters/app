@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useSwipeable } from "react-swipeable";
-import { RecipeCard } from "../Recipes/RecipeCard";
 import { MobileViewRecipeCard } from "./MobileViewRecipeCard";
 import { useData } from "../../context/Data";
 import { supabase } from "../../supabaseClient";
+import { useAuth } from "../../context/Auth";
 
 
 
@@ -11,6 +11,7 @@ export function MobileViewLayout ({ recipes } : { recipes: any[] | null}) {
   const dataset = useData()
   const {dummyData, dev } = dataset
   const [favourite, setFavourite] = useState<any[]>([])
+  const auth = useAuth()
 
   useEffect(() => {
     console.log('Favourites ...')
@@ -28,6 +29,7 @@ export function MobileViewLayout ({ recipes } : { recipes: any[] | null}) {
       },
       onSwipedRight: (eventData) => {
         console.log("User swiped right!")
+        
         setFavourite(prev => {
           return [
             ...prev,
@@ -48,6 +50,7 @@ export function MobileViewLayout ({ recipes } : { recipes: any[] | null}) {
     async function handleLike(recipe:any) {
      
       if (dev) {
+        /* there's no joint table equivalent yet for dummy data */
         dummyData.filter((item) => item.id === recipe.id ).map((recipe) => {
           console.log('Recipe ...')
           console.log(recipe)
@@ -58,9 +61,8 @@ export function MobileViewLayout ({ recipes } : { recipes: any[] | null}) {
   
       } else {
         const { data, error } = await supabase
-        .from('recipes')
-        .update({ favourite: !recipe.favourite })
-        .eq('id', recipe.id)
+        .from('favourites') // updating joint table
+        .insert({ favourite: true, user_id: auth.user.id, recipe_id: recipe.id  })
         .select()
         
   

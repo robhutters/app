@@ -1,6 +1,8 @@
 import {useEffect, useState} from 'react'
 import { useData } from '../../context/Data'
 import { supabase } from '../../supabaseClient'
+import filterFavourites from '../../helpers/filterFavourites'
+import { useAuth } from '../../context/Auth'
 
 function ImageOrInstructions ({isImage, isView, instructions, trackedStep, setTrackedStep, ingredients} : {isImage: boolean, instructions: any, trackedStep: any, setTrackedStep: any, ingredients: any, isView: boolean}) {
  
@@ -52,41 +54,37 @@ function ImageOrInstructions ({isImage, isView, instructions, trackedStep, setTr
  }
 }
 
-export default function RecipeLayout ({recipe}: {recipe : any}) {
+export default function RecipeLayout ({recipe, favourites} : {recipe : any, favourites: boolean}) {
   const [image, setImage] = useState<boolean>(true)
   const [view, setView] = useState<boolean>(false)
-  const [favourite, setFavourite] = useState<boolean>(false)
   const [trackedStep, setTrackedStep] = useState<number>(0)
-
+  const [favourite, setFavourite] = useState<boolean>()
   const recipes = useData()
+  const {user} = useAuth()
   const {dummyData, dev } = recipes
 
   useEffect(() => {
-    setFavourite(recipe.favourite)
+    setFavourite(favourites)
   },[])
-
  
 
   async function handleLike() {
    
-    console.log('This is the recipe!')
-    console.log(recipe)
-   
 
     if (dev) {
-      dummyData.filter((item) => item.id === recipe.id ).map((recipe) => recipe.favourite = !favourite)
+      dummyData.filter((item) => item.id === recipe.id ).map((recipe) => recipe.favourite = !favourites)
       console.log('Updating dataset!')
       console.log(dummyData)
-      setFavourite(!favourite)
+      setFavourite(!favourites)
+
 
     } else {
       const { data, error } = await supabase
-      .from('recipes')
-      .update({ favourite: !favourite })
-      .eq('id', recipe.id)
+      .from('favourites')
+      .insert({ favourite: !favourites, user_id: user.id, recipe_id: recipe.id  })
       .select()
 
-      setFavourite(!favourite)
+      setFavourite(!favourites)
 
       if (error) {
         console.log(error)
@@ -106,7 +104,7 @@ export default function RecipeLayout ({recipe}: {recipe : any}) {
        <div className="flex flex-row justify-between">
         <section>
             <p><strong>Totale tijd:</strong> {recipe.totalTime} minuten</p>
-
+            <h1>{recipe.id}</h1>
             <h2>{recipe.recipename}</h2>
             <p>{recipe.byline}</p>
             <div className="pt-4">
