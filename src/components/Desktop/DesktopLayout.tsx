@@ -4,7 +4,7 @@ import { HashLink } from 'react-router-hash-link'
 import RecipeLayout from "../Recipes/RecipeLayout"
 import { useLocation } from "react-router-dom"
 
-export default function DesktopLayout ( {dataset, favourite} : {dataset: any, favourite: boolean}) {
+export default function DesktopLayout ( {dataset, favourites} : {dataset: any, favourites: boolean}) {
 
 
   const [slideNumber, setSlideNumber] = useState<number>(2)
@@ -26,7 +26,7 @@ export default function DesktopLayout ( {dataset, favourite} : {dataset: any, fa
               
               return (
                     <div id={nextIdentifier.toString()} key={index} className="carousel-item w-full "> 
-                        <RecipeLayout recipe={recipe} favourites={favourite} />
+                        <RecipeLayout recipe={recipe} favourites={favourites} />
                     </div>
                     
               )

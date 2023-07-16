@@ -77,7 +77,7 @@ export default function MobileRecipeLayout ({recipe}: {recipe : any}) {
           </section>
         <section className='mb-6'>
             <p><strong>Totale tijd:</strong> {recipe.totalTime} minuten</p>
-
+            <h1>{recipe.id}</h1>
             <h2>{recipe.recipename}</h2>
             <p>{recipe.byline}</p>
             <div className="pt-4">

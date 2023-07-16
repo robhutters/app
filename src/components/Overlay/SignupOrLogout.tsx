@@ -24,6 +24,12 @@ const SignupOrLogout = ({ menu }: any, props: any) => {
             <i className='far fa-user w-8'></i>
           </span>
         </Link>
+        <Link to={'/favourites'} tabIndex={tabIndex} onClick={handleClick} className='px-4 uppercase pt-8 pb-4 font-bold tracking-wider no-underline  transition-colors duration-300 ease-linear border-b-2 border-white'>
+          <span className='px-2'>Favourites</span>
+          <span aria-hidden='true'>
+            <i className='far fa-desktop w-8'></i>
+          </span>
+        </Link>
         <Link to={'/dashboard'} tabIndex={tabIndex} onClick={handleClick} className='px-4 uppercase pt-8 pb-4 font-bold tracking-wider no-underline  transition-colors duration-300 ease-linear border-b-2 border-white'>
           <span className='px-2'>Dashboard</span>
           <span aria-hidden='true'>

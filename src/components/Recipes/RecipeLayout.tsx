@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react'
 import { useData } from '../../context/Data'
 import { supabase } from '../../supabaseClient'
-import filterFavourites from '../../helpers/filterFavourites'
 import { useAuth } from '../../context/Auth'
 
 function ImageOrInstructions ({isImage, isView, instructions, trackedStep, setTrackedStep, ingredients} : {isImage: boolean, instructions: any, trackedStep: any, setTrackedStep: any, ingredients: any, isView: boolean}) {
@@ -79,17 +78,37 @@ export default function RecipeLayout ({recipe, favourites} : {recipe : any, favo
 
 
     } else {
-      const { data, error } = await supabase
-      .from('favourites')
-      .insert({ favourite: !favourites, user_id: user.id, recipe_id: recipe.id  })
-      .select()
+      if (!favourite) {
+        const { data, error } = await supabase
+        .from('favourites')
+        .insert({ favourite: true, user_id: user.id, recipe_id: recipe.id  })
+        .select()
 
-      setFavourite(!favourites)
+        setFavourite(!favourite)
 
-      if (error) {
-        console.log(error)
-        alert ('Er ging iets mis met updaten! Neem contact op met de ontwikkelaar.')
+        if (error) {
+          console.log(error)
+          alert ('Er ging iets mis met updaten! Neem contact op met de ontwikkelaar.')
+        }
+      } else {
+        console.log('Unliking!')
+        const { data, error } = await supabase
+        .from('favourites') // updating joint table
+        .delete()
+        .eq('user_id', user.id)
+        .eq('recipe_id', recipe.id)
+        
+        setFavourite(!favourite)
+        if (error) {
+          console.log(error)
+          alert ('Er ging iets mis met updaten! Neem contact op met de ontwikkelaar.')
+        } else {
+          console.log('Deleted from favourites.')
+        }
       }
+
+
+     
     }
     
     

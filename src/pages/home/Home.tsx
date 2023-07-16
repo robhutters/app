@@ -10,7 +10,6 @@ function Home() {
   const recipes =  useData(); // awareness of what data to render
   const [context, setContext] = useState<any>()
   const [dataset, setDataset] = useState<any[] | null | undefined>()
-  const [favourite, setFavourite] = useState<boolean>(false)
 
   useEffect(() => {
       
@@ -22,7 +21,7 @@ function Home() {
         else {
          
           setDataset(recipes.filtered)
-          setFavourite(false)
+        
         }
 
        
@@ -38,7 +37,7 @@ function Home() {
       return (
          <Layout menu={menu}>
             <h1>Like om naar je favorieten lijstje te sturen</h1>     
-           <DesktopLayout dataset={dataset} favourite={favourite} />
+           <DesktopLayout dataset={dataset} favourites={false} />
          </Layout>
       )
     } else {
@@ -49,7 +48,7 @@ function Home() {
         <Layout menu={menu} >
             <h1 className='pb-4'>Swipe rechts om te liken!</h1>
 
-            <MobileViewLayout recipes={dataset} />   
+            <MobileViewLayout recipes={dataset} favourites={true}/>   
           
         </Layout>
       );

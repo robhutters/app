@@ -10,6 +10,7 @@ export function MobileViewRecipeCard ({ recipe } : { recipe: any}) {
           
           {/* main takes up all available space thanks to flex-auto. Flex container with flex-grow required. Parents included.  */}
           <main className="flex-auto">
+            
             <MobileRecipeLayout recipe={recipe} />
           </main>
       

@@ -6416,6 +6416,18 @@ summary:where(.\!menu li:not(.\!menu-title):not(.\!disabled) > details > summary
   color: rgba(79, 79, 79, var(--tw-text-opacity));
 }
 
+.text-blue-400 {
+  --tw-text-opacity: 1;
+  color: rgba(96, 165, 250, 1);
+  color: rgba(96, 165, 250, var(--tw-text-opacity));
+}
+
+.text-red-400 {
+  --tw-text-opacity: 1;
+  color: rgba(248, 113, 113, 1);
+  color: rgba(248, 113, 113, var(--tw-text-opacity));
+}
+
 .underline {
   -webkit-text-decoration: underline;
   text-decoration: underline;
