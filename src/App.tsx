@@ -11,7 +11,7 @@ import  {AuthProvider}  from './context/Auth';
 import { DataProvider } from './context/Data';
 import { PrivateRoute } from './PrivateRoute';
 import { Favourites } from './pages/favourites/Favourites';
-import './css/styles.css'
+// import './css/styles.css'
 
 function App() {
   return (
