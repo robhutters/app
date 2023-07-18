@@ -1,6 +1,5 @@
 import React from 'react'
 import Menu from '../components/Menu';
-import { News } from '../components/News/News';
 
 const Layout = ({ children, menu }: { children: any, menu : any}) => {
   
@@ -14,7 +13,7 @@ const Layout = ({ children, menu }: { children: any, menu : any}) => {
       
       <section className='md:col-span-3 flex flex-col flex-grow '>
         <section className='flex flex-col flex-grow w-full' > 
-        <News />
+        {/* <News /> */}
           <main className={`${OverlayVisible} flex flex-col flex-grow` }>
             <section className='md:mt-0 px-4 flex flex-col flex-grow'>
               {children}

@@ -1,6 +1,5 @@
-import {useEffect, useState} from 'react'
-import { useData } from '../../context/Data'
-import { supabase } from '../../supabaseClient'
+import { useState} from 'react'
+
 
 function ImageOrInstructions ({isImage, isView, instructions, trackedStep, setTrackedStep, ingredients} : {isImage: boolean, instructions: any, trackedStep: any, setTrackedStep: any, ingredients: any, isView: boolean}) {
  
