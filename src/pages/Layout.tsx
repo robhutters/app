@@ -1,6 +1,6 @@
 import React from 'react'
 import Menu from '../components/Menu';
-import News from '../components/News/News';
+import { News } from '../components/News/News';
 
 const Layout = ({ children, menu }: { children: any, menu : any}) => {
   
