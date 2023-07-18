@@ -34,10 +34,7 @@ module.exports = {
     ],
   },
   content: ['./src/**/*.html', './src/**/*.tsx', './public/**/*.html', "./node_modules/tw-elements/dist/js/**/*.js"],
-  purge: [
-    "./src/**/*.{js,jsx}",
-    "./public/index.html",
-  ],
+  purge: ['./src/**/*.html', './src/**/*.tsx', './public/**/*.html', "./node_modules/tw-elements/dist/js/**/*.js"],
   theme: {
     extend: {
      
