@@ -1,3 +1,4 @@
+import React from 'react'
 import { createContext, useState, useContext, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import AuthContextType from '../interfaces/AuthContextType';
@@ -6,7 +7,7 @@ import IProfile from '../interfaces/IProfile';
 
 export const AuthContext = createContext({});
 
-export default function AuthProvider({ children }: any) {
+export  function AuthProvider({ children }: any) {
   const [user, setUser] = useState<object | null>(null);
   const [profile, setProfile] = useState<IProfile>({
     username: null,

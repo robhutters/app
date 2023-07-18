@@ -1,3 +1,4 @@
+import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './pages/home/Home';
 import NoMatch from './pages/NoMatch';
@@ -6,7 +7,7 @@ import { Signup } from './pages/signup/Signup';
 import { Login } from './pages/login/Login';
 import { Dashboard } from './pages/dashboard/Dashboard';
 import { Account } from './pages/account/Account';
-import  AuthProvider  from './context/Auth';
+import  {AuthProvider}  from './context/Auth';
 import { DataProvider } from './context/Data';
 import { PrivateRoute } from './PrivateRoute';
 import { Favourites } from './pages/favourites/Favourites';
