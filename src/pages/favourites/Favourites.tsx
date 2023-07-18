@@ -38,7 +38,7 @@ export function Favourites () {
       return (
          <Layout menu={menu}>
             <h1>Like om naar je favorieten lijstje te sturen</h1>     
-           <DesktopLayout dataset={dataset} favourites={false} />
+           <DesktopLayout dataset={dataset} favourites={true} />
          </Layout>
       )
     } else {

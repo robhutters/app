@@ -1,6 +1,6 @@
 # README
 
-I'm a self-taught developer. This repo contains the front-end code for a Tinder-like recipe app. I'm building it for a Dutch market. It's called "the lazy chef". I intend to collect and sell user data to other businesses and offer premium features to consumers.
+I'm a self-taught developer. This repo contains the front-end code for a Tinder-like recipe app. I'm building it for a Dutch market. I intend to collect and sell user data to other businesses and offer premium features to consumers.
 
 ## How I work
 
@@ -19,8 +19,9 @@ I do not work more than four hours a day because productivity plummets beyond th
 ## Tech stack
 
 Postgres backend (Supabase)
-React (TypeScript) front-end 
+React (TypeScript) front-end (Vite)
 
 ## Hosted on Netlify 
 
 I have 3 branches, testing, staging, and production. Each branch gets its own deploy on Netlify with their own unique URL.
+I commit to the main branch to prevent myself from accidentally committing to the wrong branch. I push to whichever branch is appropriate for the stage of development I'm in.

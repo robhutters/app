@@ -48,7 +48,7 @@ function Home() {
         <Layout menu={menu} >
             <h1 className='pb-4'>Swipe rechts om te liken!</h1>
 
-            <MobileViewLayout recipes={dataset} favourites={true}/>   
+            <MobileViewLayout recipes={dataset} favourites={false}/>   
           
         </Layout>
       );

@@ -37,6 +37,7 @@ export function MobileViewLayout ({ recipes, favourites } : { recipes: any[] | n
             currentRecipe
           ]
         })
+        console.log(favourites)
         if (!favourites) handleLike(currentRecipe)
         setActiveIndex((prevIndex) =>
         Math.min(prevIndex + 1, recipes.length - 1)
@@ -93,6 +94,7 @@ export function MobileViewLayout ({ recipes, favourites } : { recipes: any[] | n
         console.log(dummyData)
   
       } else {
+        console.log('Updating favourites table ...')
         const { data, error } = await supabase
         .from('favourites') // updating joint table
         .insert({ favourite: true, user_id: auth.user.id, recipe_id: recipe.id  })
