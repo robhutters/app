@@ -5,7 +5,7 @@
   "license": "mit",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc && vite build",
     "serve": "vite preview",
     "dev:tailwind": "npx tailwindcss --postcss -i ./src/css/tailwind.pcss -o ./src/css/styles.css --jit -w"
   },
