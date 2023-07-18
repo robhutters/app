@@ -61,6 +61,7 @@ export default function RecipeLayout ({recipe, favourites} : {recipe : any, favo
   const recipes = useData()
   const {user} = useAuth()
   const {dummyData, dev } = recipes
+  const [warning, setWarning] = useState<boolean>(false)
 
   useEffect(() => {
     setFavourite(favourites)
@@ -69,47 +70,54 @@ export default function RecipeLayout ({recipe, favourites} : {recipe : any, favo
 
   async function handleLike() {
    
+    if (user === null && warning === false) {
+      setWarning(true)
+      alert('Schrijf je in om te liken! Enige melding.')
 
-    if (dev) {
-      dummyData.filter((item) => item.id === recipe.id ).map((recipe) => recipe.favourite = !favourites)
-      console.log('Updating dataset!')
-      console.log(dummyData)
-      setFavourite(!favourites)
-
-
-    } else {
-      if (!favourite) {
-        const { data, error } = await supabase
-        .from('favourites')
-        .insert({ favourite: true, user_id: user.id, recipe_id: recipe.id  })
-        .select()
-
-        setFavourite(!favourite)
-
-        if (error) {
-          console.log(error)
-          alert ('Er ging iets mis met updaten! Neem contact op met de ontwikkelaar.')
-        }
+    } else if (user !== null) {
+      if (dev) {
+        dummyData.filter((item) => item.id === recipe.id ).map((recipe) => recipe.favourite = !favourites)
+        console.log('Updating dataset!')
+        console.log(dummyData)
+        setFavourite(!favourites)
+  
+  
       } else {
-        console.log('Unliking!')
-        const { data, error } = await supabase
-        .from('favourites') // updating joint table
-        .delete()
-        .eq('user_id', user.id)
-        .eq('recipe_id', recipe.id)
-        
-        setFavourite(!favourite)
-        if (error) {
-          console.log(error)
-          alert ('Er ging iets mis met updaten! Neem contact op met de ontwikkelaar.')
+        if (!favourite) {
+          const { data, error } = await supabase
+          .from('favourites')
+          .insert({ favourite: true, user_id: user.id, recipe_id: recipe.id  })
+          .select()
+  
+          setFavourite(!favourite)
+  
+          if (error) {
+            console.log(error)
+            alert ('Er ging iets mis met updaten! Neem contact op met de ontwikkelaar.')
+          }
         } else {
-          console.log('Deleted from favourites.')
+          console.log('Unliking!')
+          const { data, error } = await supabase
+          .from('favourites') // updating joint table
+          .delete()
+          .eq('user_id', user.id)
+          .eq('recipe_id', recipe.id)
+          
+          setFavourite(!favourite)
+          if (error) {
+            console.log(error)
+            alert ('Er ging iets mis met updaten! Neem contact op met de ontwikkelaar.')
+          } else {
+            console.log('Deleted from favourites.')
+          }
         }
+  
+  
+       
       }
-
-
-     
+      
     }
+
     
     
    
