@@ -1,9 +1,11 @@
+import React from 'react'
 import Menu from '../components/Menu';
 import News from '../components/News/News';
 
-const Layout = ({ children, menu }: any) => {
+const Layout = ({ children, menu }: { children: any, menu : any}) => {
   
-  const OverlayVisible = menu.open ? 'hidden' : 'md:px-6 pt-3';
+  if (menu !== undefined) {
+    const OverlayVisible = menu.open ? 'hidden' : 'md:px-6 pt-3';
 
   return (
     /* Grid layout is for Desktop. */
@@ -25,6 +27,11 @@ const Layout = ({ children, menu }: any) => {
       </section>
     </div>
   );
+  } else {
+    return (
+      <div>No menu defined.</div>
+    )
+  }
 };
 
 export default Layout;

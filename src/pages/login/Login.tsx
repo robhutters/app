@@ -85,7 +85,7 @@ export function Login() {
   if (form) {
     return (
       <React.Fragment>
-        <Layout context={menu}>
+        <Layout menu={menu}>
 
         <p>Check your email for login link. You may safely close this window / tab.</p>
 
@@ -95,7 +95,7 @@ export function Login() {
   } else {
     return (
       <React.Fragment>
-         <Layout context={menu}>
+         <Layout menu={menu}>
 
 
         
