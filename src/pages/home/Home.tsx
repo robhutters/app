@@ -18,11 +18,11 @@ function Home() {
 
         setContext(recipes)
         if (recipes.dev) setDataset(recipes.dummyData)
-        else {
-         
-          setDataset(recipes.filtered)
+        if (recipes.filtered.length > 0) setDataset(recipes.filtered)
+        else setDataset(recipes.data)
+          
         
-        }
+        
 
        
      

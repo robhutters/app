@@ -32,7 +32,8 @@ export function DataProvider({ children }: any) {
       else setDesktop(false)
 
       const {data, error} = await supabase.from('recipes').select()
-      if (!error && !user)  {
+
+      if (!error && user !== null)  {
         setDatabaseData(data)
         console.log('Data from data context')
         console.log(data)
@@ -54,6 +55,7 @@ export function DataProvider({ children }: any) {
         console.log('Data from data context')
         console.log(data)
         console.log('--------------------')
+       
       }
     
 
@@ -61,7 +63,7 @@ export function DataProvider({ children }: any) {
       setDummyData(recipesTestObject)
       setDevEnvironment(false)
       setLoading(false)
-      console.log('Hello from data context')
+      console.log('Data context finished loading.')
 
 
         // Listen for changes on state

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+import './css/tailwind.pcss'
 import App from './App';
 
 const root = document.getElementById('root');
