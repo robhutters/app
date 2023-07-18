@@ -13,6 +13,9 @@ export function MobileViewLayout ({ recipes, favourites } : { recipes: any[] | n
   const [favourite, setFavourite] = useState<any[]>([])
   const auth = useAuth()
 
+  const {user} = auth
+  const [warning, setWarning] = useState<boolean>(false)
+
   useEffect(() => {
     console.log('Favourites ...')
     console.log(favourite)
@@ -49,31 +52,37 @@ export function MobileViewLayout ({ recipes, favourites } : { recipes: any[] | n
     const currentRecipe = recipes[activeIndex];
 
     async function handleFavourite(recipe:any) {
-     
-      if (dev) {
-        /* there's no joint table equivalent yet for dummy data */
-        dummyData.filter((item) => item.id === recipe.id ).map((recipe) => {
-          console.log('Recipe ...')
-          console.log(recipe)
-          return recipe.favourite = !recipe.favourite
-        })
-        console.log('Updating dummy dataset!')
-        console.log(dummyData)
+      if (user === null && warning === false) {
+        setWarning(true)
+        alert('Schrijf je in om te liken! Enige melding.')
   
-      } else {
-        const { data, error } = await supabase
-        .from('favourites') // updating joint table
-        .delete()
-        .eq('user_id', auth.user.id)
-        .eq('recipe_id', recipe.id)
-        
-  
-        if (error) {
-          console.log(error)
-          alert ('Er ging iets mis met updaten! Neem contact op met de ontwikkelaar.')
+      } else if (user !== null) {
+        if (dev) {
+          /* there's no joint table equivalent yet for dummy data */
+          dummyData.filter((item) => item.id === recipe.id ).map((recipe) => {
+            console.log('Recipe ...')
+            console.log(recipe)
+            return recipe.favourite = !recipe.favourite
+          })
+          console.log('Updating dummy dataset!')
+          console.log(dummyData)
+    
         } else {
-          console.log(data)
+          const { data, error } = await supabase
+          .from('favourites') // updating joint table
+          .delete()
+          .eq('user_id', auth.user.id)
+          .eq('recipe_id', recipe.id)
+          
+    
+          if (error) {
+            console.log(error)
+            alert ('Er ging iets mis met updaten! Neem contact op met de ontwikkelaar.')
+          } else {
+            console.log(data)
+          }
         }
+        
       }
       
       
