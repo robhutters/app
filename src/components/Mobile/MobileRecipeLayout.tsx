@@ -2,7 +2,9 @@ import { useState} from 'react'
 
 
 function ImageOrInstructions ({isImage, isView, instructions, trackedStep, setTrackedStep, ingredients} : {isImage: boolean, instructions: any, trackedStep: any, setTrackedStep: any, ingredients: any, isView: boolean}) {
- 
+  console.log(`Image?`, isImage)
+  console.log(`View?`, isView)
+  console.log(`tracked step?`, trackedStep)
 
   function loopTrackedSteps (trackedStep:number) {
     
@@ -11,6 +13,7 @@ function ImageOrInstructions ({isImage, isView, instructions, trackedStep, setTr
   }
 
  if (isImage && isView !== true) {
+  
   return (
    
    <div className='flex flex-row justify-center'>
@@ -19,24 +22,30 @@ function ImageOrInstructions ({isImage, isView, instructions, trackedStep, setTr
  
   )
  } else if (isImage === false && isView === false){
-  return (
-    <section className='h-[300px]'>
-      <div className='flex flex-row justify-end'>
-        <button onClick={() => setTrackedStep(loopTrackedSteps) } className='btn btn-secondary'>Volgende stap</button>
-      </div>
-      <h3>{instructions.stepTitle.map((stepName:any, index:number) => {
-        if (trackedStep == index) return stepName
-      })}</h3>
-      {instructions.intermediateSteps.map((step:any, index:any) => {
-      
-        if (trackedStep == index) {
-          return step.map((reeks :any, index:number) => <p key={index}>{reeks}</p>)
-        }
-      })}
-
-      
-    </section>
-  )
+    if (instructions.stepTitle !== undefined) {
+      return (
+        <section className='h-[300px]'>
+          <div className='flex flex-row justify-end'>
+            <button onClick={() => setTrackedStep(loopTrackedSteps) } className='btn btn-secondary'>Volgende stap</button>
+          </div>
+          <h3>{instructions.stepTitle.map((stepName:any, index:number) => {
+            if (trackedStep == index) return stepName
+          })}</h3>
+          {instructions.intermediateSteps.map((step:any, index:any) => {
+          
+            if (trackedStep == index) {
+              return step.map((reeks :any, index:number) => <p key={index}>{reeks}</p>)
+            }
+          })}
+    
+          
+        </section>
+      )
+    } else {
+      return (
+        <div>Geen instructies gevonden.</div>
+      )
+    }
 
  } else {
   
