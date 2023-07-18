@@ -4,4 +4,4 @@ dist
 dist-ssr
 *.local
 .env
-css/styles.css
+src/css/styles.css

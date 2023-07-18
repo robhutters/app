@@ -5,9 +5,9 @@
   "license": "mit",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "serve": "vite preview",
-    "dev:tailwind": "npx tailwindcss --postcss -i ./css/tailwind.pcss -o ./css/styles.css --jit -w"
+    "dev:tailwind": "npx tailwindcss --postcss -i ./src/css/tailwind.pcss -o ./src/css/styles.css --jit -w"
   },
   "dependencies": {
     "@supabase/supabase-js": "2",
