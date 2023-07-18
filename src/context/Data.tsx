@@ -32,7 +32,7 @@ export function DataProvider({ children }: any) {
       else setDesktop(false)
 
       const {data, error} = await supabase.from('recipes').select()
-      if (!error)  {
+      if (!error && !user)  {
         setDatabaseData(data)
         console.log('Data from data context')
         console.log(data)
@@ -49,7 +49,12 @@ export function DataProvider({ children }: any) {
         console.log('--------------------')
         setFiltered(renderedData)
       }
-      else alert('Could not load data from database. Check Data Context component.')
+      else {
+        setDatabaseData(data)
+        console.log('Data from data context')
+        console.log(data)
+        console.log('--------------------')
+      }
     
 
 
