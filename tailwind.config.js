@@ -33,9 +33,11 @@ module.exports = {
       "winter",
     ],
   },
-  // content: ['./src/**/*.html', './src/**/*.tsx', './public/**/*.html', "./node_modules/tw-elements/dist/js/**/*.js"],
-  purge: ['./src/**/*.html', './src/**/*.tsx', './public/**/*.html', "./node_modules/tw-elements/dist/js/**/*.js"],
-  darkMode: false, // or 'media' or 'class'
+  content: ['./src/**/*.html', './src/**/*.tsx', './public/**/*.html', "./node_modules/tw-elements/dist/js/**/*.js"],
+  purge: [
+    "./src/**/*.{js,jsx}",
+    "./public/index.html",
+  ],
   theme: {
     extend: {
      
