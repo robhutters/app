@@ -6,7 +6,7 @@ import IProfile from '../interfaces/IProfile';
 
 export const AuthContext = createContext({});
 
-export function AuthProvider({ children }: any) {
+export default function AuthProvider({ children }: any) {
   const [user, setUser] = useState<object | null>(null);
   const [profile, setProfile] = useState<IProfile>({
     username: null,
