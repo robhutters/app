@@ -63,7 +63,7 @@ export function Signup() {
   return (
     <React.Fragment> 
 
-<Layout context={menu}>
+<Layout menu={menu}>
 <section className='flex flex-row justify-center '>
     <main className='flex flex-col w-96'>
       <form onSubmit={handleSubmit}>

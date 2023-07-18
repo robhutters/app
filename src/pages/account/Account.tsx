@@ -135,7 +135,7 @@ export function Account() {
     );
   } else {
     return (
-      <Layout>
+      <Layout menu={menu}>
       <div>No user found. You shouldn't be here.</div>
     </Layout>
     )
