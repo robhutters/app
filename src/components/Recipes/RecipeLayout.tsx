@@ -14,9 +14,9 @@ function ImageOrInstructions ({isImage, isView, instructions, trackedStep, setTr
 
  if (isImage && isView !== true) {
   return (
-   
+    <section className='w-[400px]'>
     <img src="https://placehold.co/400x400" alt="placeholder" />
- 
+    </section>
   )
  } else if (isImage === false && isView === false){
   return (
@@ -130,9 +130,9 @@ export default function RecipeLayout ({recipe, favourites} : {recipe : any, favo
       <div className='flex-grow' >
        <div className="flex flex-row justify-between">
         <section>
-            <p><strong>Totale tijd:</strong> {recipe.totalTime} minuten</p>
+            <p><strong>Totale tijd:</strong> {recipe.totaltime} minuten</p>
        
-            <h2>{recipe.recipename}</h2>
+            <h2 className='my-4'>{recipe.recipename}</h2>
             <p>{recipe.byline}</p>
             <div className="pt-4">
               {recipe.labels.map((label:any, index:number) => <small key={index} className="border-2 rounded py-2 px-4">{label}</small>)}

@@ -31,7 +31,7 @@ export function Ingredients ({props} : { props: any}) {
     <div className="w-full">
       <div className="my-3">
       <h1>Ingrediënten</h1>
-      <p>Geef een lijst van ingrediënten op met bijbehorende hoeveelheden.</p>
+      <p>Geef een lijst van ingrediënten op met bijbehorende hoeveelheden <strong>voor één persoon</strong>.</p>
       </div>
       <form id="ingredient-form" action="post" onSubmit={handleSubmitIngredient}>
 

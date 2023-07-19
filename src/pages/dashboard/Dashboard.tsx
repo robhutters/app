@@ -107,6 +107,7 @@ export function Dashboard() {
       setLoading(false)
       setView([])
       setSteps(false)
+      setIngredients([])
       alert('Entry uploaded!')
     }
     
@@ -156,10 +157,10 @@ export function Dashboard() {
           
               <form method="post" onSubmit={handleSubmit}>
                   <h1>Voeg een recept toe</h1>
-                  <label htmlFor='recipeName'>Geef je recept een naam:</label>
+                  <label htmlFor='recipeName'>Geef je recept een naam (bv "Penne in aubergine-roomsaus"): </label>
                   <input name='recipeName'  className="my-3" type='text'  />
   
-                  <label htmlFor='byline'>Voor onder de titel:</label>
+                  <label htmlFor='byline'>Voor onder de titel (bv "met semi-gedroogde tomaten, geraspte kaas en vers basilicum"):</label>
                   <input name='byline' className="my-3" type='text'  />
   
                   <label htmlFor='labels'>Labels. Gebruik komma voor meerdere labels (bv. veggie,lekker snel,HelloFresh):</label>
@@ -168,7 +169,7 @@ export function Dashboard() {
                   <label htmlFor='totalTime' >Totale tijd:</label>
                   <input name='totalTime' className="my-3" type='number'  />
   
-                  <label htmlFor='calories' >Calorieën:</label>
+                  <label htmlFor='calories' >Calorieën (per portie):</label>
                   <input name='calories' className="my-3" type='number'  />
   
                   <button type='submit' disabled={loading}>
