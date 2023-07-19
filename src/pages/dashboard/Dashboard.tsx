@@ -94,7 +94,6 @@ export function Dashboard() {
       recipename: intermediateFormData.recipename,
       byline: intermediateFormData.byline,
       labels: intermediateFormData.labels,
-      description: intermediateFormData.description,
       totaltime: intermediateFormData.totalTime,
       calories: intermediateFormData.calories,
       ingredients
@@ -129,7 +128,6 @@ export function Dashboard() {
         recipename: formObject.recipeName,
         byline: formObject.byline,
         labels: splitLabels,
-        description: formObject.description,
         totalTime: Number(formObject.totalTime),
         calories: formObject.calories
         
@@ -173,10 +171,6 @@ export function Dashboard() {
                   <label htmlFor='calories' >Calorieën:</label>
                   <input name='calories' className="my-3" type='number'  />
   
-                  <label htmlFor='description' >Beschrijving:</label>
-                  <br />
-                  <textarea name='description' className="my-3 w-full border-2 border-black" rows={5}  wrap="soft" />
-                
                   <button type='submit' disabled={loading}>
                   {loading ? 'Loading...' : 'Volgende'}</button>
                 </form> 
