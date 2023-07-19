@@ -137,10 +137,7 @@ export default function RecipeLayout ({recipe, favourites} : {recipe : any, favo
             <div className="pt-4">
               {recipe.labels.map((label:any, index:number) => <small key={index} className="border-2 rounded py-2 px-4">{label}</small>)}
             </div>
-            <div className="pt-4">
-              <h4>Omschrijving</h4>
-              <p>{recipe.description}</p>
-            </div>
+         
             
            
           </section>
