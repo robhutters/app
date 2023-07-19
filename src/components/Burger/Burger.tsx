@@ -13,8 +13,7 @@ type Context = {
 };
 
 const Burger = ({ menu, ...props }: Context) => {
-  console.log(`Menu object from Burger component`, menu.menu)
-  const { open, setOpen } = menu.menu;
+  const { open, setOpen } = menu;
   const completedClass = open ? styles.isOpen : '';
 
   const node = useRef<HTMLDivElement>(null);

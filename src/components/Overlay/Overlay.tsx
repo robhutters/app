@@ -2,22 +2,21 @@ import { Link } from 'react-router-dom';
 import SignupOrLogout from './SignupOrLogout';
 
 const Overlay = ({  menu }: any) => {
-  console.log(`Menu object:`, menu)
 
 
   let className = 'md:hidden overflow-y-auto text-base h-full w-full fixed flex flex-col text-left p-2 top-0 left-0 bottom-0 right-0 bg-body-200  z-10 transition transform duration-300 ease-in-out';
 
-  if (!menu.menu.open) {
+  if (!menu.open) {
     className += 'md:hidden overflow-y-auto text-base h-full w-full fixed flex flex-col  h-screen text-left p-2 top-0 left-0 bottom-0 right-0 bg-body-200 w-full z-10 transition transform duration-300 ease-in-out -translate-x-full';
   }
 
   function handleClick() {
     if (open) {
-      menu.menu.setOpen(!open);
+      menu.setOpen(!open);
     }
   }
 
-  const isHidden = menu.menu.open ? true : false;
+  const isHidden = menu.open ? true : false;
   const tabIndex = isHidden ? 0 : -1;
 
   return (

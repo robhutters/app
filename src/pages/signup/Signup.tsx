@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { AuthContext } from '../../context/Auth';
+import { AuthContext, useAuth } from '../../context/Auth';
 import Layout from '../Layout';
 import { supabase } from '../../supabaseClient';
 
@@ -14,7 +14,7 @@ export function Signup() {
 
   const history = useHistory();
 
-  const menu = useContext(AuthContext);
+  const { menu } = useAuth(); // extract session info and profile info 
 
   async function handleSubmit(e: any) {
     e.preventDefault();
@@ -67,6 +67,11 @@ export function Signup() {
 <section className='flex flex-row justify-center '>
     <main className='flex flex-col w-96'>
       <form onSubmit={handleSubmit}>
+        <div className="my-4">
+        <h1>Aanmelden</h1>
+        <p className='my-4'>
+        Heb je al een account of wil je geen account aanmaken maar wel inloggen? <Link to='/login'><strong>Log in</strong></Link></p>
+        </div>
 
         <label htmlFor='input-username'>Gebruikersnaam</label>
         <input id='input-username' type='text' ref={userNameRef} />
@@ -89,9 +94,7 @@ export function Signup() {
 
      <br />
 
-     <p>
-       Already have an account? <Link to='/login'><strong>Log in</strong></Link>
-     </p>
+    
      </main>
      </section>
 

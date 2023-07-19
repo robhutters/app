@@ -3,7 +3,7 @@ import { useAuth } from '../../context/Auth';
 import styled from './Login.module.css';
 import Layout from '../Layout';
 import { AuthContext } from '../../context/Auth';
-import {useHistory} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 
 export function Login() {
   const history = useHistory();
@@ -22,9 +22,8 @@ export function Login() {
     React will set its 'current' property to the DOM node it's referencing.
   */
   const [form, setForm] = useState<null|boolean>(false)
-  const menu = useContext(AuthContext);
 
-  const { signIn, signInMagic } = useAuth();
+  const { signIn, signInMagic, menu } = useAuth();
 
   async function handlePasswordSubmit(e: any) {
     
@@ -104,25 +103,12 @@ export function Login() {
         
           <main className='flex flex-col w-96 pt-10'>
 
-            <h1>Welcome!</h1>
+            <h1>Welkom!</h1>
            
-           
-           
-
-            <strong className='py-4'>Password</strong>
-            <form id="loginForm" onSubmit={handlePasswordSubmit} className={styled.form}>
-              <label htmlFor='input-email'>Email</label>
-              <input id='input-email' type='email' ref={emailRefWithPassword} />
-              <label htmlFor='input-password'>Password</label>
-              <input id='input-password' type='password' ref={passwordRef} />
-              
-              <button type='submit' disabled={loading}>
-              {loading ? 'Logging you in ...' : 'Login'}</button>
-            </form>
        
 
-            <strong>Magic Link</strong>
-            <p>Log in securely with <em>any</em> e-mail, instantly.  </p>
+            <strong className='my-4'>Magic Link</strong>
+            <p>Inloggen met enkel je e-mail. Je hoeft geen account te hebben aangemaakt.</p>
             <p className="px-24  text-center">&nbsp;</p>
 
             <form id="loginForm" onSubmit={handleSubmit} className={styled.form}>
@@ -132,7 +118,18 @@ export function Login() {
               <button type='submit' disabled={loading}>
               {loading ? 'Logging you in ...' : 'Login'}</button>
             </form>
-  
+      
+            <strong className='py-4'>Inloggen met wachtwoord</strong>
+            <p className='my-4'>Hiervoor moet je je eerst <Link to="/signup"><strong>aangemeld</strong></Link> hebben.</p>
+            <form id="loginForm" onSubmit={handlePasswordSubmit} className={styled.form}>
+              <label htmlFor='input-email'>Email</label>
+              <input id='input-email' type='email' ref={emailRefWithPassword} />
+              <label htmlFor='input-password'>Wachtwoord</label>
+              <input id='input-password' type='password' ref={passwordRef} />
+              
+              <button type='submit' disabled={loading}>
+              {loading ? 'Logging you in ...' : 'Login'}</button>
+            </form>
            
             
           

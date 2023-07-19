@@ -19,13 +19,13 @@ const SignupOrLogout = ({ menu }: any, props: any) => {
     return (
       <>
         <Link to={'/account'} tabIndex={tabIndex} onClick={handleClick} className='px-4 uppercase pt-8 pb-4 font-bold tracking-wider no-underline  transition-colors duration-300 ease-linear border-b-2 border-white'>
-          <span className='px-2'>account</span>
+          <span className='px-2'>Account</span>
           <span aria-hidden='true'>
             <i className='far fa-user w-8'></i>
           </span>
         </Link>
         <Link to={'/favourites'} tabIndex={tabIndex} onClick={handleClick} className='px-4 uppercase pt-8 pb-4 font-bold tracking-wider no-underline  transition-colors duration-300 ease-linear border-b-2 border-white'>
-          <span className='px-2'>Favourites</span>
+          <span className='px-2'>Favorieten</span>
           <span aria-hidden='true'>
             <i className='far fa-desktop w-8'></i>
           </span>
@@ -49,7 +49,7 @@ const SignupOrLogout = ({ menu }: any, props: any) => {
           </span>
         </Link>
         <Link to={'/signup'} tabIndex={tabIndex} onClick={handleClick} className='px-4 uppercase pt-8 pb-4 font-bold tracking-wider no-underline  transition-colors duration-300 ease-linear border-b-2 border-white'>
-          <span className='px-2'>signup</span>
+          <span className='px-2'>Aanmelden</span>
           <span aria-hidden='true'>
             <i className='far fa-user-plus w-8'></i>
           </span>
