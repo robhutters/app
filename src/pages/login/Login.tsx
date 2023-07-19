@@ -84,17 +84,17 @@ export function Login() {
 
   if (form) {
     return (
-      <React.Fragment>
+    
         <Layout menu={menu}>
 
         <p>Check your email for login link. You may safely close this window / tab.</p>
 
         </Layout>
-    </React.Fragment>
+   
     )
   } else {
     return (
-      <React.Fragment>
+     
          <Layout menu={menu}>
 
 
@@ -140,7 +140,7 @@ export function Login() {
         </section>
            </Layout>
        
-      </React.Fragment>
+
     );
   }
 }
