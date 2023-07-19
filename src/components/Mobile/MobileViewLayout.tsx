@@ -29,7 +29,11 @@ export function MobileViewLayout ({ recipes, favourites } : { recipes: any[] | n
       onSwipedLeft: (eventData) =>{
         console.log("User Swiped left!")
         if (favourites) handleFavourite(currentRecipe)
-        setActiveIndex((prevIndex) => Math.min(prevIndex + 1, recipes.length - 1));
+        if (activeIndex + 1 !== recipes.length) setActiveIndex((prevIndex) => Math.min(prevIndex + 1, recipes.length - 1));
+       else {
+        alert('Einde recepten database!')
+
+       }
       },
       onSwipedRight: (eventData) => {
         console.log("User swiped right!")
@@ -41,11 +45,13 @@ export function MobileViewLayout ({ recipes, favourites } : { recipes: any[] | n
           ]
         })
         console.log(favourites)
-        if (!favourites) handleLike(currentRecipe)
-        setActiveIndex((prevIndex) =>
+        if (!favourites && activeIndex + 1 !== recipes.length) handleLike(currentRecipe)
+        if (activeIndex + 1 !== recipes.length) setActiveIndex((prevIndex) =>
         Math.min(prevIndex + 1, recipes.length - 1)
         
-      );
+      ); else {
+        alert('Einde recepten database!')
+      }
       }
     });
 

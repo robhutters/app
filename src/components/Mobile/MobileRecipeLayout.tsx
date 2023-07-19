@@ -5,6 +5,8 @@ function ImageOrInstructions ({isImage, isView, instructions, trackedStep, setTr
   console.log(`Image?`, isImage)
   console.log(`View?`, isView)
   console.log(`tracked step?`, trackedStep)
+  console.log(`Ingredients`, ingredients)
+  
 
   function loopTrackedSteps (trackedStep:number) {
     
@@ -31,12 +33,14 @@ function ImageOrInstructions ({isImage, isView, instructions, trackedStep, setTr
           <h3>{instructions.stepTitle.map((stepName:any, index:number) => {
             if (trackedStep == index) return stepName
           })}</h3>
+          <ul>
           {instructions.intermediateSteps.map((step:any, index:any) => {
           
-            if (trackedStep == index) {
-              return step.map((reeks :any, index:number) => <p key={index}>{reeks}</p>)
-            }
-          })}
+          if (trackedStep == index) {
+            return step.map((reeks :any, index:number) => <li className='py-1' key={index}>{reeks}</li>)
+          }
+        })}
+          </ul>
     
           
         </section>
@@ -55,7 +59,9 @@ function ImageOrInstructions ({isImage, isView, instructions, trackedStep, setTr
    <section >
      <div>
       <h3>Ingrediënten</h3>
-      {ingredients.map((ingredient:any, index: number) => <p key={index}>{ingredient}</p>)}
+     <ul>
+     {ingredients.map((ingredient:any, index: number) => <li key={index}>{ingredient.amount} {ingredient.ingredient}</li>)}
+     </ul>
     </div>
    </section>
   )
@@ -84,7 +90,7 @@ export default function MobileRecipeLayout ({recipe}: {recipe : any}) {
             />
           </section>
         <section className='mb-6'>
-            <p><strong>Totale tijd:</strong> {recipe.totalTime} minuten</p>
+            <p><strong>Totale tijd:</strong> {recipe.totaltime} minuten</p>
            
             <h2>{recipe.recipename}</h2>
             <p>{recipe.byline}</p>
