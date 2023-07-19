@@ -69,10 +69,10 @@ export function Dashboard() {
 
   useEffect(() => {
     /* dev only */
-    setIntermediateFormData(NewRecipeTestObject)
-    setSteps(true)
+    // setIntermediateFormData(NewRecipeTestObject)
+    // setSteps(true)
 
-    setView([1,2,3,4,5])
+    // setView([1,2,3,4,5])
     /* dev */
   }, [])
  
