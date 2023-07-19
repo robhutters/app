@@ -131,7 +131,7 @@ export default function RecipeLayout ({recipe, favourites} : {recipe : any, favo
        <div className="flex flex-row justify-between">
         <section>
             <p><strong>Totale tijd:</strong> {recipe.totalTime} minuten</p>
-            <h1>{recipe.id}</h1>
+       
             <h2>{recipe.recipename}</h2>
             <p>{recipe.byline}</p>
             <div className="pt-4">
