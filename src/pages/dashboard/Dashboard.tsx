@@ -95,8 +95,6 @@ export function Dashboard() {
       byline: intermediateFormData.byline,
       labels: intermediateFormData.labels,
       description: intermediateFormData.description,
-      cooktime: intermediateFormData.cookTime,
-      preptime: intermediateFormData.prepTime,
       totaltime: intermediateFormData.totalTime,
       calories: intermediateFormData.calories,
       ingredients
@@ -122,16 +120,17 @@ export function Dashboard() {
       const form = e.target;
       const formData = new FormData(form)    
       const formObject = Object.fromEntries(formData.entries());
-  
+      const labels = formObject.labels.toString()
+      const splitLabels = labels.split(',')
+ 
+
       setIntermediateFormData({
         user_id: user.id,
         recipename: formObject.recipeName,
         byline: formObject.byline,
-        labels: [formObject.labels],
+        labels: splitLabels,
         description: formObject.description,
-        cookTime: formObject.cookTime,
-        prepTime: formObject.prepTime,
-        totalTime: Number(formObject.cookTime) + Number(formObject.prepTime),
+        totalTime: Number(formObject.totalTime),
         calories: formObject.calories
         
       })
@@ -165,14 +164,11 @@ export function Dashboard() {
                   <label htmlFor='byline'>Voor onder de titel:</label>
                   <input name='byline' className="my-3" type='text'  />
   
-                  <label htmlFor='labels'>Labels (b.v. vegan):</label>
+                  <label htmlFor='labels'>Labels. Gebruik komma voor meerdere labels (bv. veggie,lekker snel,HelloFresh):</label>
                   <input name='labels' className="my-3" type='text'  />
   
-                  <label htmlFor='prepTime' >Voorbereidingstijd:</label>
-                  <input name='prepTime' className="my-3" type='number'  />
-  
-                  <label htmlFor='cookTime' >Kooktijd:</label>
-                  <input name='cookTime' className="my-3" type='number'  />
+                  <label htmlFor='totalTime' >Totale tijd:</label>
+                  <input name='totalTime' className="my-3" type='number'  />
   
                   <label htmlFor='calories' >Calorieën:</label>
                   <input name='calories' className="my-3" type='number'  />
