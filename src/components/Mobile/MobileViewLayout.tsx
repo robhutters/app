@@ -99,7 +99,7 @@ export function MobileViewLayout ({ recipes, favourites } : { recipes: any[] | n
     async function handleLike(recipe:any) {
       if (user === null && warning === false) {
         setWarning(true)
-        alert('Schrijf je in om te liken! Enige melding.')
+        alert('Schrijf je in om je favorieten op te slaan! Enige melding.')
   
       } else if (user !== null) {
         if (dev) {
