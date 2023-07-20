@@ -79,7 +79,7 @@ export default function MobileRecipeLayout ({recipe}: {recipe : any}) {
     <section className='flex flex-col'>
       <div className='flex-grow' >
        <div className="flex flex-col justify-between">
-       <section className='mb-4 h-[300px]'>
+       <section className='mb-4 '>
             <ImageOrInstructions 
             isImage={image} 
             isView={view}
