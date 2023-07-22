@@ -30,7 +30,7 @@ function Home() {
           setVisitor(true)
           toast('Meld je aan om je swipes te bewaren!')
         }
-      })().then((data) => toast('Swipe rechts om te liken!')).catch(e => console.log(e))
+      })().then((data) => toast('Welkom! Vragen? info@deluiechef.nl')).catch(e => console.log(e))
   }, []); 
 
 
