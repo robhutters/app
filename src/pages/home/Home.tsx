@@ -4,29 +4,33 @@ import { useAuth } from '../../context/Auth';
 import { MobileViewLayout } from '../../components/Mobile/MobileViewLayout';
 import { useData } from '../../context/Data';
 import DesktopLayout from '../../components/Desktop/DesktopLayout';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Home() {
-  const { menu } = useAuth(); // extract session info and profile info 
+  const { user, menu } = useAuth(); // extract session info and profile info 
   const recipes =  useData(); // awareness of what data to render
   const [context, setContext] = useState<any>()
   const [dataset, setDataset] = useState<any[] | null | undefined>()
+  const [visitor, setVisitor] = useState<boolean>(true)
 
   useEffect(() => {
-      
-
       (async function() {
+        console.log(user)
 
         setContext(recipes)
         if (recipes.dev) setDataset(recipes.dummyData)
         if (recipes.filtered.length > 0) setDataset(recipes.filtered)
         else setDataset(recipes.data)
+        if (user === null) {
+          setVisitor(false)
+        }
+        else { 
           
-        
-        
-
-       
-     
-      })()
+          setVisitor(true)
+          toast('Meld je aan om je swipes te bewaren!')
+        }
+      })().then((data) => toast('Swipe rechts om te liken!')).catch(e => console.log(e))
   }, []); 
 
 
@@ -38,6 +42,7 @@ function Home() {
          <Layout menu={menu}>
             <h1>Like om naar je favorieten lijstje te sturen</h1>     
            <DesktopLayout dataset={dataset} favourites={false} />
+           <ToastContainer />
          </Layout>
       )
     } else {
@@ -46,10 +51,9 @@ function Home() {
       console.log('-------------------------')
       return (
         <Layout menu={menu} >
-            <h1 className='pb-4'>Swipe rechts om te liken!</h1>
 
             <MobileViewLayout recipes={dataset} favourites={false}/>   
-          
+            <ToastContainer />
         </Layout>
       );
     }

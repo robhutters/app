@@ -1,149 +1,78 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import { MobileViewRecipeCard } from "./MobileViewRecipeCard";
 import { useData } from "../../context/Data";
 import { supabase } from "../../supabaseClient";
 import { useAuth } from "../../context/Auth";
+import { toast } from "react-toastify";
+import { deleteFavourite } from "../../helpers/deleteFavourite";
 
-
+/* Layout used to display Favourites and the Home page */
 
 export function MobileViewLayout ({ recipes, favourites } : { recipes: any[] | null, favourites: boolean}) {
-  const dataset = useData()
-  const {dummyData, dev } = dataset
-  const [favourite, setFavourite] = useState<any[]>([])
-  const auth = useAuth()
 
-  const {user} = auth
   const [warning, setWarning] = useState<boolean>(false)
-
-  useEffect(() => {
-    console.log('Favourites ...')
-    console.log(favourite)
-    console.log('-----------------------------')
-  },[favourite])
+  const auth = useAuth()
+  const { user } = auth
   
+  async function handleLike(recipe:any) {
+
+    if (user === null && warning === false) {
+      setWarning(true)
+      toast('Maak account aan om op te slaan.')
+
+    } else if (user !== null) {
+     
+        const { data, error } = await supabase
+        .from('favourites') // updating joint table
+        .insert({ favourite: true, user_id: auth.user.id, recipe_id: recipe.id  })
+        .select()
+        
+      if (error) {
+        toast('Error: Neem contact op met de ontwikkelaar.')
+      } else {
+        toast('Nieuw recept aan favorieten toegevoegd!')
+      }
+    }    
+  } 
+ 
+
   if (recipes !== null) {
+
     const [activeIndex, setActiveIndex] = useState(0);
 
     const handlers = useSwipeable({
       onSwipedLeft: (eventData) =>{
-        console.log("User Swiped left!")
-        if (favourites) handleFavourite(currentRecipe)
+        if (favourites) deleteFavourite(currentRecipe, user, auth)
         if (activeIndex + 1 !== recipes.length) setActiveIndex((prevIndex) => Math.min(prevIndex + 1, recipes.length - 1));
-       else {
-        alert('Einde recepten database!')
-
+        else {
+        toast('Einde recepten database!')
        }
       },
       onSwipedRight: (eventData) => {
-        console.log("User swiped right!")
         
-        if (!favourites) setFavourite(prev => {
-          return [
-            ...prev,
-            currentRecipe
-          ]
-        })
-        console.log(favourites)
         if (!favourites && activeIndex + 1 !== recipes.length) handleLike(currentRecipe)
         if (activeIndex + 1 !== recipes.length) setActiveIndex((prevIndex) =>
         Math.min(prevIndex + 1, recipes.length - 1)
         
       ); else {
-        alert('Einde recepten database!')
+        toast('Einde recepten database!')
       }
       }
     });
 
     const currentRecipe = recipes[activeIndex];
 
-    async function handleFavourite(recipe:any) {
-      if (user === null && warning === false) {
-        setWarning(true)
-        alert('Schrijf je in om je favorieten op te slaan! Enige melding.')
-  
-      } else if (user !== null) {
-        if (dev) {
-          /* there's no joint table equivalent yet for dummy data */
-          dummyData.filter((item) => item.id === recipe.id ).map((recipe) => {
-            console.log('Recipe ...')
-            console.log(recipe)
-            return recipe.favourite = !recipe.favourite
-          })
-          console.log('Updating dummy dataset!')
-          console.log(dummyData)
-    
-        } else {
-          const { data, error } = await supabase
-          .from('favourites') // updating joint table
-          .delete()
-          .eq('user_id', auth.user.id)
-          .eq('recipe_id', recipe.id)
-          
-    
-          if (error) {
-            console.log(error)
-            alert ('Er ging iets mis met updaten! Neem contact op met de ontwikkelaar.')
-          } else {
-            console.log(data)
-          }
-        }
-        
-      }
-      
-      
-     
-    } 
-
-
-    async function handleLike(recipe:any) {
-      if (user === null && warning === false) {
-        setWarning(true)
-        alert('Schrijf je in om je favorieten op te slaan! Enige melding.')
-  
-      } else if (user !== null) {
-        if (dev) {
-          /* there's no joint table equivalent yet for dummy data */
-          dummyData.filter((item) => item.id === recipe.id ).map((recipe) => {
-            console.log('Recipe ...')
-            console.log(recipe)
-            return recipe.favourite = !recipe.favourite
-          })
-          console.log('Updating dummy dataset!')
-          console.log(dummyData)
-    
-        } else {
-          console.log('Updating favourites table ...')
-          const { data, error } = await supabase
-          .from('favourites') // updating joint table
-          .insert({ favourite: true, user_id: auth.user.id, recipe_id: recipe.id  })
-          .select()
-          
-    
-          if (error) {
-            console.log(error)
-            alert ('Er ging iets mis met updaten! Neem contact op met de ontwikkelaar.')
-          } else {
-            console.log('New database entry.')
-            console.log(data)
-          }
-        }
-
-      }
-     
-      
-      
-     
-    } 
-
-
-
-    return (<div {...handlers} className="flex flex-col flex-grow "> 
+    return (
+        <div {...handlers} className="flex flex-col flex-grow "> 
           <MobileViewRecipeCard recipe={currentRecipe} />
-      </div>)
+        </div>
+      )
   } else {
-    return <div>
-      <p>No valid data found.</p>
-    </div>
+    return (
+      <div>
+        <p>No valid data found.</p>
+      </div>
+    )
   }
 };
