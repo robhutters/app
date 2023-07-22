@@ -6,7 +6,7 @@ import { useData } from '../../context/Data';
 import DesktopLayout from '../../components/Desktop/DesktopLayout';
 
 function Home() {
-  const { user, profile, menu } = useAuth(); // extract session info and profile info 
+  const { menu } = useAuth(); // extract session info and profile info 
   const recipes =  useData(); // awareness of what data to render
   const [context, setContext] = useState<any>()
   const [dataset, setDataset] = useState<any[] | null | undefined>()
